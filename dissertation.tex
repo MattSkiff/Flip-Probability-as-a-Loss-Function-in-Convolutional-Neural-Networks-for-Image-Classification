@@ -1,0 +1,55 @@
+% this document structures the dissertation and should have minimal content
+
+% TODO List;
+%   * Fix acronyms not capitalised at beginning of sentence
+%   * Fix figure positioning
+%   * Insert references where need (indicated with phrase 'Zambingo')
+
+\documentclass[12pt]{uwthesis17}
+
+\usepackage{hon_dissert} % contains entire pre-amble
+\usepackage{chronology} % custom sty file
+
+\title{Flip Probability as a Loss Function in Convolutional Neural Networks for Image Classification}
+\author{Matthew Keith Skiffington} 
+\begin{document}
+\pagenumbering{roman}
+\maketitle
+\setcounter{page}{2}
+
+\setlength{\parindent}{0pt} % disable indents
+
+\begin{abstract}
+Basically it sucks, lol.
+\end{abstract}
+\begin{acknowledgements}
+
+\bigskip
+
+\begin{spacing}{2}
+
+I would like to thank Dr Robert Durrant for his patience, wisdom and understanding in helping produce this dissertation. His teaching and guidance was pivotal in the development of this work.\bigskip
+
+I am grateful for the support and kindness of my partner, Renata Sawyer.\bigskip
+
+\end{spacing}
+
+\end{acknowledgements}
+\tableofcontents
+\listoffigures
+\listoftables
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+\include{introduction}
+\include{literature_review}
+\include{methods}
+\include{results_discussion}
+\include{conclusion}
+\include{back_matter}
+%Sets the bibliography style to UNSRT and imports the 
+%bibliography file "samples.bib".
+\bibliographystyle{unsrt}
+\bibliography{dissertation}
+
+\end{document}

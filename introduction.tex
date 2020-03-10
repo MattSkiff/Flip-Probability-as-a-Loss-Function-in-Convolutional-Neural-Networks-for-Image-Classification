@@ -1,0 +1,20 @@
+\chapter{Introduction}
+
+\section{Purpose}
+
+The aim of this dissertation is to explore the use of  \gls{fp}, as initially developed by Durrant and Kaban (2013)\cite{durrant2013sharp}, as a \gls{lossfunction} in a \gls{cnn} for image classification. Previously, the concept of  \gls{fp} has been used in developing a robust form of logistic regression \cite{label_noise}. We hypothesise that the use of  \gls{fp} could improve classification accuracy, improve computational performance and could allow for \gls{nn}s to be trained using less data. We test these hypotheses in detail. \bigskip
+
+There are various methods of incorporating  \gls{fp} into a  \gls{nn}. In all cases, we wish to train the network by minimising the  \gls{fp}, by using it as a loss function. One method is to retrain the last layer using  \gls{fp} as the loss, while freezing the rest of the network. This is a method commonly used with high capacity \gls{dnn}s \cite{transfer_learning}. Another would be to undergo \gls{representationlearning} on the first few \gls{layer}s of the network, using  \gls{fp} as the \gls{lossfunction}, and then use a more traditional loss function on the final layers. A final method is alternating training of the network with  \gls{fp} as the loss and a traditional loss function (such as \gls{softmax}). 
+
+\section{Motivation}
+
+A small  \gls{mse} is not a guarantee of a small $0/1$ loss - similar parts can have dissimilar labels. Points near the boundaries of classes are a key concern and likely to be misclassified.  \gls{mse} is a good aggregate measure of bulk of points. However, it is a poor measure of points near the decision boundary of classes. We wish for a smooth loss for fitting a classifier, not a discrete loss like the $0/1$ loss and a loss function that is superior to the  \gls{mse}.
+
+\section{Overview}
+
+As the focus of this dissertation is to test \gls{fp} as a \gls{lossfunction} for the purpose of image classification, we will restrict testing of this to \gls{cnn}s or simpler networks (such as  \gls{mlp}s or \gls{feedforward} \gls{nn}s).
+
+ \gls{fp} is a smooth approximation of the $0/1$ loss and, in principle, should more accurately classify points near the \gls{decisionboundary}. To implement this, we can use  \gls{nn}s "off the shelf", tweak them and measure results. However,  \gls{fp} is a theoretical concept and finding an empirical measure is necessary if we wish to implement it in practice. 
+
+Once an empirical measure is found, we proceed to test this, using standard \gls{nn} training and testing techniques.
+

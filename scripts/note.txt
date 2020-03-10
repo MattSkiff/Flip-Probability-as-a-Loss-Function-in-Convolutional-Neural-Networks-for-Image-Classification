@@ -1,0 +1,1 @@
+purpose of scripts folder is contain finished scripts that can reproducibly produce the graphs and figures for tables found in results section, as well as several of the figures

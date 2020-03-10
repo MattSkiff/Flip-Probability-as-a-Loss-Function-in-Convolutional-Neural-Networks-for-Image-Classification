@@ -1,0 +1,246 @@
+% these glossary entries are defined off the 'top of my head' i.e. off my current understanding. Where a source has been used for the def I have cited it.
+
+\newglossaryentry{attributes}
+{
+    name=attributes,
+    description={In a machine learning context, these are the variables or columns of the data (e.g. the pixel grayscale intensity values used during image classification, or the weight of an individual used in predicting diabetes risk)}
+}
+
+\newglossaryentry{activationfunction}
+{
+    name=activation function,
+    description={A non-linear mathematical function, such as the rectified linear unit the weighted sum of a neuron is put through in order introduce a non-linearity in the network to improve learning}
+}
+
+\newglossaryentry{backpropagation}
+{
+    name=back propagation,
+    description={The process of calculating the gradients based on the size of the loss with respect to all of the parameters in the network, using the chain rule, and updating the parameters in direction that minimises the loss (using some optimisation method)}
+}
+
+\newglossaryentry{classlabel}
+{
+    name=attributes,
+    description={The attribute that indicates the true class of the observation or example (e.g. "cat" or "dog" for pet images)}
+}
+
+\newglossaryentry{costfunction}
+{
+    name={cost function},
+    description={A synonym for a loss function \cite[p.~80]{good_fellow_2016}.}
+}
+
+\newglossaryentry{dataaugmentation} % TODO - improve this glossary entry
+{
+    name=data augmentation,
+    description={The practice of applying a transformation to the raw data and training the given algorithm on the transformed data (as well as, in certain cases, the transformed data). Examples include generating extra examples using generative adversarial networks, rotating images and normalising input data}
+}
+
+\newglossaryentry{decisionboundary}
+{
+    name=decision boundary,
+    description={The geometric boundary in the space of data where the algorithm will go from predicting one class (e.g. setosa), to another class (e.g. versicolor)}
+}
+
+\newglossaryentry{epoch}
+{
+    name=epoch,
+    description={A full forward and backwards pass over the network}
+}
+
+\newglossaryentry{features}
+{
+    name=features,
+    description={Attributes}
+}
+
+\newglossaryentry{feedforward}
+{
+    name=feed forward,
+    description={A simple type of neural network where each neuron in the previous layer is connected to every neuron in the next layer} 
+}
+
+\newglossaryentry{flipprobability}
+{
+    name=flip probability,
+    description={The probability that the classification of a label will flip given a classifier if the data is randomly projected down to a lower dimensional subspace}
+}
+
+\newglossaryentry{forwardpropagation}
+{
+    name=forward propagation,
+    description={The process of running the input data through the layers of network to produce some output}
+}
+
+\newglossaryentry{generalisationperformance}
+{
+    name=flip probability,
+    description={How well the classifier performs on new, unseen data not used in either the testing in training data sets}
+}
+
+\newglossaryentry{hyperparameter}
+{
+    name=hyperparameter,
+    description={A parameter that governs the training of the model,such as the batch size used in \gls{sgd}} 
+}
+
+\newglossaryentry{hyperplane}
+{
+    name=hyperplane,
+    description={A geometric term. A plane is the layman's sense is a 2D surface in 3D space. A hyperplane is the flat equivalent (n-1)-d surface, in an n-d space (this can include the straight-forward 3d context - hence a sheet of paper can be described as a 'hyperplane', if we were to pretend it had zero thickness)}
+}
+
+\newglossaryentry{imagerecognition}
+{
+    name=image recognition,
+    description={A synonym for image classification}
+}
+
+\newglossaryentry{indicatorfunction}
+{
+    name=indicator function,
+    description={A function that takes the value one if its condition is true or zero if its condition is false}
+}
+
+% TODO
+
+\newglossaryentry{layer}
+{
+    name=layer,
+    description={A set of neurons in a neural network that receive data from either the input (data) layer or the output of the previous layer of neurons. Mathematically this can be thought of as a matrix of weights, with a bias column appended (if a bias term is included) } 
+}
+
+\newglossaryentry{linearclassifier}
+{
+    name=linear classifier,
+    description={A classifier which uses a linear combination of the features to classifier the data and so forms a straight (in 2D) or flat (or 3D) decision boundary}
+}
+
+\newglossaryentry{linearlyseparable}
+{
+    name=linearly separable,
+    description={Able to be separated by a linear classifier}
+}
+
+\newglossaryentry{lossfunction}
+{
+    name=loss function,
+    description={A function that calculates the loss. We usually wish to minimise (or in some cases, maximise) the result of this function as part of some optimisation procedure}
+}
+
+\newglossaryentry{loss}
+{
+    name=loss,
+    description={A statistical measure of the distance between the predicted result and the actual result, used in the training of learning algorithms}
+}
+
+\newglossaryentry{neuralnetwork}
+{
+    name={NN},
+    description={A Neural Network (NN) is a machine learning algorithm that comprises of a series of layers each with a given number of neurons (which act as a weighted sum of the inputs) with trainable parameters including weights and biases where each neuron typically undergoes a non-linear transformation in the form of an activation function to ultimately produce a prediction of class or target value based on the input data}
+}
+
+\newglossaryentry{neuron}
+{
+    name=layer,
+    description={ In a neural network context, a neuron is a single 'unit' that applies a function. Mathematically, this can be thought of as a single column in a the weights matrix, with a length that matches the dimensionality for the input data (if the neuron is situated in the input layer).  } 
+}
+
+\newglossaryentry{objectivefunction}
+{
+    name={objective function},
+    description={A synonym (generally) for a loss function \cite[p.~80]{good_fellow_2016}}
+}
+
+\newglossaryentry{parameterspace}
+{
+    name={parameter space},
+    description={The parameter space of the model or algorithm is the n-dimensional space in which a single point would represent a single combination of the parameters.}
+}
+
+\newglossaryentry{representationlearning}
+{
+    name=representation learning,
+    description={A method of initially learning a simpler transformed representation from the raw data that allows for superior classification by a (usually linear) classifier}
+}
+
+\newglossaryentry{resnet}
+{
+    name=residual network,
+    description={A type of deep neural network that uses residual connections (which use the identity function) between layers to allow improved gradient flow and gain increased accuracy from additional layers}
+}
+
+\newglossaryentry{semanticsegmentation}
+{
+    name=semantic segmentation,
+    description={The task of breaking down any image (input data) into labelled discrete sections that have some semantic meaning. For example, breaking down 'The Persistence of Memory' by Dali into 'watch', 'sky', 'ground', 'water', etc.}
+}
+
+\newglossaryentry{softmax}
+{
+    name=soft max,
+    description={A loss function used in classification problems which } % todo 
+}
+
+\newglossaryentry{supervisedlearning}
+{
+    name=supervised learning,
+    description={Any learning that uses the class label or true target value (e.g. linear regression)}
+}
+
+\newglossaryentry{unsupervisedlearning}
+{
+    name=unsupervised learning,
+    description={Any learning that does not use the class label or true target value (e.g. clustering)}
+}
+
+\newacronym{ai}{AI}{Artificial Intelligence}
+\newacronym{apm}{APM}{Actions Per Minute}
+\newacronym{ann}{ANN}{Artificial Neural Network} 
+\newacronym{adam}{ADAM}{Adaptive Moment Estimation} 
+\newacronym{aws}{AWS}{Amazon Web Services}
+\newacronym{cifar}{CIFAR}{Canadian Institute for Advanced Research}
+\newacronym{cnn}{CNN}{Convolutional Neural Network}
+\newacronym{cpu}{CPU}{Central Processing Unit}
+\newacronym{cv}{CV}{Cross Validation}
+\newacronym{dl}{DL}{Deep Learning}
+\newacronym{dnn}{DNN}{Deep Neural Network}
+\newacronym{dcnn}{DCNN}{Deep Convolutional Neural Network}
+\newacronym{drl}{DRL}{Deep Reinforcement Learning}
+\newacronym{ffnn}{FFNN}{Feedforward Neural Network}
+\newacronym{flda}{FLDA}{Fisher's Linear Discriminant Analysis}
+\newacronym{fp}{FP}{Flip probability} 
+\newacronym{gan}{GAN}{Generative Adversarial Networks} 
+\newacronym{gb}{GB}{Gigabyte}
+\newacronym{gcp}{GCP}{Google Cloud Platform}
+\newacronym{gpu}{GPU}{Graphics Processing Unit} 
+\newacronym{ilsvrc}{ILSVRC}{ImageNet Large Scale Visual Recognition Challenge}
+\newacronym{jll}{JLL}{Johnson-Linden Straus Lemma} 
+\newacronym{kl}{KL}{Kullback–Leibler} 
+\newacronym{lln}{LNN}{Law of Large Numbers}
+\newacronym{ltsm}{LTSM}{Long-Term Short-Term Memory}
+\newacronym{ml}{ML}{Machine Learning}
+\newacronym{mlp}{MLP}{Multi-layer Perceptron}
+\newacronym{mnist}{MNIST}{Modified National Institute of Standards and Technology} 
+\newacronym{mse}{MSE}{Mean Squared Error} 
+\newacronym{nin}{NIN}{Network-in-Network}
+
+\newglossaryentry{nn}{type=\acronymtype, 
+name={NN}, 
+description={Neural Network}, 
+first={Neural Network (NN)\glsadd{neuralnetwork}},
+see=[Glossary:]{neuralnetwork}}
+
+\newacronym{ram}{RAM}{Random Access Memory}
+\newacronym{relu}{ReLu}{Rectified Linear Unit}
+\newacronym{r-cnn}{RNN}{Region-Convolutional Neural Network}
+\newacronym{rnn}{RNN}{Recurrent Neural Network}
+\newacronym{rp}{RP}{Random Projection}
+\newacronym{sgd}{SGD}{Stochastic Gradient Descent}
+\newacronym{ssd}{SSD}{Solid State Disk}
+\newacronym{svm}{SVM}{Support Vector Machines}
+\newacronym{uap}{UAP}{Universal Approximation Theorem}
+\newacronym{vae}{VAE}{Variational Auto-Encoder}
+\newacronym{vc}{VC}{Vapnis-Chervonenkis}
+\newacronym{xor}{XOR}{Exclusive OR}
+\newacronym{yolo}{YOLO}{You Only Look Once}

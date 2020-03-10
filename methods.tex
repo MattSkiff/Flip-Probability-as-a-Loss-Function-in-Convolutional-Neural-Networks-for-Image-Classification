@@ -1,0 +1,176 @@
+\chapter{Methods}
+
+One of the motivations of using flip probability as a loss function is the 'cold start' problem in \gls{ml}. Ideally, one could 'warm start' a network by training it from scratch with a small sample. This is not dissimilar to the idea of \gls{dataaugmentation} - improving the ability of the network to learn on the raw data. This is a problem that is exacerbated further in the context of \gls{dl}, as there are many more millions of parameters (in modern networks) and hence \gls{parameterspace} is much larger. One hypothesis is that one could use \gls{fp} to perform \gls{representationlearning} on less data than would usually be required so that the network will train quickly.
+
+\begin{hypothesis} %\begin{hyp}[H\ref{hyp:first}] \label{hyp:first}
+Using \gls{fp} to perform \gls{representationlearning} on the data will allow the network to train more quickly.
+\label{hyp:first}
+\end{hypothesis}
+
+\begin{hypothesis} %\begin{hyp}[H\ref{hyp:first}] \label{hyp:first}
+Using \gls{fp} to perform \gls{representationlearning} on the data will improve \gls{generalisationperformance}.
+\label{hyp:second}
+\end{hypothesis}
+
+Another key idea, as mention in 
+
+\section{Flip Probability}
+
+We have some data:
+
+\begin{equation}
+X \in \mathds{R}^d 
+\end{equation}
+
+Where $d$, the dimensionality of the data, is quite high. \bigskip
+
+For a single batch of data and a single classifier, the flipping probability can be thought of as the proportion of label 'flips' that occur when the classifier and data are randomly projected down (using a \gls{rp} matrix) to a lower dimension:
+
+\begin{equation}
+P((R h)^T Rx \neq h^{T}x)  
+\end{equation}
+
+An example of a (linear) classifier is a single neuron in a \gls{nn} at the last layer. Randomly projecting the classifier and minimising the \gls{fp} can act as a proxy for learning a classifier on the projected space. \smallskip
+
+ \gls{fp} can then be defined empirically:
+
+\begin{equation}
+\hat{P}\ := \\ P(\frac{1}{m}\sum_{j = 1}^m (R_j h)^T R_{j}x \neq h_i^{T}x)  
+\end{equation}
+
+Where;  \smallskip
+
+\begin{itemize}
+\item $\hat{P}$ is the empirical estimate of the flipping probability  
+\item $R$ is the \gls{rp} matrix  
+\item $P$ is the proportion of inequalities recorded over the data 
+\item $h_i$ is the classifier  
+\end{itemize}
+
+If  \gls{fp} is small, the points are well separated. \bigskip
+
+The entries of $R$ are typically drawn from a normal distribution (and will be in this instance) but can also be drawn from other distributions in order to speed up generation of the random (projection) matrices while training the network:
+
+\begin{equation}
+R \in M^{kxd}, R_{ij} \stackrel{i.i.d}{\backsim} N(0,1) 
+\end{equation}
+
+When $d$ is very large, subgaussian random variables can be used replacements. One such alternative is the Rademacher discrete distribution:
+
+\begin{equation}
+R \in M^{kxd}, R_{ij} = \pm 1 \; w.p. 0.5 
+\end{equation}
+
+\begin{itemize}
+\item $M$ is the number of classes  
+\item $k$ is the projection dimension, a user specified parameter 
+\item $R_{ij}$ is an individual entry of the \gls{rp} matrix  \gls{sgd}  
+\end{itemize}
+
+One example of $h_i$ is the ZAMBINGO at the $i^{th}$ node of the last layer of an \gls{mlp}. This would take the form of a vector of weights that are applied to (cross-multiplied with) the inputs from the previous layer and a bias term is added, before the \gls{activationfunction} for the layer is added.
+\bigskip
+
+\bigskip
+
+ \gls{fp} implemented using  \gls{sgd} would look like the following:
+
+\begin{equation}
+\label{eq:sgd_fp}
+\hat{P}\ := \frac{1}{L}\frac{1}{M}\sum_{l = 1}^N \sum_{j = 1}^M \mathds{1}((R_j h_i)^T R_jx_L \neq h_i^Tx_L)  
+\end{equation}
+
+Where;  \smallskip
+
+\begin{itemize}
+\item $\mathds{1}$ is the \gls{indicatorfunction}  
+\item $k$ is the projection dimension, a user specified parameter 
+\item $R_{ij}$ is an individual entry of the \gls{rp} matrix  \gls{sgd} 
+\item $x_L$ is the batch of data used during  \gls{sgd}  
+\item $N$ is the number of batches of data used in  \gls{sgd}  
+\item $M$ is the number of classes %is the number of \gls{rp} matrices
+\end{itemize}
+
+Equation \ref{eq:sgd_fp} fails to consider the possibility that the randomly projected classifier,  $(R_j h_i)$, will classify the data, $x_L$, correctly where the unprojected classifier has classified the data incorrectly.
+\bigskip
+
+\begin{equation}
+\label{eq:conditional_sgd_fp}
+\hat{P}\ := \frac{1}{L}\frac{1}{M}\sum_{l = 1}^N \sum_{j = 1}^M  \mathds{1}( (R_j h_i)^T R_jx_L \neq h_i^Tx_L \mid \hat{h_i^T}x_L = y_i )  
+\end{equation}
+
+Where $y_i$ is the correct label of the data $x_i$. 
+\bigskip
+
+Equation \ref{eq:conditional_sgd_fp} correctly accounts for this case (although it is anticipated with a well trained classifier, this situation would account for a negligible proportion of cases). 
+\bigskip
+
+How often the projected classifier incorrectly classifies the data when the data is compressed strongly depends on the  geometry of the data. The key idea with using  \gls{fp} as a loss function in a  \gls{nn} context is to "drive the representation to a nice place" aka, undergo effective unsupervised representation learning before learning a classifier on the data. 
+\bigskip
+
+% TODO - more explain on FP
+
+Implementing  \gls{fp} inevitably encounters a problem in that loss functions must be differentiable, if the network is to be trained using gradient descent, or a variant thereof (such as the  \gls{adam} algorithm). In particular, the loss function must be differentiable with respect to the parameters of the model in order for the gradients to be back-propagated through the network. The gradients are then used to update the parameters in the correct direction (towards a local, and hopefully global, optimum). Modern tools incorporate auto-differentiation libraries to lessen the mathematical challenge of specifying derivatives for complex loss functions, but the function, when decomposed, must still nonetheless be differentiable.
+\bigskip
+
+Hence, a major challenge with the above loss functions is that they are not differentiable, primary due to the inequality involved. One way to get around this is to recognise that in principle, we are minimising the angle between the 
+
+\section{Implementation of Flip Probability}
+
+One way we can reduce the computational burden of this procedure is to generate the \gls{rp} matrices at the start of the algorithm instead of dynamically each time the loss function is called. This has the disadvantage of introducing dependencies \cite{bob_rp_storage}, but given the number of \gls{rp} matrices needed to be generated in even a small \gls{cnn}, this is a necessary step in order for testing and iteration to be feasible. 
+\bigskip
+
+% TODO - calculate number of RP matrices need for static storage and dynamic generation
+\section{Data sets}
+ 
+\subsection{Artificial Data}
+
+In order to test the effectiveness of \gls{fp} as a loss function, some synthetic, linearly separable data was generated. As  \gls{fp} benefits from the  \gls{jll}, it was necessary to ensure this was sufficiently highly dimensional. Hence, data with dimension $k =$ 5,10,20,50,100,500,1000,10000 was generated to test with a  \gls{nn}. 
+\bigskip
+
+ \subsection{\gls{mnist}}
+ 
+ This is a famous data set often regarded as a starting point to work on and experiment with. It comprises of images of handwritten digits (of ten classes, 0-9), scaled, centered and batch normalised into 28x28 grayscale images. Of 60k images, these are split into 10k training images and 50k testing images \cite{mnist}. This type of problem (digit recognition) is fairly unique in image classification in that the visual information directly conveys the \gls{classlabel}, i.e. there is a direct mapping between the image and the label. Modern training accuracies are sufficiently high (less than 0.2\%, \cite{mnist_sota}) on \gls{mnist} that it can be considered a 'solved' problem \cite{mnist_sota_web}. However, this data is of sufficiently dimensionality ($\mathds{R}^{784}$) that it can adequately be used as a test for \gls{fp} in a \gls{cnn} context. 
+ \bigskip
+
+\subsection{\gls{cifar}-10}
+
+To extend upon the \gls{mnist} testing with a more challenging data set, the ten class \gls{cifar}-10 data set was used. Here, the mapping between image and label is less direct, and the complexity of the images (which include animal and vehicles) is increased.
+\bigskip
+
+Tiny ImageNet:
+
+Tiny ImageNet is smaller version of the well-known \gls{ilsvrc} ImageNet, which has over a million images.
+
+\section{Testing Scheme}
+
+First, it is necessary to have baseline results. While there are various data preprocessing (scaling, whitening,  and data augmentation strategies (e.g. flipping, cropping, rotation and jittering)  available, we use a fairly simple script in Pytorch (\cite{mnist_script}) that uses the test/train split present in the  \gls{mnist} data set and rapidly achieves an accuracy of 97\%. Ideally, we would test the algorithms using 10 fold- \gls{cv} (the 'gold standard', \ref{algo:10-fold-cv}). However, this introduces a high level of computational burden, as the algorithm must be run across at least 10 subsets of the data. 
+\bigskip
+
+\begin{algorithm}[H]
+\SetAlgoLined
+\KwResult{Write here the result }
+ initialization\;
+ \While{While condition}{
+  instructions\;
+  \eIf{condition}{
+   instructions1\;
+   instructions2\;
+   }{
+   instructions3\;
+  }
+ }
+    \caption{The 10 fold \gls{cv} algorithm}
+    \label{algo:10-fold-cv}
+\end{algorithm}
+
+The \gls{relu} (figure \ref{fig:relu_function}) was used as the activation function in all testing schemes. This is an \gls{activationfunction} that is fast to compute, easy to interpret, widely used, and performs well in neural networks generally (\cite{activation_search}). 
+
+\begin{wrapfigure}{l}{0.5\textwidth}
+    \includegraphics[scale=0.5]{figs/relu.png}
+    \caption{The ReLu activation function.}
+    \label{fig:relu_function}
+\end{wrapfigure}
+
+\section{Hardware}
+
+When benchmarking for running time, the \gls{nn}s were run on an Asus laptop with 8 \gls{gb}s of \gls{ram}, a Intel Core i5-8250U processor and a 256\gls{gb} \gls{ssd}. All operations were run on the \gls{cpu}. \href{https://colab.research.google.com/}{Google colaboratory}, a cloud notebook platform, was also used to run networks.

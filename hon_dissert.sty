@@ -1,0 +1,66 @@
+\ProvidesPackage{hon_dissert} % import cust hons sty 'package'
+
+\usepackage{amsmath, amssymb, , amsxtra,acronym}
+
+\usepackage[acronym]{glossaries} % for glossary
+\renewcommand{\glossarypreamble}{\footnotesize}
+
+\usepackage [autostyle, english = american]{csquotes}
+\MakeOuterQuote{"} % fixes backwards quotes (lets you use " ")
+
+\setacronymstyle{long-short}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{setspace} % line spacing
+\usepackage{dsfont} % for indicator sign
+\usepackage{hyperref} % for url links
+\usepackage{amsthm} % for theorems
+\usepackage{subfig} % for grids of figures
+\usepackage{sidecap}  % for caption next to figure 
+\usepackage{wrapfig} % wrap text around figure
+\usepackage[ruled,vlined]{algorithm2e} % allows use of the 'algorithmic' environment
+%\usepackage{ntheorem} % for hypotheses
+%\theoremseparator{:} % setting for ntheorem 
+
+\usepackage{etoolbox}
+\AtBeginEnvironment{quote}{\singlespacing\small} % set up block quotes
+
+\makeglossaries
+
+\include{acronyms_glossary}
+
+\theoremstyle{hypothesis}
+\newtheorem{hypothesis}{Hypothesis}
+
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{axiom}[theorem]{Axiom}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}{Exercise}
+\newtheorem{definition}{Definition}[chapter]
+
+% reformats chapter titles 
+\usepackage{titlesec}
+
+\titleformat
+{\chapter} % command
+[display] % shape
+{\bfseries\Large\itshape} % format
+{Chapter \ \thechapter} % label
+{0.5ex} % sep
+{
+    \rule{\textwidth}{1pt}
+    \vspace{1ex}
+    \centering
+} % before-code
+[
+\vspace{-0.5ex}%
+\rule{\textwidth}{0.3pt}
+] % after-code
