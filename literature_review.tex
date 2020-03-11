@@ -19,19 +19,21 @@
 \section*{Fields and Techniques}
 
 %\begin{SCfigure}
+% ZAMBINGO - if possible, redo figure using ggplot
+% ZAMBINGO - spelling mistake - should be 'breadth' not 'breath
 \begin{wrapfigure}{r}{0.5\textwidth}
-    \includegraphics[width=80mm]{figs/ai_ml_dl.png}
+    \includegraphics[width=60mm]{figs/ai_ml_dl.png}
     \caption{The fields of \gls{ai}, \gls{ml} and \gls{nn}, with examples of techniques in each.}
     \label{fig:ai_ml_dl} 
 \end{wrapfigure}
 
 %\end{SCfigure}
-Figure \ref{fig:ai_ml_dl} shows the relationship between \gls{ai}, \gls{ml} and \gls{dl}. \gls{ai} concerns the broad field of using technology to mimic human behaviour. \gls{ml} additionally involves training algorithms to find rules automatically based on training data, which can involve techniques usually situated within statistics, such as linear or logistic regression. \gls{dl} takes this a step further, concern the use of multi-layered \gls{nn}s trained on a large pool of training data to perform even more complex tasks, such as image segmentation or video captioning. The roots of \gls{ai} goes to the 1950s, with one particular event, the Dartmouth Summer Research Project, gaining particular retrospective notoriety for proposing to making significant advances in the field in a '2 month, 10 man study'  \cite{dartmouth_summer}.
+Figure \ref{fig:ai_ml_dl} shows the relationship between \gls{ai}, \gls{ml} and \gls{dl}. \gls{ai} concerns the broad field of using technology to mimic human behaviour. \gls{ml} additionally involves training algorithms to find rules automatically based on training data, which can involve techniques usually situated within statistics, such as linear or logistic regression. \gls{dl} takes this a step further, concern the use of multi-layered \gls{nn}s trained on a large pool of training data to perform even more complex tasks, such as image segmentation or video captioning. The roots of \gls{ai} goes to the 1940s and 50s, with one particular event, the Dartmouth Summer Research Project, gaining particular retrospective notoriety for proposing to making significant advances in the field in a '2 month, 10 man study'  \cite{dartmouth_summer}.
 
 \section{Machine Learning}
 % name drop kernel trick
 
-\gls{ml} is an interdisciplinary field at the intersection of mathematics, computer science and statistics and itself is often considered as a sub-field of the broad area of study that is  \gls{ai}. \gls{ml} deals with the challenge of "learning" from data without manual human input. In contrast to many statistical techniques, \gls{ml} is especially suited to scenarios where predictive accuracy is paramount, training examples are both numerous and high dimensional, and inferential understanding is not critical [ZAMBINGO]. \gls{ml} gathered a lot of momentum in the 1990s, with the term 'data mining' often used as a pseudonym. Traditional techniques in the field of \gls{ml} include decision trees,  \gls{svm}s, K-means clustering, Naive Bayes and  \gls{flda}.  \bigskip
+\gls{ml} is an interdisciplinary field at the intersection of mathematics, computer science and statistics and itself is often considered as a sub-field of the broad area of study that is  \gls{ai}. \gls{ml} deals with the challenge of "learning" from data without manual human input. In contrast to many statistical techniques, \gls{ml} is especially suited to scenarios where predictive accuracy is paramount, training examples are both numerous and high dimensional, and inferential understanding is not critical [ZAMBINGO]. \gls{ml} gathered a lot of momentum in the 1990s, with the term 'data mining' often used as a pseudonym. Traditional techniques in the field of \gls{ml} include decision trees,  \gls{svm}s (1992, \cite{svm}, K-means clustering (1962 \cite{k_means}, Naive Bayes and  \gls{flda}.  \bigskip
 
 % probably delete this line 
 Examples of classic data sets in \gls{ml} refer to unsupervised classification of data points into flower species, predicting diabetes risk based on a small subset of predictors, predicting whether a mine is present based on hundreds of frequency reflection variable and other challenges \cite{uci_ml_data}. Practical milestones include the use of Yan Le Cun's 'LeNet' architecture in the late 1990s to perform accurate handwriting recognition. At one stage, this algorithm (a \gls{cnn}) was responsible for the majority of automated cheque processing in the United States [ZAMBINGO].  \bigskip
@@ -69,7 +71,7 @@ A \gls{nn} can be interpreted many ways. For example, a common interpretation is
 
 Another view of \gls{nn}s is as an extremely simply approximation of how the brain works. 
 
-At it's simplest, it is a single \gls{neuron} comprising of a weighted sum of the input features, the addition of bias term and the application of an \gls{activationfunction} to provide an output for a given input instance $i$;
+At it's simplest a \gls{nn} for binary classification is a single \gls{neuron} comprising of a weighted sum of the input features, the addition of a bias term and the application of an \gls{activationfunction} to provide an output for a given input instance $i$. This is summarised in \ref{fig:nn_simple}. 
 
 \begin{figure}
     \centering
@@ -80,10 +82,10 @@ At it's simplest, it is a single \gls{neuron} comprising of a weighted sum of th
 
 \begin{equation}
     y_i = \mathds{1} ((\sum_{j = 1}^m w_j + b_m) > 0)
-    \label{eq:sgd_fp}
+    \label{eq:nn_simple_pred}
 \end{equation}
 
-This network is a \gls{linearclassifier}, which has a single \gls{layer} and uses the heaviside \gls{activationfunction} (figure \ref{fig:heavi_function}). 
+This network is a \gls{linearclassifier}, which has a single \gls{layer} and uses the heaviside \gls{activationfunction} (figure \ref{fig:heavi_function}) and does not use a bias term (would would be added to the weighted sum). Choosing an \gls{activationfunction} when designing networks in modern times often comes down to using the 'tried and true' functions, or a lot of manual \gls{hyperparameter} tuning.
 
 \begin{wrapfigure}{l}{0.5\textwidth}
     \includegraphics[scale=0.5]{figs/heavi.png}
@@ -91,9 +93,28 @@ This network is a \gls{linearclassifier}, which has a single \gls{layer} and use
     \label{fig:heavi_function}
 \end{wrapfigure}
 
-Choosing an activation function when designing networks in modern times often comes down to using the 'tried and true' functions, or a lot of manual \gls{hyperparameter} tuning.
+If we set the activation function as the sigmoid activation function and use the bias term, we now have what is equivalent to a logistic regression. Hence there is a parallel that can be drawn between a particular configuration of the perceptron, an early technique in \gls{ml} and the traditional statistical logistic regression. By a running a logistic regression with data that has the minimal \gls{vc} dimension (3) for a linear classifier, we can see that the classifier can always 'shatter' (perfectly separate) the data. However, if we increase the number of points to four, we now find this is not always true.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=120mm]{figs/vc_3.png}
+    \caption{An illustration of the VC dimension for linear classifiers.}
+    \label{fig:vc_3}
+\end{figure}
+
+\begin{wrapfigure}{l}{0.5\textwidth}
+    \includegraphics[scale=0.5]{figs/sigmoid.png}
+    \caption{The Sigmoid activation function.}
+    \label{fig:sigmoid_function}
+\end{wrapfigure}
+
+Many \gls{nn} diverge from most statistical techniques in that they do not assume a distribution over the data, rather taking an 'algorithmic' approach to classification and prediction \cite{two_cultures_stats_modeling}.
 
 \gls{nn}s find their origins in the fields of psychology and electronic engineering, dating back to the days of linear adaptive filters in the \cite{nns_haykins}. This began perceptron model proposed by Rosenblatt \cite{perceptron_paper} as an extension of the McCulloch and Pitts model of the neuron \cite{logical_calculus} \bigskip
+
+% spiel about VC dim and linear classifiers using simple logistic regression (and link to NN)
+
+% ZAMBINGO - figure idea - branching tree of nn architectures leading to cnns
 
 % REDO DIAGRAM IN GGPLOT2
 \begin{figure}
@@ -114,7 +135,7 @@ Eventually however, research with layered \gls{nn}s intensified and progress was
 %todo insert xor figure
 
 \bigskip
-Coming out of the AI winter, \gls{nn}s were restricted to four or five layers (never past ten). There was a 'node budget' and a lot of manually configured architecture at the node level. The manually specified architecture of the network was critical to it's success [ZAMBINGO], for example in computer vision, where significant amounts of feature engineering was required. 
+Coming out of the AI winter, \gls{nn}s were restricted to four or five layers (never past ten). There was a 'node budget' and a lot of manually configured architecture at the node level. The manually specified architecture of the network was critical to it's success \cite{manual_architecture}, for example in computer vision, where significant amounts of feature engineering was required. 
 
 In 1997, Yan Le Cun developed the first neural network capable of high accuracy digit recognition which outperformed the previously popular \gls{svm} models. \bigskip
 
@@ -124,7 +145,7 @@ In 1997, Yan Le Cun developed the first neural network capable of high accuracy 
 
 \section{Deep Learning}
 
-Highly layered ("deep") \gls{nn}s lie at the heart of \gls{dl} and are in fact all extensions of the \gls{mlp}. Other deep algorithms do exist (such as 'deep trees' \cite{deep_forest}) although these are unable to handle complex image classification problems as well as other modern {dnn}s. \gls{dl} is seen as a highly effective strategy in a variety of \gls{ai} applications. As a model, they are far more complex than most statistical models, having millions of parameters \cite{unreasonable_dl}.  \bigskip
+Highly layered ("deep") \gls{nn}s lie at the heart of \gls{dl} and are in fact all extensions of the \gls{mlp}. The phrase 'deep' has a level of subjectivity around it; clearly, a two \gls{layer} \gls{mlp} is not a \gls{dnn}, but is a 5-layer network 'deep'? The most Other deep algorithms do exist (such as 'deep trees' \cite{deep_forest}) although these are unable to handle complex image classification problems as well as other modern {dnn}s. \gls{dl} is seen as a highly effective strategy in a variety of \gls{ai} applications. As a model, they are far more complex than most statistical models, having millions of parameters \cite{unreasonable_dl}.  \bigskip
 % AI winter mention and comeback - LeNet CNNs then cooling SVMs
 
 For context \gls{nn}s had now significantly fallen out of favour [ZAMBINGO] and \gls{svm}s were rapidly gaining popularity [ZAMBINGO]. This trend continued until 2012, when the striking performance of AlexNet, a \gls{dcnn}, in the influential annual \gls{ilsvrc} created a lot of interest in \gls{dl}. The remarkable improvements in performance achieved showed the viability of \gls{dl} as an alternative to \gls{svm}s and other techniques, for \gls{imagerecognition}. This demonstration was enabled by several factors contributing to recent rapid developments in \gls{dl}: the availability of \gls{dl} tool-kits, such as Theano and Caffe (2007, 2013 - REF), and Keras, TensorFlow and PyTorch (2015, 2016 ZAMBINGO); advances in computational hardware and accessibility, including powerful purpose-built \gls{gpu}s (examples... mention google TPUs?), accessible to cloud compute (\gls{aws}, \gls{gcp}, Azure) and decreasing cost barriers (Google Collab, MatrixDS, note on costs e.g. declining storage costs); and access to large, curated data sets for training (large text corpuses, image repositories, [ZAMBINGO]) \bigskip
@@ -152,7 +173,7 @@ Image classification is a subset of the broader area of computer vision, which i
 
 %The field of \gls{dl} is a relatively modern one, and recent developments have been popularised through %making appearances in the media, through the striking use of neural style transfer to make various %surprising images or videos - such as the face of a dollar bill, speak a particular phrase, the Mona %Lisa come to life or even figures like Marilyn Monroe take the stage once more [ZAMBINGO]. 
 
-The underpinnings of resurgence \gls{dl} in recent times are linked to the use of \gls{dcnn}s for the ImageNet challenge. Prior to this challenge, \gls{dl} had not been feasible due to several problems; computational resources, sufficient training data, a lack of accessible tool-kits and the "vanishing gradients problem". Today, there is a wide breadth of techniques in \gls{dl}, from deep \gls{rnn}s for object detection in videos, \gls{gan}s for image and video generation, \gls{dcnn}s for \gls{imagerecognition}, ... 
+The underpinnings of the resurgence of \gls{dl} in recent times is linked to the use of \gls{dcnn}s for the ImageNet challenge. Prior to this challenge, \gls{dl} had was not widespread due to several problems; computational resources, sufficient training data, a lack of accessible tool-kits and the "vanishing gradients problem". Today, there is a wide breadth of techniques in \gls{dl}, from deep \gls{rnn}s for object detection in videos, \gls{gan}s for image and video generation, \gls{dcnn}s for \gls{imagerecognition}, ... 
 
 Recent major developments include Neural Ordinary Differential Equations
 
@@ -160,23 +181,31 @@ Recent major developments include Neural Ordinary Differential Equations
 
 Given the computational complexity of  \gls{dl} models, the providence of good tools has accelerated the development of algorithms. \bigskip
 
-Initially, neural networks were implemented in  . \bigskip
+% find early implementations or delete line
+Initially, neural networks were implemented in ZAMBINGO . \bigskip
 
-This later burgeoned with Caffe, Theano and a variety of disparate frameworks and later evolved into Pytorch, Keras and Tensorflow, which have become the main tools of research and production in the \gls{dl}. All three of these frameworks have implementations in Python as well as a variety of other languages (for example, Keras has recently had a wrapper implemented in R \cite{keras_r}).  \bigskip
+This later burgeoned with Torch, Caffe, Theano and a variety of disparate frameworks and later evolved into Pytorch, Keras and Tensorflow, which have become the main tools of research and production in the \gls{dl}. All three of these frameworks have implementations in Python as well as a variety of other languages (for example, Keras has recently had a wrapper implemented in R \cite{keras_r}).  \bigskip
 
-Pytorch
+%  ZAMBIGO
+Pytorch, developed by Facebook, is common used due to it's 'Pythonic' implementation and imperative style 
 
-Keras is often considered the easiest framework for beginners to pick and use, being positioned at a high level of abstraction relative to Tensorflow and Pytorch. \bigskip
 
-Tensorflow \bigskip
+Keras is often considered the easiest framework for beginners to pick and use, being positioned at a high level of abstraction relative to Tensorflow and Pytorch. It can interface with Pytorch, Theano,  \bigskip
 
-It is now possible to use a  \gls{nn} 'off-the-shelf' or pre-trained. This is a common strategy in transfer learning, used with  \gls{dnn}s [ZAMBINGO]. \bigskip
+Tensorflow, developed by Google,  \cite{tale_dl_databricks}. All three frameworks have the advantage of being completely open source. \bigskip
+
+% this paragraph needs a re-write
+It is now possible to use a  \gls{nn} 'off-the-shelf' or pre-trained. This is a common strategy in transfer learning, where \gls{dnn}s trained on large data sets are then trained further on new unseen data (which may, for example, include new classes). To speed up training, only the last layer of these networks may be retrained with the new data, in order to leverage the learning power of the existing network. \bigskip
 
 \section*{Mathematical Background}
 
+% ZAMBINGO - reference for AI safety would be good here
+\gls{nn}s are at heart a mathematical technique and despite the enormous ecosystem of competing tools, technologies and techniques that are continuously developed, an understanding of the mathematical principles involved  is critical to safely understanding their operation and for developing an understanding of the bounds of uncertainty involved in accomplishing different tasks with them, whether it be prediction, classification or a sophisticated multi-task system.
+
 \section{Loss Functions}
 
-\gls{lossfunction}s measure how far the prediction a statistical or \gls{ml} algorithm creates from the target. As the algorithm is trained, the loss is minimised. This can be explicitly, such as when using the normal equations to solve exactly for the optimal coefficients such as in linear regression. Linear regression traditionally uses the  \gls{mse} as a \gls{lossfunction}, more commonly known as the L2 loss in a \gls{ml} context:
+% mention NP-hardness loss paper
+\gls{lossfunction}s measure how far the prediction a statistical or \gls{ml} algorithm creates from the target. As the algorithm is trained, the loss is minimised. In $\mathds{R}^3$, this can be visualised quite strikingly as trying to find the lowest point in a 'loss landscape' \cite{loss_landscape}. This can be explicitly, such as when using the normal equations to solve exactly for the optimal coefficients such as in linear regression. Linear regression traditionally uses the  \gls{mse} as a \gls{lossfunction}, more commonly known as the L2 loss in a \gls{ml} context:
 
 \begin{equation}
 l_2 := \sum_{i = 1}^N (\hat{y_i} - y_i)^2
@@ -191,11 +220,11 @@ Where;
 \item $\hat{y}$ is the predicted class for the individual example 
 \end{itemize}
 
-More commonly, some optimisation method is required in order to minimise the \gls{loss}.  At the simplest level, this takes the form of gradient descent. Modern methods include  \gls{sgd}, \gls{adam}, Adagrad. When a \gls{nn} is trained, these methods are used to find the parameters in conjunction with back propagation.  % todo
+More commonly, some optimisation method is required in order to minimise the \gls{loss}.  At the simplest level, this takes the form of \gls{gd}. However, as \gls{gd} requires the gradients to be computed with respected to the entire training data, \gls{sgd} is more common as it is much faster, even though each individual step may not point as closely towards the local minima. More recent methods include  \gls{adam}, Adagrad and Adadelta. When a \gls{nn} is trained, these methods are used to find the parameters in conjunction with back propagation.  % todo
 
 % TODO - gradient descent diagram
 
-Methods of regularisation, such as LASSO and Ridge Regression add penalties to this loss function in order to prevent overfitting. The former penalises the absolute size of the model coefficients hence favouring smaller coefficients while the later penalises the squared size of the coefficients hence favouring a sparser set of coefficients \cite{ridge_lasso}). \bigskip
+Methods of regularisation, such as LASSO and Ridge Regression add penalties to this loss function in order to prevent overfitting. The former penalises the absolute size of the model coefficients hence favouring smaller coefficients while the later penalises the squared size of the coefficients hence favouring a sparser set of coefficients \cite{ridge_lasso}). These are two more statistical examples of regularisation; more recent examples in \gls{dl} include drop-out, ZAMBINGO \bigskip
 
 The \gls{lossfunction}s which most accurately models such a distance in a classification context is the $0/1$ loss, also known as the Heaviside step function;
 
@@ -203,7 +232,7 @@ The \gls{lossfunction}s which most accurately models such a distance in a classi
 H := \sum_{i = 1}^N \mathds{1} (\hat{y_i} \neq y_i)  
 \end{equation}
 
-This loss is not differentiable, meaning there are few optimisation methods available for finding optimal parameters. Therefore, loss functions tend to be used.
+This loss is not differentiable, meaning there are few optimisation methods available for finding optimal parameters. In \gls{drl}, deep networks can be trained using non-differentiable loss functions \cite{drl_non_differentiable}, but in \gls{dcnn}s this is not possible. Therefore, differentiable loss functions tend to be used.
 
 \gls{svm} Loss,
 
@@ -242,11 +271,13 @@ Figure \ref{fig:good_sep_classes} shows the desired geometry of the data. In the
 \label{fig:poor_sep_classes}
 \end{figure}
 
-Figure \ref{fig:poor_sep_classes} shows a geometry of the data that would have high flipping probability upon  \gls{rp}. There is only one \gls{hyperplane} that separates the classes. Hence new examples (e.g. out-of-sample data), which are likely to be near this boundary (the area indicated in red) have a high chance of being misclassified. This is an example of a situation where a traditional loss function, such as the \gls{mse}, would have poor \gls{generalisationperformance}, upon learning a \gls{decisionboundary} between these two classes. \bigskip
+Figure \ref{fig:poor_sep_classes} shows a geometry of the data that would have high flipping probability upon \gls{rp}. There is only one \gls{hyperplane} that separates the classes. Hence new examples (e.g. out-of-sample data), which are likely to be near this boundary (the area indicated in red) have a high chance of being misclassified. This is an example of a situation where a traditional loss function, such as the \gls{mse}, would have poor \gls{generalisationperformance}, upon learning a \gls{decisionboundary} between these two classes. \bigskip
 
-Calculation of \gls{fp} (compressing the data via  \gls{rp}s) allows for a proxy of how separable the classes are. However, any single \gls{rp} is not likely to find a good representation of the data.
+Calculation of empirical \gls{fp} (compressing the data via \gls{rp}s) allows for a proxy of how separable the classes are. However, any single \gls{rp} is not likely to find a good representation of the data. We define a 'good representation' as a representation that allows for accurate and rapidly learning on the data, compared to attempting to learn on a 'raw' transformed version of the data.
 
-Hence, we wish to find a representation of the data, through many repeated  \gls{rp}s, that shifts the classes away from each other geometrically (i.e. from Figure \ref{fig:poor_sep_classes} to Figure \ref{fig:good_sep_classes}) and hence minimises the \gls{fp} \bigskip
+% the above paragraph fails to mention the disconnect between gradient based learning and using flip probability - you need to mention this somewhere
+
+Hence, we wish to find a good representation of the data, through many repeated  \gls{rp}s, that shifts the classes away from each other geometrically (i.e. from Figure \ref{fig:poor_sep_classes} to Figure \ref{fig:good_sep_classes}) and hence minimises the \gls{fp} \bigskip
 
 For this, we will need an empirical measure of \gls{fp} and a functioning (trainable) implementation of it in a \gls{cnn}. \bigskip
 
