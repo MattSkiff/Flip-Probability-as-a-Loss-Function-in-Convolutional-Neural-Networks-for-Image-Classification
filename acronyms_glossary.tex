@@ -78,6 +78,11 @@
     description={How well the classifier performs on new, unseen data not used in either the testing in training data sets}
 }
 
+\newglossaryentry{hiddenlayer} {
+    name=hidden layer,
+    description={A layer in a neural network that does not take the input data as input (only the outputs of a previous of a layer), nor outputs the final predictions (only intermediary outputs that are treated as input by the next layer). Hence, as no neuron directly interacts with the data in a visible way, it is considered "hidden"}
+}
+
 \newglossaryentry{hyperparameter}
 {
     name=hyperparameter,
@@ -102,12 +107,24 @@
     description={A function that takes the value one if its condition is true or zero if its condition is false}
 }
 
+\newglossaryentry{instance}
+{
+    name={instance},
+    description={A single point of data (labelled or unlabelled), a single observation, $x_i$.}
+}
+
 % TODO
 
 \newglossaryentry{layer}
 {
     name=layer,
-    description={A set of neurons in a neural network that receive data from either the input (data) layer or the output of the previous layer of neurons. Mathematically this can be thought of as a matrix of weights, with a bias column appended (if a bias term is included) } 
+    description={A set of neurons in a neural network that receive data from either the input (data) layer or the output of the previous layer of neurons. Mathematically this can be thought of as a matrix of weights, with a bias column appended (if a bias term is included). These do not necessarily have to be a weight sum; in convolutional neural networks, pooling layers are commonly used} 
+}
+
+\newglossaryentry{label}
+{
+    name=label,
+    description={A shorthand for the 'class label', this can also be called the 'target value' (although this usually refers to numeric prediction), or $y_i$. This specifies the class of the instance}
 }
 
 \newglossaryentry{linearclassifier}
@@ -120,6 +137,12 @@
 {
     name=linearly separable,
     description={Able to be separated by a linear classifier}
+}
+
+\newglossaryentry{localreceptivefields}
+{
+    name=local receptive fields,
+    description={A concept borrowed from the biology of the human vision system, this defines the 'patch' of the input that each neuron in the input layer connects to (convolves over), in contrast to a feed forward network, where the input layer would connect to the entire batch of the input data}
 }
 
 \newglossaryentry{lossfunction}

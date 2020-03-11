@@ -74,7 +74,7 @@ One example of $h_i$ is the ZAMBINGO at the $i^{th}$ node of the last layer of a
 
  \gls{fp} implemented using  \gls{sgd} would look like the following:
 
-\begin{equation}
+\begin{equation}[H]
 \label{eq:sgd_fp}
 \hat{P}\ := \frac{1}{L}\frac{1}{M}\sum_{l = 1}^N \sum_{j = 1}^M \mathds{1}((R_j h_i)^T R_jx_L \neq h_i^Tx_L)  
 \end{equation}
@@ -101,7 +101,7 @@ Equation \ref{eq:sgd_fp} fails to consider the possibility that the randomly pro
 Where $y_i$ is the correct label of the data $x_i$. 
 \bigskip
 
-Equation \ref{eq:conditional_sgd_fp} correctly accounts for this case (although it is anticipated with a well trained classifier, this situation would account for a negligible proportion of cases). 
+Equation \ref{eq:conditional_sgd_fp} correctly accounts for this (although it is anticipated with a well trained classifier, this situation would account for a negligible proportion of cases). 
 \bigskip
 
 How often the projected classifier incorrectly classifies the data when the data is compressed strongly depends on the  geometry of the data. The key idea with using  \gls{fp} as a loss function in a  \gls{nn} context is to "drive the representation to a nice place" aka, undergo effective unsupervised representation learning before learning a classifier on the data. 
@@ -127,12 +127,12 @@ One way we can reduce the computational burden of this procedure is to generate 
 In order to test the effectiveness of \gls{fp} as a loss function, some synthetic, linearly separable data was generated. As  \gls{fp} benefits from the  \gls{jll}, it was necessary to ensure this was sufficiently highly dimensional. Hence, data with dimension $k =$ 5,10,20,50,100,500,1000,10000 was generated to test with a  \gls{nn}. 
 \bigskip
 
- \subsection{\gls{mnist}}
+ \subsection{MNIST}
  
- This is a famous data set often regarded as a starting point to work on and experiment with. It comprises of images of handwritten digits (of ten classes, 0-9), scaled, centered and batch normalised into 28x28 grayscale images. Of 60k images, these are split into 10k training images and 50k testing images \cite{mnist}. This type of problem (digit recognition) is fairly unique in image classification in that the visual information directly conveys the \gls{classlabel}, i.e. there is a direct mapping between the image and the label. Modern training accuracies are sufficiently high (less than 0.2\%, \cite{mnist_sota}) on \gls{mnist} that it can be considered a 'solved' problem \cite{mnist_sota_web}. However, this data is of sufficiently dimensionality ($\mathds{R}^{784}$) that it can adequately be used as a test for \gls{fp} in a \gls{cnn} context. 
+\gls{mnist} is a famous data set often regarded as a starting point to work on and experiment with. It comprises of images of handwritten digits (of ten classes, 0-9), scaled, centered and batch normalised into 28x28 grayscale images. Of 60k images, these are split into 10k training images and 50k testing images \cite{mnist}. This type of problem (digit recognition) is fairly unique in image classification in that the visual information directly conveys the \gls{classlabel}, i.e. there is a direct mapping between the image and the label. Modern training accuracies are sufficiently high (less than 0.2\%, \cite{mnist_sota}) on \gls{mnist} that it can be considered a 'solved' problem \cite{mnist_sota_web}. However, this data is of sufficiently dimensionality ($\mathds{R}^{784}$) that it can adequately be used as a test for \gls{fp} in a \gls{cnn} context. 
  \bigskip
 
-\subsection{\gls{cifar}-10}
+\subsection{CIFAR-10}
 
 To extend upon the \gls{mnist} testing with a more challenging data set, the ten class \gls{cifar}-10 data set was used. Here, the mapping between image and label is less direct, and the complexity of the images (which include animal and vehicles) is increased.
 \bigskip
@@ -141,11 +141,12 @@ Tiny ImageNet:
 
 Tiny ImageNet is smaller version of the well-known \gls{ilsvrc} ImageNet, which has over a million images.
 
-\section{Testing Scheme}
-
-First, it is necessary to have baseline results. While there are various data preprocessing (scaling, whitening,  and data augmentation strategies (e.g. flipping, cropping, rotation and jittering)  available, we use a fairly simple script in Pytorch (\cite{mnist_script}) that uses the test/train split present in the  \gls{mnist} data set and rapidly achieves an accuracy of 97\%. Ideally, we would test the algorithms using 10 fold- \gls{cv} (the 'gold standard', \ref{algo:10-fold-cv}). However, this introduces a high level of computational burden, as the algorithm must be run across at least 10 subsets of the data. 
+\section{Testing Schemes}
+  
+First, it is necessary to have baseline results. While there are various data preprocessing (scaling, whitening,  and data augmentation strategies (e.g. flipping, cropping, rotation and jittering)  available, we use a fairly simple script in Pytorch (\cite{mnist_script}) that uses the test/train split present in the  \gls{mnist} data set and rapidly achieves an accuracy of 97\%. Ideally, we would test the algorithms using 10 fold- \gls{cv} (the 'gold standard', \ref{algo:10-fold-cv}). However, this introduces a high level of computational burden, as the algorithm must be run independently across at least 10 subsets of the data. 
 \bigskip
 
+% ZAMBINGO - cv algorithm
 \begin{algorithm}[H]
 \SetAlgoLined
 \KwResult{Write here the result }
@@ -163,13 +164,40 @@ First, it is necessary to have baseline results. While there are various data pr
     \label{algo:10-fold-cv}
 \end{algorithm}
 
-The \gls{relu} (figure \ref{fig:relu_function}) was used as the activation function in all testing schemes. This is an \gls{activationfunction} that is fast to compute, easy to interpret, widely used, and performs well in neural networks generally (\cite{activation_search}). 
+\bigskip
+
+To approximate a reasonable test of \gls{generalisationperformance}, we can use the typical test-train split, where 10\% of the data is used for testing and 90\% is used for training. This split is randomly determined 
+
+In terms of \gls{hyperparameter} tuning, various modern methods for this exist, the simplest of which is the grid search. This also results in a high computational burden, being a brute force strategy. 
 
 \begin{wrapfigure}{l}{0.5\textwidth}
     \includegraphics[scale=0.5]{figs/relu.png}
     \caption{The ReLu activation function.}
     \label{fig:relu_function}
 \end{wrapfigure}
+
+The \gls{relu} (figure \ref{fig:relu_function}) was used as the activation function in all testing schemes. This is an \gls{activationfunction} that is fast to compute, easy to interpret, widely used, and performs well in neural networks generally (\cite{activation_search}). 
+
+\begin{table}
+    \centering
+    \begin{tabular}{ |p{3cm}||p{3cm}|p{3cm}|p{3cm}|  }
+         \hline
+         \multicolumn{4}{|c|}{Country List} \\
+         \hline
+         AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG\\
+         \hline
+         AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG  \\
+         AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG\\
+         AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG\\
+         AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG\\
+         AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG\\
+         AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG\\
+         AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG\\
+         \hline
+    \end{tabular}
+    \caption{Testing Schemes run on MNIST}
+    \label{table:testing_schemes}
+\end{table}
 
 \section{Hardware}
 

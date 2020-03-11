@@ -1,16 +1,18 @@
 \ProvidesPackage{hon_dissert} % import cust hons sty 'package'
 
-\usepackage{amsmath, amssymb, , amsxtra,acronym}
+\usepackage{amsmath, amssymb,amsxtra,acronym}
+\usepackage[utf8]{inputenc} % defines input encoding as utf-8
 
 \usepackage[acronym]{glossaries} % for glossary
 \renewcommand{\glossarypreamble}{\footnotesize}
+
+
 
 \usepackage [autostyle, english = american]{csquotes}
 \MakeOuterQuote{"} % fixes backwards quotes (lets you use " ")
 
 \setacronymstyle{long-short}
 
-\usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{setspace} % line spacing
 \usepackage{dsfont} % for indicator sign
@@ -20,6 +22,7 @@
 \usepackage{sidecap}  % for caption next to figure 
 \usepackage{wrapfig} % wrap text around figure
 \usepackage[ruled,vlined]{algorithm2e} % allows use of the 'algorithmic' environment
+\usepackage{float} % allows the use of [H] for fixing figures in place
 %\usepackage{ntheorem} % for hypotheses
 %\theoremseparator{:} % setting for ntheorem 
 
