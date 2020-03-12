@@ -180,7 +180,7 @@
 %    \vskip 40\p@ - removed
   \begin{center}%
     {\LARGE\bf \@title \par}%
-    \vskip 3em%
+    \vskip 2em%
     {\bf A \thesis\par}
     {\bf submitted in \fulfil\par}
     {\bf of the requirements for the Degree\par}
@@ -189,7 +189,7 @@
     {\bf at\par}
     {\bf The University of Waikato \par}
     {by\par}
-    {\large \lineskip .75em
+    {\large \lineskip .5em
     \begin{tabular}[t]{c}\large\bf\@author
     \end{tabular}\par}
 %   \ifx\epsfbox\undefined
@@ -200,7 +200,7 @@
     \begin{center}
     \ifpdf
        \includegraphics[width=6truecm]{Waik-Print-PMS-V.pdf}
-       \vspace*{-1.3truecm}
+       \vspace*{-2truecm}
     \else
        \vskip 2.2em
        \includegraphics[width=4.5truecm]{Waik-Print-PMS-V.eps}

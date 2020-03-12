@@ -1,11 +1,14 @@
 \chapter{Methods}
 
-One of the motivations of using flip probability as a loss function is the 'cold start' problem in \gls{ml}. Ideally, one could 'warm start' a network by training it from scratch with a small sample. This is not dissimilar to the idea of \gls{dataaugmentation} - improving the ability of the network to learn on the raw data. This is a problem that is exacerbated further in the context of \gls{dl}, as there are many more millions of parameters (in modern networks) and hence \gls{parameterspace} is much larger. One hypothesis is that one could use \gls{fp} to perform \gls{representationlearning} on less data than would usually be required so that the network will train quickly.
+One of the motivations of using flip probability as a loss function is the 'cold start' problem in \gls{ml}. Ideally, one could 'warm start' a network by training it from scratch with a small sample. This is not dissimilar to the idea of \gls{dataaugmentation} - improving the ability of the network to learn on the raw data. This is a problem that is exacerbated further in the context of \gls{dl}, as there are many more millions of parameters (in modern networks) and hence the \gls{parameterspace} is much larger. One hypothesis is that one could use \gls{fp} to perform \gls{representationlearning} on less data than would usually be required so that the network will train quickly.
 
 \begin{hypothesis} %\begin{hyp}[H\ref{hyp:first}] \label{hyp:first}
 Using \gls{fp} to perform \gls{representationlearning} on the data will allow the network to train more quickly.
 \label{hyp:first}
 \end{hypothesis}
+
+% this is something of a false dichotomy - need to investigate how CE performs around edges
+Another problem with classifiers trained using a traditional loss function, like \gls{mse}, is that (as illustrated by figures \ref{fig:poor_sep_classes} and \ref{fig:good_sep_classes}) they tend to generalise poorly, especially when the data classes are closely spaced geometrically. Hence, by using \gls{fp} to find a representation of the data that spaces out these classes in a geometric sense, we might expect to see an increase in \gls{generalisationperformance}.
 
 \begin{hypothesis} %\begin{hyp}[H\ref{hyp:first}] \label{hyp:first}
 Using \gls{fp} to perform \gls{representationlearning} on the data will improve \gls{generalisationperformance}.
@@ -72,9 +75,9 @@ One example of $h_i$ is the ZAMBINGO at the $i^{th}$ node of the last layer of a
 
 \bigskip
 
- \gls{fp} implemented using  \gls{sgd} would look like the following:
+\gls{fp} implemented using  \gls{sgd} would look like the following:
 
-\begin{equation}[H]
+\begin{equation}
 \label{eq:sgd_fp}
 \hat{P}\ := \frac{1}{L}\frac{1}{M}\sum_{l = 1}^N \sum_{j = 1}^M \mathds{1}((R_j h_i)^T R_jx_L \neq h_i^Tx_L)  
 \end{equation}
@@ -109,10 +112,10 @@ How often the projected classifier incorrectly classifies the data when the data
 
 % TODO - more explain on FP
 
-Implementing  \gls{fp} inevitably encounters a problem in that loss functions must be differentiable, if the network is to be trained using gradient descent, or a variant thereof (such as the  \gls{adam} algorithm). In particular, the loss function must be differentiable with respect to the parameters of the model in order for the gradients to be back-propagated through the network. The gradients are then used to update the parameters in the correct direction (towards a local, and hopefully global, optimum). Modern tools incorporate auto-differentiation libraries to lessen the mathematical challenge of specifying derivatives for complex loss functions, but the function, when decomposed, must still nonetheless be differentiable.
+Implementing  \gls{fp} inevitably encounters a problem in that loss functions must be differentiable, if the network is to be trained using gradient descent, or a variant thereof (such as the \gls{adam} algorithm). In particular, the loss function must be differentiable with respect to the parameters of the model in order for the gradients to be backpropagated through the network. The gradients are then used to update the parameters in the correct direction (towards a local, and hopefully global, optimum). Modern tools incorporate auto-differentiation libraries to lessen the mathematical challenge of specifying derivatives for complex loss functions, but the function, when decomposed, must still nonetheless be differentiable.
 \bigskip
 
-Hence, a major challenge with the above loss functions is that they are not differentiable, primary due to the inequality involved. One way to get around this is to recognise that in principle, we are minimising the angle between the 
+Hence, a major challenge with the above loss functions is that they are not differentiable, primary due to the inequality involved. This inequality introduces a discontinuity in the function, which is not differentiable. One way to get around this is to recognise that in principle, we are minimising the angle between the 
 
 \section{Implementation of Flip Probability}
 
@@ -129,7 +132,7 @@ In order to test the effectiveness of \gls{fp} as a loss function, some syntheti
 
  \subsection{MNIST}
  
-\gls{mnist} is a famous data set often regarded as a starting point to work on and experiment with. It comprises of images of handwritten digits (of ten classes, 0-9), scaled, centered and batch normalised into 28x28 grayscale images. Of 60k images, these are split into 10k training images and 50k testing images \cite{mnist}. This type of problem (digit recognition) is fairly unique in image classification in that the visual information directly conveys the \gls{classlabel}, i.e. there is a direct mapping between the image and the label. Modern training accuracies are sufficiently high (less than 0.2\%, \cite{mnist_sota}) on \gls{mnist} that it can be considered a 'solved' problem \cite{mnist_sota_web}. However, this data is of sufficiently dimensionality ($\mathds{R}^{784}$) that it can adequately be used as a test for \gls{fp} in a \gls{cnn} context. 
+\gls{mnist} is a famous data set often regarded as a starting point to work on and experiment with. It represents an improvement over the older \gls{nist} data set, which used images from different sources (high school students and workers) for the training and testing set \cite{nist}. It comprises of images of handwritten digits (of ten classes, 0-9), scaled, centered and batch normalised into 28x28 grayscale images. Of 60k images, these are split into 10k training images and 50k testing images \cite{mnist}. This type of problem (digit recognition) is fairly unique in image classification in that the visual information directly conveys the \gls{classlabel}, i.e. there is a direct mapping between the image and the label. Modern training accuracies are sufficiently high (less than 0.2\%, \cite{mnist_sota}) on \gls{mnist} that it can be considered a 'solved' problem \cite{mnist_sota_web}. However, this data is of sufficiently dimensionality ($\mathds{R}^{784}$) that it can adequately be used as a test for \gls{fp} in a \gls{cnn} context. 
  \bigskip
 
 \subsection{CIFAR-10}
@@ -166,7 +169,8 @@ First, it is necessary to have baseline results. While there are various data pr
 
 \bigskip
 
-To approximate a reasonable test of \gls{generalisationperformance}, we can use the typical test-train split, where 10\% of the data is used for testing and 90\% is used for training. This split is randomly determined 
+Instead, for a reasonable test of \gls{generalisationperformance}, we can use the typical test-train split, where 10\% of the data is used for testing and 90\% is used for training. This split is randomly determined.
+\bigskip
 
 In terms of \gls{hyperparameter} tuning, various modern methods for this exist, the simplest of which is the grid search. This also results in a high computational burden, being a brute force strategy. 
 
@@ -177,27 +181,56 @@ In terms of \gls{hyperparameter} tuning, various modern methods for this exist, 
 \end{wrapfigure}
 
 The \gls{relu} (figure \ref{fig:relu_function}) was used as the activation function in all testing schemes. This is an \gls{activationfunction} that is fast to compute, easy to interpret, widely used, and performs well in neural networks generally (\cite{activation_search}). 
+\bigskip
 
-\begin{table}
+% Zambingo - formatting is borked here
+In all cases;
+
+\begin{itemize}
+    \item Batch size = 64
+    \item The optimisation method was \gls{sgd}
+    \item The learning rate was 0.01
+\end{itemize}
+
+\begin{landscape}
+
+%\newgeometry{left=0.5cm,top=0.5cm,bottom=0.5cm,right=0.5cm}
+
+\begin{table}[hp]
     \centering
-    \begin{tabular}{ |p{3cm}||p{3cm}|p{3cm}|p{3cm}|  }
+    \begin{tabular}{ |p{1cm}||p{2cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{6cm}| }
          \hline
-         \multicolumn{4}{|c|}{Country List} \\
+         \multicolumn{8}{|c|}{Scheme Parameters} \\
          \hline
-         AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG\\
+         No. & Epochs & $M$ & Loss & 2nd Loss & DO & $N$ & Notes\\
          \hline
-         AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG  \\
-         AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG\\
-         AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG\\
-         AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG\\
-         AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG\\
-         AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG\\
-         AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG &AFG\\
+         1 & 100 & - &FP &CE &0.5 &Y & Alt. Loss per batch\\
+         2 & 10 & - &FP &CE &0.5 &Y & Alt. Loss per batch\\
+         3 & 10 & - &FP &CE & - &Y & Alt. Loss per batch\\
+         4 & 10 & - &FP &CE & - &Y & Alt. Loss per batch\\
+         5 & 5 & -  &FP &CE & - &Y & Alt. Loss per batch\\
+         6 & 10 & -  &FP &CE & - &Y & Alt. Loss over run\\
+         7 & 5 & 0.5 &FP &CE & - &Y & Alt. Loss over run\\
+         8 & 10 & 0.5 &FP &CE & - &Y & Alt. Loss over run\\
+         9 & 10 & 0.5 &FP &CE &0.5 &Y & Short FP periods, alternating\\
+         10 & 10 & 0.5 &CE & - &0.5 &Y & Baseline\\
+         11 & 10 & 0.5 &CE & - & - &N &Baseline - No Normalisation\\
+         12 & 20 & - &FP &CE & - &Y & Switched loss at midpoint*\\
+         13 & 100 & - &FP &CE & -  &Y & Switched loss at midpoint*\\
          \hline
+         \multicolumn{3}{@{}p{1.5in}}{\footnotesize (DO) $=$ Drop-out}\\
+         \multicolumn{3}{@{}p{1.5in}}{\footnotesize ($M$) $=$ Momentum}\\
+         \multicolumn{3}{@{}p{1.5in}}{\footnotesize ($N$) $=$ Normalisation}\\
+         \multicolumn{3}{@{}p{1.5in}}{\footnotesize (-) $=$ Unused}\\
+         \multicolumn{3}{@{}p{1.5in}}{\footnotesize (*) $=$ Keeping layers frozen as appropriate} 
     \end{tabular}
     \caption{Testing Schemes run on MNIST}
     \label{table:testing_schemes}
 \end{table}
+
+\end{landscape}
+
+%\restoregeometry
 
 \section{Hardware}
 

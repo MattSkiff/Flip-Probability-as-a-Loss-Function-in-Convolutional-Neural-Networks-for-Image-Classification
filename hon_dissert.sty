@@ -23,6 +23,11 @@
 \usepackage{wrapfig} % wrap text around figure
 \usepackage[ruled,vlined]{algorithm2e} % allows use of the 'algorithmic' environment
 \usepackage{float} % allows the use of [H] for fixing figures in place
+\usepackage{lscape} % allows for landscape pages
+
+% ZAMBINGO - this is breaking the title page!!!
+\usepackage{geometry} % for creating envs to set margins and restore
+
 %\usepackage{ntheorem} % for hypotheses
 %\theoremseparator{:} % setting for ntheorem 
 
@@ -56,7 +61,7 @@
 {\chapter} % command
 [display] % shape
 {\bfseries\Large\itshape} % format
-{Chapter \ \thechapter} % label
+{Chapter. \ \thechapter} % label
 {0.5ex} % sep
 {
     \rule{\textwidth}{1pt}

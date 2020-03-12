@@ -51,14 +51,14 @@ The key idea is that the algorithm automatically finds and determines a set of r
 
 \begin{figure}
     \centering
-    \includegraphics[width=120mm,scale=1.5]{figs/timeline_old_nn.png}
+    \includegraphics[width=140mm,scale=1.5]{figs/timeline_old_nn.png}
     \caption{A selection of events in early neural network history}
     \label{fig:timeline_old_nn}
 \end{figure}
 
 \begin{figure}
     \centering
-    \includegraphics[width=120mm,scale=1.5]{figs/timeline_new_nn.png}
+    \includegraphics[width=140mm,scale=1.5]{figs/timeline_new_nn.png}
     \caption{A selection of events in modern neural network history}
     \label{fig:timeline_new_nn}
 \end{figure}
@@ -240,7 +240,10 @@ Where;
 
 More commonly, some optimisation method is required in order to minimise the \gls{loss}.  At the simplest level, this takes the form of \gls{gd}. However, as \gls{gd} requires the gradients to be computed with respected to the entire training data, \gls{sgd} is more common as it is much faster, even though each individual step may not point as closely towards the local minima. More recent methods include  \gls{adam}, Adagrad and Adadelta. When a \gls{nn} is trained, these methods are used to find the parameters in conjunction with back propagation.  % todo
 
-% TODO - gradient descent diagram
+
+
+% ZAMBINGO - design r script - sgd vs gd for optim
+% ZAMBINGO - sgd algo here not a bad idea either
 
 Methods of regularisation, such as LASSO and Ridge Regression add penalties to this loss function in order to prevent overfitting. The former penalises the absolute size of the model coefficients hence favouring smaller coefficients while the later penalises the squared size of the coefficients hence favouring a sparser set of coefficients \cite{ridge_lasso}). These are two more statistical examples of regularisation; more recent examples in \gls{dl} include drop-out, ZAMBINGO \bigskip
 

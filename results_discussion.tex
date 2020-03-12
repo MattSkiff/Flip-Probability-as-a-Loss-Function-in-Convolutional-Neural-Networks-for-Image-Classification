@@ -224,40 +224,46 @@ The second set of experiments used the MNIST data set. In principle, any modern 
     \label{fig:training_scheme_9}
 \end{figure}
 
+\newpage
+
+%\newgeometry{top=1cm}
+
 \begin{figure}[H]
     \centering
     \subfloat[normalised]{
-      \includegraphics[width=65mm]{figs/run_10/test_accuracy_fp.png}
+      \includegraphics[width=50mm]{figs/run_10/test_accuracy_fp.png}
     }
     \subfloat[normalised]{
-      \includegraphics[width=65mm]{figs/run_10/test_losses_fp.png}
+      \includegraphics[width=50mm]{figs/run_10/test_losses_fp.png}
     }
     \hspace{0mm}
     \subfloat[normalised]{
-      \includegraphics[width=65mm]{figs/run_10/train_accuracy.png}
+      \includegraphics[width=50mm]{figs/run_10/train_accuracy.png}
     }
     \subfloat[normalised]{
-      \includegraphics[width=65mm]{figs/run_10/train_losses_ce.png}
+      \includegraphics[width=50mm]{figs/run_10/train_losses_ce.png}
     }
     \hspace{0mm}
     \subfloat[no normalisation]{
-      \includegraphics[width=65mm]{figs/run_11/test_accuracy_fp.png}
+      \includegraphics[width=50mm]{figs/run_11/test_accuracy_fp.png}
     }
     \subfloat[no normalisation]{
-      \includegraphics[width=65mm]{figs/run_11/test_losses_fp.png}
+      \includegraphics[width=50mm]{figs/run_11/test_losses_fp.png}
     }
     \hspace{0mm}
     \subfloat[no normalisation]{
-      \includegraphics[width=65mm]{figs/run_11/train_accuracy.png}
+      \includegraphics[width=50mm]{figs/run_11/train_accuracy.png}
     }
     \subfloat[no normalisation]{
-      \includegraphics[width=65mm]{figs/run_11/train_losses_ce.png}
+      \includegraphics[width=50mm]{figs/run_11/train_losses_ce.png}
     }
     \hspace{0mm}
     
     \caption{The results of the tenth and eleventh training scheme, the baseline scheme, with and without normalisation}
     \label{fig:training_scheme_10_11}
 \end{figure}
+
+%\restoregeometry
 
 %\begin{figure}
 %\centering
@@ -315,7 +321,7 @@ The second set of experiments used the MNIST data set. In principle, any modern 
     \label{fig:training_scheme_13}
 \end{figure}
 
-We can see that the baseline schemes, 10/11, clearly achieve a very high accuracy rapidly and without trouble. Removing image normalisation slightly decreases training and testing accuracy during the early stages of training, but otherwise has little effect on the final accuracy.
+We can see that the baseline schemes, figures \ref{fig:training_scheme_10_11}, clearly achieve a very high accuracy rapidly and without trouble. Removing image normalisation slightly decreases training and testing accuracy during the early stages of training, but otherwise has little effect on the final accuracy.
 
 The third, more refined set of experiments was on the \gls{cifar}-10 data set
 
