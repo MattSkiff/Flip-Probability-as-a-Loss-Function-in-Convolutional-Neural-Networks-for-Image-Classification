@@ -115,19 +115,45 @@ How often the projected classifier incorrectly classifies the data when the data
 Implementing  \gls{fp} inevitably encounters a problem in that loss functions must be differentiable, if the network is to be trained using gradient descent, or a variant thereof (such as the \gls{adam} algorithm). In particular, the loss function must be differentiable with respect to the parameters of the model in order for the gradients to be backpropagated through the network. The gradients are then used to update the parameters in the correct direction (towards a local, and hopefully global, optimum). Modern tools incorporate auto-differentiation libraries to lessen the mathematical challenge of specifying derivatives for complex loss functions, but the function, when decomposed, must still nonetheless be differentiable.
 \bigskip
 
-Hence, a major challenge with the above loss functions is that they are not differentiable, primary due to the inequality involved. This inequality introduces a discontinuity in the function, which is not differentiable. One way to get around this is to recognise that in principle, we are minimising the angle between the 
+Hence, a major challenge with the above loss functions is that they are not differentiable, primary due to the inequality involved. This inequality introduces a discontinuity in the function, which is not differentiable. One way to get around this is to recognise that in principle, we are minimising the angle between the data and the classifier \cite{}
+
+\begin{equation}
+\label{eq:sgd_fp}
+\hat{FP}\ := \frac{1}{L}\frac{1}{M}\sum_{l = 1}^N \sum_{j = 1}^M \mathds{1}((R_j h_i)^T R_jx_L \neq h_i^Tx_L)  
+\end{equation}
 
 \section{Implementation of Flip Probability}
 
+To practically implement \gls{fp}, we return the input of
+
+
+
 One way we can reduce the computational burden of this procedure is to generate the \gls{rp} matrices at the start of the algorithm instead of dynamically each time the loss function is called. This has the disadvantage of introducing dependencies \cite{bob_rp_storage}, but given the number of \gls{rp} matrices needed to be generated in even a small \gls{cnn}, this is a necessary step in order for testing and iteration to be feasible. 
 \bigskip
+
+\begin{algorithm}[H]
+\SetAlgoLined
+\KwResult{Write here the result }
+ initialization\;
+ \While{While condition}{
+  instructions\;
+  \eIf{condition}{
+   instructions1\;
+   instructions2\;
+   }{
+   instructions3\;
+  }
+ }
+    \caption{The 10 fold \gls{cv} algorithm}
+    \label{algo:fp_python_1}
+\end{algorithm}
 
 % TODO - calculate number of RP matrices need for static storage and dynamic generation
 \section{Data sets}
  
 \subsection{Artificial Data}
 
-In order to test the effectiveness of \gls{fp} as a loss function, some synthetic, linearly separable data was generated. As  \gls{fp} benefits from the  \gls{jll}, it was necessary to ensure this was sufficiently highly dimensional. Hence, data with dimension $k =$ 5,10,20,50,100,500,1000,10000 was generated to test with a  \gls{nn}. 
+In order to test the effectiveness of \gls{fp} as a loss function, some synthetic, linearly separable data was generated. As  \gls{fp} benefits from the \gls{jll}, it was necessary to ensure this was sufficiently highly dimensional. Hence, data with dimension $k =$ 5,10,20,50,100,500,1000,10000 was generated to test with a  \gls{nn}. 
 \bigskip
 
  \subsection{MNIST}
@@ -137,7 +163,7 @@ In order to test the effectiveness of \gls{fp} as a loss function, some syntheti
 
 \subsection{CIFAR-10}
 
-To extend upon the \gls{mnist} testing with a more challenging data set, the ten class \gls{cifar}-10 data set was used. Here, the mapping between image and label is less direct, and the complexity of the images (which include animal and vehicles) is increased.
+To extend upon the \gls{mnist} testing with a more challenging data set, the ten class \gls{cifar}-10 data set was used. Here, the mapping between image and label is less direct, and the complexity of the images (which include animal and vehicles) is increased. These images are \gls{rgb} and of 32x32. Hence, they have a dimension of 3 * 32 * 32 = 3072. Because of this increased dimensionality, we include a pooling layer in the \gls{cnn} and add a extra \gls{fc} layer to complexify the network.
 \bigskip
 
 Tiny ImageNet:
@@ -146,7 +172,26 @@ Tiny ImageNet is smaller version of the well-known \gls{ilsvrc} ImageNet, which 
 
 \section{Testing Schemes}
   
-First, it is necessary to have baseline results. While there are various data preprocessing (scaling, whitening,  and data augmentation strategies (e.g. flipping, cropping, rotation and jittering)  available, we use a fairly simple script in Pytorch (\cite{mnist_script}) that uses the test/train split present in the  \gls{mnist} data set and rapidly achieves an accuracy of 97\%. Ideally, we would test the algorithms using 10 fold- \gls{cv} (the 'gold standard', \ref{algo:10-fold-cv}). However, this introduces a high level of computational burden, as the algorithm must be run independently across at least 10 subsets of the data. 
+First, it is necessary to have baseline results. While there are various data preprocessing (scaling, whitening), and \gls{dataaugmentation} strategies (e.g. flipping, cropping, rotation and jittering)  available, we use a fairly simple script in Pytorch (\cite{mnist_script}) that uses the test/train split present in the  \gls{mnist} data set and rapidly achieves an accuracy of 97\%. Ideally, we would test the algorithms using 10 fold-\gls{cv} (the 'gold standard', \ref{algo:10-fold-cv}). However, this introduces a high level of computational burden, as the algorithm must be run independently across at least 10 subsets of the data. This script was built upon by:
+
+\begin{itemize}
+    \item Writing new \gls{lossfunction}s to implement \gls{fp}
+    \item Configuring the network architecture to handle the new \gls{lossfunction}s
+    \item Testing the new architecture and \gls{lossfunction} with a variety of \gls{hyperparameter} settings
+    \item Simplifying the script to handle artificial data and complexifying the script to handle \gls{cifar}-10
+\end{itemize}
+
+The structure of the network trained on \gls{mnist} is as follows;
+
+\begin{itemize}
+    \item Convolution layer 1 (Input layer) : 1,10
+    \item Convolution layer 2 : 10,20
+    \item (if \gls{do}) Dropout layer :
+    \item Fully Connected layer 1 : 320, 50
+    \item Fully Connected layer 2 (Output layer) : 50, 10
+\end{itemize}
+
+
 \bigskip
 
 % ZAMBINGO - cv algorithm
@@ -167,6 +212,9 @@ First, it is necessary to have baseline results. While there are various data pr
     \label{algo:10-fold-cv}
 \end{algorithm}
 
+% ZAMBINGO - insert diagram for cv here 
+% https://cran.r-project.org/web/packages/groupdata2/vignettes/cross-validation_with_groupdata2.html
+
 \bigskip
 
 Instead, for a reasonable test of \gls{generalisationperformance}, we can use the typical test-train split, where 10\% of the data is used for testing and 90\% is used for training. This split is randomly determined.
@@ -176,7 +224,7 @@ In terms of \gls{hyperparameter} tuning, various modern methods for this exist, 
 
 \begin{wrapfigure}{l}{0.5\textwidth}
     \includegraphics[scale=0.5]{figs/relu.png}
-    \caption{The ReLu activation function.}
+    \caption{The ReLu activation function.}[The ReLu activation function, also known as the 'hinge loss', known for it's ease of computation and efficacy in training networks.]
     \label{fig:relu_function}
 \end{wrapfigure}
 
@@ -190,7 +238,10 @@ In all cases;
     \item Batch size = 64
     \item The optimisation method was \gls{sgd}
     \item The learning rate was 0.01
+    \item Kernel size = 5
 \end{itemize}
+
+Where normalisation was performed, this was over each input channel \footnote{\url{https://pytorch.org/docs/stable/torchvision/transforms.html}}, using a mean of 0.1307 and a standard deviation of 0.3081, which are known to be the mean and standard deviation of the grayscale (only) channel of \gls{mnist}.
 
 \begin{landscape}
 
@@ -198,33 +249,32 @@ In all cases;
 
 \begin{table}[hp]
     \centering
-    \begin{tabular}{ |p{1cm}||p{2cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{6cm}| }
+    \begin{tabular}{ |p{1cm}||p{1.5cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}|p{6cm}| }
          \hline
          \multicolumn{8}{|c|}{Scheme Parameters} \\
          \hline
          No. & Epochs & $M$ & Loss & 2nd Loss & DO & $N$ & Notes\\
          \hline
          1 & 100 & - &FP &CE &0.5 &Y & Alt. Loss per batch\\
-         2 & 10 & - &FP &CE &0.5 &Y & Alt. Loss per batch\\
-         3 & 10 & - &FP &CE & - &Y & Alt. Loss per batch\\
-         4 & 10 & - &FP &CE & - &Y & Alt. Loss per batch\\
-         5 & 5 & -  &FP &CE & - &Y & Alt. Loss per batch\\
-         6 & 10 & -  &FP &CE & - &Y & Alt. Loss over run\\
-         7 & 5 & 0.5 &FP &CE & - &Y & Alt. Loss over run\\
-         8 & 10 & 0.5 &FP &CE & - &Y & Alt. Loss over run\\
-         9 & 10 & 0.5 &FP &CE &0.5 &Y & Short FP periods, alternating\\
-         10 & 10 & 0.5 &CE & - &0.5 &Y & Baseline\\
-         11 & 10 & 0.5 &CE & - & - &N &Baseline - No Normalisation\\
-         12 & 20 & - &FP &CE & - &Y & Switched loss at midpoint*\\
-         13 & 100 & - &FP &CE & -  &Y & Switched loss at midpoint*\\
+         2 &\cellcolor{blue!25} 10 & - &FP &CE &0.5 &Y & Alt. Loss per batch\\
+         3 & 10 & - &FP &CE &\cellcolor{blue!25} - &Y & Alt. Loss per batch\\
+         4 &\cellcolor{blue!25} 5 & -  &FP &CE & - &Y & Alt. Loss per batch\\
+         5 & 10 & -  &FP &CE & - &Y & \cellcolor{blue!25}Alt. Loss over run\\
+         6 & \cellcolor{blue!25}10 & \cellcolor{blue!25}0.5 &FP &CE & - &Y & Alt. Loss over run\\
+         7 & \cellcolor{blue!25}20 & 0.5 &FP &CE & - &Y & Alt. Loss over run\\
+         8 & 10 & 0.5 &FP &CE &0.5 &Y & \cellcolor{blue!25}Short FP periods, alternating\\
+         9 & 10 & 0.5 &\cellcolor{blue!25}CE & - &0.5 &Y & Baseline\\
+         10 & 10 & 0.5 &CE & - & - &\cellcolor{blue!25}N &Baseline - No Normalisation\\
+         11 & 20 & - &FP &CE & - &Y & \cellcolor{blue!25}Switched loss at midpoint*\\
+         12 & \cellcolor{blue!25}100 & - &FP &CE & -  &Y & Switched loss at midpoint*\\
          \hline
          \multicolumn{3}{@{}p{1.5in}}{\footnotesize (DO) $=$ Drop-out}\\
          \multicolumn{3}{@{}p{1.5in}}{\footnotesize ($M$) $=$ Momentum}\\
          \multicolumn{3}{@{}p{1.5in}}{\footnotesize ($N$) $=$ Normalisation}\\
          \multicolumn{3}{@{}p{1.5in}}{\footnotesize (-) $=$ Unused}\\
-         \multicolumn{3}{@{}p{1.5in}}{\footnotesize (*) $=$ Keeping layers frozen as appropriate} 
+         \multicolumn{3}{@{}p{3in}}{\footnotesize (*) $=$ Keeping layers frozen as appropriate}\\
     \end{tabular}
-    \caption{Testing Schemes run on MNIST}
+    \caption{Testing Schemes run on MNIST. Coloured background indicate a change in parameters from the previous similar scheme.}
     \label{table:testing_schemes}
 \end{table}
 
@@ -234,4 +284,8 @@ In all cases;
 
 \section{Hardware}
 
-When benchmarking for running time, the \gls{nn}s were run on an Asus laptop with 8 \gls{gb}s of \gls{ram}, a Intel Core i5-8250U processor and a 256\gls{gb} \gls{ssd}. All operations were run on the \gls{cpu}. \href{https://colab.research.google.com/}{Google colaboratory}, a cloud notebook platform, was also used to run networks.
+When benchmarking for running time, the \gls{nn}s were run on an Asus laptop with 8 \gls{gb}s of \gls{ram}, a Intel Core i5-8250U processor and a 256\gls{gb} \gls{ssd}. All operations were run on the \gls{cpu}. \href{https://colab.research.google.com/}{Google colaboratory}, a cloud notebook platform, was also used to run the networks. A collection of note 
+
+\section{Software}
+
+In networks were implemented in \href{https://pytorch.org/}{Pytorch}, a deep learning platform built ontop of the older 'torch' library. Python was used to design and run all code. Pytorch has the advantage of being more easily able to be modified at a low level, which is necessary for designing and integrating custom loss functions. It also has a 'pythonic' imperative style, which is less obtuse than the declarative style used in Tensorflow and the reductionist style of Keras \cite{tale_dl}. All scripts and latex written for this dissertation can be accessed at the \href{https://pytorch.org/}{github repository}.

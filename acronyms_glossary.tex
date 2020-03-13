@@ -9,7 +9,7 @@
 \newglossaryentry{activationfunction}
 {
     name=activation function,
-    description={A non-linear mathematical function, such as the rectified linear unit the weighted sum of a neuron is put through in order introduce a non-linearity in the network to improve learning}
+    description={A non-linear mathematical function, such as the rectified linear unit, the weighted sum of a neuron is put through in order introduce a non-linearity in the network to improve learning}
 }
 
 \newglossaryentry{backpropagation}
@@ -27,13 +27,13 @@
 \newglossaryentry{costfunction}
 {
     name={cost function},
-    description={A synonym for a loss function \cite[p.~80]{good_fellow_2016}.}
+    description={A synonym for a loss function \cite[p.~80]{good_fellow_2016}}
 }
 
 \newglossaryentry{dataaugmentation} % TODO - improve this glossary entry
 {
     name=data augmentation,
-    description={The practice of applying a transformation to the raw data and training the given algorithm on the transformed data (as well as, in certain cases, the transformed data). Examples include generating extra examples using generative adversarial networks, rotating images and normalising input data}
+    description={The practice of increasing the amount of training data available to learn on by applying a transformation to the raw data and training the given algorithm on the transformed and original data. Examples include generating extra examples using generative adversarial networks, rotating images and jittering or noising input data}
 }
 
 \newglossaryentry{decisionboundary}
@@ -72,9 +72,15 @@
     description={The process of running the input data through the layers of network to produce some output}
 }
 
+\newglossaryentry{gaussianrandomprojection}
+{
+    name=gaussian random projection,
+    description={Random projection of the data by matrix multiplying it with a projection matix whose entries are filled from a distribution from the gaussian family}
+}
+
 \newglossaryentry{generalisationperformance}
 {
-    name=flip probability,
+    name=generalisation performance,
     description={How well the classifier performs on new, unseen data not used in either the testing in training data sets}
 }
 
@@ -217,9 +223,16 @@
     description={Any learning that does not use the class label or true target value (e.g. clustering)}
 }
 
+\newglossaryentry{vapnikchervonenkis}
+{
+    name={VC},
+    description={The Vapnik-Chervonekis (VC) dimension, this is a measure of the complexity, or capacity of a classifier. It denotes the largest number of points, relative to the ambient dimension, that are always able to classified by a class of classifiers \cite[Chapter~2]{haykin}}
+}
+
 \newacronym{ai}{AI}{Artificial Intelligence}
 \newacronym{apm}{APM}{Actions Per Minute}
 \newacronym{ann}{ANN}{Artificial Neural Network} 
+\newacronym{ad}{AD}{Automatic Differentiation}
 \newacronym{adam}{ADAM}{Adaptive Moment Estimation} 
 \newacronym{aws}{AWS}{Amazon Web Services}
 \newacronym{ce}{CE}{Cross-Entropy}
@@ -231,6 +244,7 @@
 \newacronym{dnn}{DNN}{Deep Neural Network}
 \newacronym{dcnn}{DCNN}{Deep Convolutional Neural Network}
 \newacronym{drl}{DRL}{Deep Reinforcement Learning}
+\newacronym{fc}{FC}{Fully Connected}
 \newacronym{ffnn}{FFNN}{Feedforward Neural Network}
 \newacronym{flda}{FLDA}{Fisher's Linear Discriminant Analysis}
 \newacronym{fp}{FP}{Flip probability} 
@@ -260,13 +274,21 @@ see=[Glossary:]{neuralnetwork}}
 \newacronym{ram}{RAM}{Random Access Memory}
 \newacronym{relu}{ReLu}{Rectified Linear Unit}
 \newacronym{r-cnn}{RNN}{Region-Convolutional Neural Network}
+\newacronym{rgb}{RGB}{Red, Green, Blue}
 \newacronym{rnn}{RNN}{Recurrent Neural Network}
 \newacronym{rp}{RP}{Random Projection}
 \newacronym{sgd}{SGD}{Stochastic Gradient Descent}
 \newacronym{ssd}{SSD}{Solid State Disk}
 \newacronym{svm}{SVM}{Support Vector Machines}
+\newacronym{tpu}{TPU}{Tensor Processing Unit}
 \newacronym{uap}{UAP}{Universal Approximation Theorem}
 \newacronym{vae}{VAE}{Variational Auto-Encoder}
-\newacronym{vc}{VC}{Vapnis-Chervonenkis}
+
+\newglossaryentry{vc}{type=\acronymtype, 
+name={VC}, 
+description={Vapnik-Chervonenkis}, 
+first={Vapnik-Chervonekis (VC)\glsadd{vapnikchervonenkis}},
+see=[Glossary:]{vapnikchervonenkis}}
+
 \newacronym{xor}{XOR}{Exclusive OR}
 \newacronym{yolo}{YOLO}{You Only Look Once}

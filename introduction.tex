@@ -14,7 +14,7 @@ A small  \gls{mse} is not a guarantee of a small $0/1$ loss - similar parts can 
 
 As the focus of this dissertation is to test \gls{fp} as a \gls{lossfunction} for the purpose of image classification, we will restrict testing of this to \gls{cnn}s or simpler networks (such as  \gls{mlp}s or \gls{feedforward} \gls{nn}s).
 
- \gls{fp} is a smooth approximation of the $0/1$ loss and, in principle, should more accurately classify points near the \gls{decisionboundary}. To implement this, we can use  \gls{nn}s "off the shelf", tweak them and measure results. However,  \gls{fp} is a theoretical concept and finding an empirical measure is necessary if we wish to implement it in practice. 
+ \gls{fp} is a smooth approximation of the $0/1$ loss and, in principle, should more accurately classify points near the \gls{decisionboundary}. To implement this, we can use  \gls{nn}s "off the shelf", tweak them and measure results. However,\gls{fp} is a theoretical concept and finding an empirical measure is necessary if we wish to implement it in practice. 
 
 Once an empirical measure is found, we proceed to test this, using standard \gls{nn} training and testing techniques.
 
