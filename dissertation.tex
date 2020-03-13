@@ -5,6 +5,13 @@
 %   * Fix figure positioning
 %   * Todo (indicated with phrase 'Zambingo')
 
+% this document structures the dissertation and should have minimal content
+
+% TODO List;
+%   * Fix acronyms not capitalised at beginning of sentence
+%   * Fix figure positioning
+%   * Todo (indicated with phrase 'Zambingo')
+
 \documentclass[12pt]{uwthesis17}
 
 \usepackage{hon_dissert} % contains entire preamble
@@ -22,6 +29,8 @@
 \setlength{\parindent}{0pt} % disable indents
 
 \begin{abstract}
+
+We developed a novel implementation of a \gls{loss} function; the empirical \gls{flipprobability}, derived from the flip probability developed by Durrant \& Kab\'an \cite{durrant2013sharp}. \gls{loss} and tested it in several canonical versions of convolution neural networks to assess whether an increase in training speed or \gls{generalisationperformance} could be achieved. While the \gls{lossfunction} can be used to train networks of a reasonably high accuracy, the performance is generally worse than when standard a standard \gls{lossfunction} and architecture is used. 
 
 \end{abstract}
 \begin{acknowledgements}
@@ -44,6 +53,7 @@ I am grateful for the support and kindness of my partner, Renata Sawyer.
 \tableofcontents
 \listoffigures
 \listoftables
+%\listofmyequations
 \newpage
 \pagenumbering{arabic}
 \setcounter{page}{1}
@@ -59,3 +69,63 @@ I am grateful for the support and kindness of my partner, Renata Sawyer.
 \bibliography{dissertation}
 
 \end{document}
+
+
+
+
+
+%\documentclass[12pt]{uwthesis17}
+%
+%\usepackage{hon_dissert} % contains entire preamble
+%
+%% despite not using any chron timelines, this package is now a dependency... - don't remove
+%\usepackage{chronology} % custom sty file - switched to ggplot (redundant)
+%
+%\title{Flip Probability as a Loss Function in Convolutional Neural Networks for Image Classification}
+%\author{Matthew Keith Skiffington} 
+%\begin{document}
+%\pagenumbering{roman}
+%\maketitle
+%\setcounter{page}{2}
+%
+%\setlength{\parindent}{0pt} % disable indents
+%
+%\begin{abstract}
+%
+%\end{abstract}
+%\begin{acknowledgements}
+%
+%\bigskip
+%
+%\begin{spacing}{2}
+%
+%% ZAMINGO - is it 'was pivotal' or 'were pivotal'?
+%
+%I would like to thank Dr Robert Durrant for his patience, wisdom and understanding in helping produce %this dissertation. His teaching and guidance was pivotal in the development of this work.
+%\bigskip
+%
+%I am grateful for the support and kindness of my partner, Renata Sawyer.
+%\bigskip
+%
+%\end{spacing}
+%
+%\end{acknowledgements}
+%\tableofcontents
+%\listoffigures
+%\listoftables
+%\listofmyequations
+%\newpage
+%\pagenumbering{arabic}
+%\setcounter{page}{1}
+%\include{introduction}
+%\include{literature_review}
+%\include{methods}
+%\include{results_discussion}
+%\include{conclusion}
+%\include{back_matter}
+%%Sets the bibliography style to UNSRT and imports the 
+%%bibliography file "samples.bib".
+%\bibliographystyle{unsrt}
+%\bibliography{dissertation}
+%
+%\end{document}

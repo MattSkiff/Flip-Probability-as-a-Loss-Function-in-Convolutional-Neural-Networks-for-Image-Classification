@@ -1,6 +1,7 @@
 \chapter{Results and Discussion}
 
-The first set of experiments used the 'toy' artificial data set. \bigskip
+The first set of experiments used the 'toy' artificial data set. 
+\bigskip
 
 The second set of experiments used the MNIST data set. In principle, any modern iteration of a \gls{cnn} can achieve very high accuracy on this data set \cite{mnist_sota_web}. \gls{nn}s ranging from simple CNNs to modern CapsNets, \gls{resnet}s and DenseNets (all \gls{dnn}s) should be able to achieve 98-99\% on this data set {\cite{mnist_sota_web}}. This is seen in the test and training accuracies in the baseline training schemes (figure \ref{fig:training_scheme_9_10}), where very high accuracies are achieved after only a few \gls{epoch}s. 
 \bigskip
@@ -343,12 +344,15 @@ We can see that the baseline schemes, figures \ref{fig:training_scheme_10_11}, c
 \bigskip
 
 The third, more refined set of experiments was on the \gls{cifar}-10 data set
+\bigskip
 
 The final experiment was an attempt to implement \gls{fp} in a \gls{dl} context, to see if any improvements could be made. We used the Tiny ImageNet data set
+\bigskip
 
 \section{Discussion}
 
 It is feasible to implement \gls{fp} in a way that resembles the cosine loss, although this comes at the expense of increased computation burden and poorer training accuracies. Implementing \gls{fp} in a way that allows for \gls{gd} has still not been done.
+\bigskip
 
 Other work leveraging \gls{rp}s exists. For example, \gls{rp}s have been used in projection networks in tandem with the full \gls{nn} to efficiently compress down (reduce the number of parameters) the full networks to lessen the memory footprint. This allows projection networks to run on devices that have resource constraints, such as smartwatches \cite{projection_net}. 
 \bigskip

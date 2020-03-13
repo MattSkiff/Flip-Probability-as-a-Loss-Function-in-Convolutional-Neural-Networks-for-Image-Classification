@@ -76,7 +76,7 @@ A \gls{nn} can be interpreted many ways. For example, a common interpretation is
 Another view of \gls{nn}s is as an extremely simply approximation of how the brain works. This has more of a parallel when the heaviside activation function, where, if the input signals of the neuron (the weighted attributes of the \gls{instance}, which can be thought of as analogous to the dendrites of a neuron) surpass a given threshold, the neuron 'fires', sending an output signal down the axon (i.e. returns a one, instead of zero).
 \bigskip
 
-At it's simplest a \gls{nn} for binary classification is a single \gls{neuron} comprising of a weighted sum of the input features, the addition of a bias term and the application of an \gls{activationfunction} to provide an output for a given input \gls{instance} $i$. This is summarised in \ref{fig:nn_simple}. 
+At it's simplest a \gls{nn} for binary classification is a single \gls{neuron} comprising of a weighted sum of the input features, the addition of a bias term and the application of an \gls{activationfunction} to provide an output for a given input \gls{instance} $i$. This is summarised in \ref{fig:nn_simple} \footnote{\url{Interactive Example of \gls{nn}s, hosted by TensorFlow.}{https://playground.tensorflow.org/}}.  
 
 \begin{figure}
     \centering
@@ -89,6 +89,7 @@ At it's simplest a \gls{nn} for binary classification is a single \gls{neuron} c
     y_i = \mathds{1} ((\sum_{j = 1}^m w_j + b_m) > 0)
     \label{eq:nn_simple_pred}
 \end{equation}
+%\myequations{Prediction for a Linear Combiner}
 
 This network is a binary \gls{linearclassifier}, which has a single \gls{layer} and uses the heaviside \gls{activationfunction} (figure \ref{fig:heavi_function}) and does not use a bias term (would would be added to the weighted sum). The output $y_i$, can be either a one, or a zero. It therefore has a single parameter for each non-class attribute present in the input data, which corresponds to each weight, $w_m$. Choosing an \gls{activationfunction}, $\phi$ when designing networks in modern times often comes down to using the 'tried and true' functions (such as \gls{relu}), or a lot of manual \gls{hyperparameter} tuning.
 
@@ -104,15 +105,15 @@ If we use the sigmoid \gls{activationfunction} and incorporate a bias term, we n
 \begin{figure}[H]
     \centering
     \includegraphics[width=120mm]{figs/vc_3.png}
-    \caption[\gls{vc} dimension of a linear classifier - the data is shattered.]{Logistic regression (a linear classifier) can perfectly shatter a data set with three points, in all cases. The points have been randomly generated in each plot, a logistic regression fitted to each data set using $x, y$ as covariates.}
+    \caption[\Gls{vc} dimension of a linear classifier - the data is shattered.]{In two dimensions, logistic regression (a linear classifier) can perfectly shatter a data set with three points, in all cases. The points have been randomly generated in each plot, a logistic regression fitted to each data set using $x, y$ as covariates.}
     \label{fig:vc_3}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=120mm]{figs/vc_4.png}
-    \caption[Surpassing the \gls{vc} dimension of a linear classifier - the data is not always shattered.]{Linear classifiers begin to falter once the VC dimension is surpassed in the data. The points have been randomly generated in each plot, a logistic regression fitted to each data set using $x, y$ as covariates and the plots are set to automatically highlight instances of imperfect separation of the data.}
-    \label{fig:vc_3}
+    \caption[Surpassing the \gls{vc} dimension of a linear classifier - the data is not always shattered.]{\Gls{linearclassifier}s begin to falter once the VC dimension of the classifier is surpassed in the data. The points have been randomly generated in each plot, a logistic regression fitted to each data set using $x, y$ as covariates and the plots are set to automatically highlight instances of imperfect separation of the data.}
+    \label{fig:vc_4}
 \end{figure}
 
 \begin{wrapfigure}{l}{0.5\textwidth}
@@ -121,7 +122,7 @@ If we use the sigmoid \gls{activationfunction} and incorporate a bias term, we n
     \label{fig:sigmoid_function}
 \end{wrapfigure}
 
-Many \gls{nn} diverge from most statistical techniques in that they do not assume a distribution over the data, rather taking an 'algorithmic' approach to classification and prediction \cite{two_cultures}. They leverage the increased classifier complexity that results from the addition of extra neurons to layers ('going wide') and the addition of \gls{layer}s ('going deep').
+Many \gls{nn} diverge from most statistical techniques in that they do not assume a distribution over the data, rather taking an 'algorithmic' approach to classification and prediction \cite{two_cultures}. They leverage the increased classifier complexity that results from the addition of extra neurons to layers ('going wide') and the addition of \gls{layer}s ('going deep'). This increased complexity comes at the cost of the interpretability, although a variety of techniques are in development to tackle this problem \cite{nn_interpretability}.
 
 \gls{nn}s find their origins in the fields of psychology and electronic engineering, dating back to the days of linear adaptive filters in the \cite{nns_haykins}. This began perceptron model proposed by Rosenblatt \cite{perceptron_paper} as an extension of the McCulloch and Pitts model of the neuron \cite{logical_calculus} \bigskip
 % ZAMBINGO - figure idea - branching tree of nn architectures leading to cnns
@@ -130,11 +131,14 @@ Many \gls{nn} diverge from most statistical techniques in that they do not assum
 \begin{figure}
     \centering
     \includegraphics[width=120mm]{figs/xor_problem.png}
-    \caption{An illustration of the \gls{xor} problem that a perceptron can not solve.}
+    \caption{An illustration of the \gls{xor} problem that a perceptron can not solve. Lines indicate arbitrary examples of \gls{linearclassifier}s.}
     \label{fig:xor_problem}
 \end{figure}
 
-The \gls{xor} problem is the simplest possible example of data that is not \gls{linearlyseparable}, and thus not able to be classified using a \gls{linearclassifier}. After the highly influential book,'Perceptrons' proved that the \gls{xor} problem (figure \ref{fig:xor_problem}) could not be solved with a single layer perceptron \cite{perceptrons_book}, interest in neural networks died off considerably - this is often referred to as the 'AI winter' \cite{ai_winter}. It has been speculated \cite{ai_winter} that this was in part because the idea that \gls{mlp}s could not solve the \gls{xor} problem gained traction, despite the authors acknowledging that it was likely that they could in their book \cite{perceptron_book}. \bigskip
+The \gls{xor} problem is the simplest possible example of data that is not \gls{linearlyseparable}, and thus not able to be classified using a \gls{linearclassifier}. After the highly influential book,'Perceptrons' proved that the \gls{xor} problem (figure \ref{fig:xor_problem}) could not be solved with a single layer perceptron \cite{perceptrons_book}, interest in \gls{nn}s died off considerably - this is often referred to as the 'AI winter' \cite{ai_winter}. This continues to cause general speculation around whether another such 'winter' will occur \cite{ai_winter_spec}. It has been speculated \cite{perceptron_spec} that this was in part because the idea that \gls{mlp}s could not solve the \gls{xor} problem gained traction, despite the authors acknowledging that it was likely that they could in their book \cite{perceptron_book}. \bigskip
+
+% Can't seem to find a reference for this.
+% This culminated in a general decrease in funding and a shift in focus, with leading conferences in the field, such as \gls{nip}s receiving more submissions under the field of data mining than \gls{nn}s, despite being explicitly a conference centered around neural systems
 
 Eventually however, research with layered \gls{nn}s intensified and progress was made, not least in part because of advances in computational power;
 
@@ -149,7 +153,6 @@ Coming out of the AI winter, \gls{nn}s were restricted to four or five layers (n
 
 In 1997, Yan Le Cun developed the first neural network capable of high accuracy digit recognition which outperformed the previously popular \gls{svm} models. \bigskip
 
-
 % CNN
 
 \section{Deep Learning}
@@ -159,9 +162,9 @@ In 1997, Yan Le Cun developed the first neural network capable of high accuracy 
 Highly layered ("deep") \gls{nn}s lie at the heart of \gls{dl} and are in fact all extensions of the \gls{mlp}. The phrase 'deep' has a level of subjectivity around it; clearly, a two \gls{layer} \gls{mlp} is not a \gls{dnn}, but is a 5-layer network 'deep'? The most Other deep algorithms do exist (such as 'deep trees' \cite{deep_forest}) although these are unable to handle complex image classification problems as well as other modern {dnn}s. \gls{dl} is seen as a highly effective strategy in a variety of \gls{ai} applications. As a model, they are far more complex than most statistical models, having millions of parameters \cite{unreasonable_dl}.  \bigskip
 % AI winter mention and comeback - LeNet CNNs then cooling SVMs
 
-Major recent events (figure \ref{fig:timeline_new_nn}) include progress made in \gls{drl}, such as teaching a network to effectively play a variety of Atari games without any manual intervention \cite{drl_atari}. Generative networks progressed, with the development of \gls{vae}s, which could generate examples from complex distributions and were then surpassed by the development of \gls{gan}s for the generation of highly realistic examples \cite{gan}. AlphaStar  \cite{alpha_star} and AlphaGo \cite{alpha_go} gained a lot of attention \cite{press_alpha_go} \cite{press_alpha_star} for beating top human players in the board game Go and the video game StarCraft II. Both games are notably complex with the first having an extremely large state space (having around 300 possible moves on average, versus an average of \cite{moves_chess_go}) and the second having a complex continuous real time state space, often requiring  around 400 \gls{apm} \cite{sc_apm} for top human players. Style\gls{gan}s were notable for effective image style transfer, which was also picked up in the media \cite{press_stylegan} \footnote{An interactive example of this can be found here \url{ZAMBINGO}}.
+Major recent events (figure \ref{fig:timeline_new_nn}) include progress made in \gls{drl}, such as teaching a network to effectively play a variety of Atari games without any manual intervention \cite{drl_atari}. Generative networks progressed, with the development of \gls{vae}s, which could generate examples from complex distributions and were then surpassed by the development of \gls{gan}s for the generation of highly realistic examples \cite{gans}. AlphaStar \cite{alphastar} and AlphaGo \cite{alphago} gained a lot of attention \cite{press_alpha_go} \cite{press_alpha_star} for beating top human players in the board game Go and the video game StarCraft II. In the later case, the \gls{ai} was constrained in terms of \gls{apm}, it's view and a realistic observation delay and network latency. Both games are notably complex with the first having an extremely large state space (having a search space of $10^360$ moves, versus $10^{43-123}$ for chess \cite{moves_chess_go}) and the second having a complex continuous real time state space, often requiring  around hundreds \gls{apm} \cite{sc_apm} for top human players. Style\gls{gan}s were notable for effective image style transfer, which was also picked up in the media \cite{press_stylegan} \footnote{An interactive example of this can be found here \url{ZAMBINGO}}.
 
-In terms of \gls{cnn}s, kicked off a flurry in research activity in \gls{dl}, as it was the first \gls{dnn} to win the \gls{ilsvrc}, in 2012 \cite{alex_net}. \gls{r-cnn}s were notable for classification of regions and \gls{semanticsegmentation} using \gls{cnn}s. 'GoogLeNet' introduce a more parallel architecture with the 'inception' module to achieve higher accuracies \cite{googlenet}. \gls{resnet}s broke new ground with it's extreme depth \cite{resnet} by surpassing 'human level recognition' \cite{resnet_human}. 'SqueezeNets' introduce high performing \gls{cnn}s with far fewer parameters and a smaller memory footprint \cite{squeeze_net}. 
+In terms of \gls{cnn}s, kicked off a flurry in research activity in \gls{dl}, as it was the first \gls{dnn} to win the \gls{ilsvrc}, in 2012 \cite{alex_net} \cite{dl_overview}. \gls{r-cnn}s were notable for classification of regions and \gls{semanticsegmentation} using \gls{cnn}s. 'GoogLeNet' introduce a more parallel architecture with the 'inception' module to achieve higher accuracies \cite{googlenet}. \gls{resnet}s broke new ground with it's extreme depth \cite{resnet} by surpassing 'human level recognition' \cite{resnet_human}. 'SqueezeNets' introduce high performing \gls{cnn}s with far fewer parameters and a smaller memory footprint \cite{squeeze_net}. 
 \bigskip
 
 For context \gls{nn}s had now significantly fallen out of favour [ZAMBINGO] and \gls{svm}s were rapidly gaining popularity [ZAMBINGO]. This trend continued until 2012, when the striking performance of AlexNet, a \gls{dcnn}, in the influential annual \gls{ilsvrc} created a lot of interest in \gls{dl}. The remarkable improvements in performance achieved showed the viability of \gls{dl} as an alternative to \gls{svm}s and other techniques, for \gls{imagerecognition}. This demonstration was enabled by several factors contributing to recent rapid developments in \gls{dl}: the availability of \gls{dl} tool-kits, such as Theano and Caffe (2007, 2013 - REF), and Keras, TensorFlow and PyTorch (2015, 2016 ZAMBINGO); advances in computational hardware and accessibility, including powerful purpose-built \gls{gpu}s, access to cloud compute (\gls{aws}, \gls{gcp}, Azure, \gls{tpu}s) and decreasing cost barriers (Google Collab, MatrixDS, note on costs e.g. declining storage costs); and access to large, curated data sets for training (large text corpuses \cite{enron_emails}, image repositories \cite{image_net}) \bigskip
@@ -171,15 +174,16 @@ Now, \gls{nn}s can be incredibly deep, from 50-150 layers (depths used with \gls
 % insert summary table of models used in ILSVRC, number of parameters, hardware trained on, architecture, unique features and top 1/3/5 accuracy's
 
 % when to capitalise fields?
-While this was a major advancement for \gls{dl} in the problem domain of image classification, progress was being made in other domains; speech recognition, handwriting recognition, image segmentation, image captioning, generative models [ZAMBINGO] \bigskip % todo - finish list of progress in domains
+While this was a major advancement for \gls{dl} in the problem domain of image classification, progress was being made in other domains such as speech recognition, handwriting recognition, image segmentation, image captioning and generative models \cite{dl_overview}. 
+\bigskip % todo - finish list of progress in domains
  
-\gls{dl} has evolved as a subset of \gls{ml} methods used for extracting complex semantics from data. \gls{dl} methods have achieved a wide variety of goals that would not otherwise be possible via traditional machine algorithms (such as realistic face generation \footnote{For an excellent example of this, see \url{https://www.thispersondoesnotexist.com/}, for realistic faces generated by StyleGANs})  \bigskip% todo - finish list of goals 
+\gls{dl} has evolved as a subset of \gls{ml} methods used for extracting complex semantics from data. \gls{dl} methods have achieved a wide variety of goals that would not otherwise be possible via traditional machine algorithms (such as realistic face generation \footnote{For an excellent example of this, see \url{This Person Does Not Exist}{https://www.thispersondoesnotexist.com/}, for realistic faces generated by StyleGANs})  \bigskip% todo - finish list of goals 
 
 The success of  \gls{dl} has fuelled the development of a plethora of different  \gls{nn} architectures, including \gls{ltsm}s, \gls{rnn}s and \gls{gan}s [ZAMBINGO]. These are now widely used in a variety of applications, such as for text-to-speech, handwriting recognition and art generation (respectively). [ZAMBINGO]  \bigskip 
 
 \section{Convolutional Neural Networks}
 
-\gls{cnn}s were inspired by the 'Neocognitron' of the 1980s,\cite{neocognitron_proposal} \cite{neocognitron}. This was notable for having a concept similar to \gls{localreceptivefields} and a strategy similar to the pooling and covolutional that occurs in modern \gls{cnn}s ZAMBINGO. \gls{cnn}s were developed in earnest by in the 1990s, with early uses involving reading cheques \cite{lecun_cheques}. The primary purpose of \gls{cnn}s is \gls{imagerecognition}, although they are also used in time series forecasting (1D \gls{cnn}s) and can be used for 3D recognition, for example using sensors from the Microsoft Kinect (\cite{3d_conv}). \gls{cnn}s hinge on 'local receptive fields' (also known as sparse connectively), which means that each of the input layer neurons have a particular patch of the input data that they connect to. The input data (or function) undergoes a convolution, in that a filter (or kernel) is convolved (slid across) the data. Each successive \gls{neuron} in a given layer \cite[Chapter~5]{good_fellow_2016}
+\gls{cnn}s were inspired by the 'Neocognitron' of the 1980s \cite{neocognitron_proposal} \cite{neocognitron}. This was notable for having a concept similar to \gls{localreceptivefields} and a strategy similar to the pooling and covolutional that occurs in modern \gls{cnn}s ZAMBINGO. \gls{cnn}s were developed in earnest by in the 1990s, with early uses involving reading cheques \cite{lecun_cheques}. The primary purpose of \gls{cnn}s is \gls{imagerecognition}, although they are also used in time series forecasting (1D \gls{cnn}s) and can be used for 3D recognition, for example using sensors from the Microsoft Kinect (\cite{3d_conv}). \gls{cnn}s hinge on 'local receptive fields' (also known as sparse connectively), which means that each of the input layer neurons have a particular patch of the input data that they connect to. The input data (or function) undergoes a convolution, in that a filter (or kernel) is convolved (slid across) the data. Each successive \gls{neuron} in a given layer \cite[Chapter~5]{good_fellow_2016}
 
 % bit on how convolution works
 % bit on pooling (or decimation)
@@ -193,9 +197,9 @@ Image classification is a subset of the broader area of computer vision, which i
 \bigskip
 %The field of \gls{dl} is a relatively modern one, and recent developments have been popularised through %making appearances in the media, through the striking use of neural style transfer to make various %surprising images or videos - such as the face of a dollar bill, speak a particular phrase, the Mona %Lisa come to life or even figures like Marilyn Monroe take the stage once more [ZAMBINGO]. 
 
-The underpinnings of the resurgence of \gls{dl} in recent times is linked to the use of \gls{dcnn}s for the ImageNet challenge. Prior to this challenge, \gls{dl} had was not widespread due to several problems; computational resources, sufficient training data, a lack of accessible tool-kits and the "vanishing gradients problem" \cite[Chapter~8]{good_fellow_2016}. Today, there is a wide breadth of techniques in \gls{dl}, from deep \gls{rnn}s for object detection in videos, \gls{gan}s for image and video generation, \gls{dcnn}s for \gls{imagerecognition}, ... 
+The underpinnings of the resurgence of \gls{dcnn}s in recent times is linked to the use of \gls{dcnn}s for the ImageNet challenge. Prior to this challenge, \gls{dl} had was not widespread due to several problems; computational resources, sufficient training data, a lack of accessible tool-kits and the "vanishing gradients problem" \cite[Chapter~8]{good_fellow_2016} \cite[p.~93-94]{dl_overview}. Today, there is a wide breadth of techniques in \gls{dl}, from deep \gls{rnn}s for object detection in videos, \gls{gan}s for image and video generation, \gls{dcnn}s for \gls{imagerecognition}, ... 
 
-Recent major developments include Neural Ordinary Differential Equations
+%Recent major developments include Neural Ordinary Differential Equations
 
 \section{Tools and Hardware}
 
@@ -207,7 +211,7 @@ This later burgeoned with Torch, Caffe, Theano and a variety of disparate framew
 Pytorch, developed by Facebook, is common used due to it's 'Pythonic' implementation and imperative style 
 
 
-Keras is often considered the easiest framework for beginners to pick and use, being positioned at a high level of abstraction relative to Tensorflow and Pytorch. It can interface with Pytorch, Theano,  \bigskip
+The Keras API is often considered the easiest framework for beginners to pick and use, being positioned at a high level of abstraction relative to Tensorflow and Pytorch. It can interface with Tensorflow, Theano or CNTK  \bigskip
 
 Tensorflow, developed by Google,  \cite{tale_dl}. All three frameworks have the advantage of being completely open source. \bigskip
 
@@ -220,7 +224,7 @@ It is now possible to use a  \gls{nn} 'off-the-shelf' or pre-trained. This is a 
 % elements of statistical learning
 % https://stats.stackexchange.com/questions/15971/what-is-the-curse-of-dimensionality
 
-\gls{nn}s are at heart a mathematical technique and despite the enormous ecosystem of competing tools, technologies and techniques that are continuously developed, an understanding of the mathematical principles involved  is critical to safely understanding their operation and for developing an understanding of the bounds of uncertainty involved in accomplishing different tasks with them, whether it be prediction, classification or a sophisticated multi-task system.
+\gls{nn}s are at heart a mathematical technique and despite the enormous ecosystem of competing tools, technologies and techniques that are continuously developed, an understanding of the mathematical principles involved  is critical to safely understanding their operation, furthering practical implementations from fundamental research and for developing an understanding of the bounds of uncertainty involved in accomplishing different tasks with them, whether it be prediction, classification or a sophisticated multi-task system.
 
 \section{Loss Functions}
 
@@ -231,6 +235,7 @@ It is now possible to use a  \gls{nn} 'off-the-shelf' or pre-trained. This is a 
 l_2 := \sum_{i = 1}^N (\hat{y_i} - y_i)^2
 % todo - MSE equation 
 \end{equation}
+%\myequations{Mean Squared Error}
 
 Where;
 
@@ -252,16 +257,17 @@ The \gls{lossfunction}s which most accurately models such a distance in a classi
 \begin{equation}
 H := \sum_{i = 1}^N \mathds{1} (\hat{y_i} \neq y_i)  
 \end{equation}
+%\myequations{Heaviside Step Activation Function}
 
 This loss is not differentiable, meaning there are few optimisation methods available for finding optimal parameters. In \gls{drl}, deep networks can be trained using non-differentiable loss functions \cite{drl_non_differentiable}, but in \gls{dcnn}s this is not possible. Therefore, differentiable loss functions tend to be used (such as the sigmoid activation function, seen in figure \ref{fig:sigmoid_function}, which you will note is smooth and continuous in all places). The \gls{relu} function has a special theorem that proves 'subgradients' can be calculated \cite{subgradient_theorem}. % ZAMBINGO
 
-\gls{svm} Loss,
-
-Huber-loss,
-
-Cross-entropy loss,
-
-\gls{kl} divergence,
+%\gls{svm} Loss,
+%
+%Huber-loss,
+%
+%Cross-entropy loss,
+%
+%\gls{kl} divergence,
 
 %\section{Cold Start Problem}
 \section{Random Projections}
@@ -282,17 +288,20 @@ The act of randomly projecting data refers to the act projecting data down to a 
 
 \section{Flip Probability}
 
-The term \gls{fp} refers to the probability of label flipping under \gls{gaussianrandomprojection} \cite{bob_sharp_generalisation_error_bounds}
+The term \gls{fp} is a geometric one and refers to  refers to the probability of label flipping under \gls{gaussianrandomprojection}. Crucially, Durrant \& Kab\'an showed that there are strict bounds on generalisation error when a classifier is projected. These bounds serve as a motivation for projecting the classifier and the data, measuring the empirical \gls{fp}, calculating a loss from this and then minimising that loss so \cite{bob_sharp_generalisation_error_bounds}
 
-The development of \gls{fp} is closely tied with the Johnson-Linden Strauss Lemma. This lemma makes guarantees about the effectiveness of \gls{rp}s, as follows:
+The development of \gls{fp} is closely tied with the \gls{jll}. This lemma makes guarantees about the effectiveness of projection in general, as follows:
 
+\begin{quote}
+    $n$ points in high dimensional euclidean space can be mapped onto k dimensions where $K \leq \mathcal{O}(log \frac{n}{\epsilon^{2})} $ without distorting the euclidean distance between any two points more than a factor of $\pm \ \epsilon \cite{jll_notes}.
+\end{quote}
 
-
-with the significant caveat of assuming the data is randomly distributed. The use of \gls{rp}s has been around for some time, mostly as a dimensionality reduction technique. In this capacity, it has found use in traditional statistical techniques, \gls{ml} techniques and \gls{dl}. \gls{rp}s have the \gls{lln} supporting them [ZAMBINGA] and 
+With the significant caveat of assuming the data is randomly distributed. The lemma is important because it provides a strong bound on the error when using projections; we can  The use of \gls{rp}s has been around for some time, mostly as a dimensionality reduction technique. In this capacity, it has found use in traditional statistical techniques, \gls{ml} techniques and \gls{dl}. \gls{rp}s have the \gls{lln} supporting them [ZAMBINGA] and 
 
 However, more recently there have been attempts to use this concept as an \gls{objectivefunction}. This is achieved through the use of gls{fp}. \gls{fp} is the probability that the classification of a data point changes (or "flips") in the simple two class classification case. This probability is calculated empirically using the data, a set of \gls{rp} matrices and the classifier vector. We wish to find a representation of the data that will minimise this probability, that is, we wish to find a \gls{rp} of the data that minimises the probability the classification of the data point will change from the initial unprojected classification.  For example, the error of linear classification optimised with \gls{fp} can be bounded as follows;
 
-\begin{figure}[ht]
+\begin{figure}[H]
+\centering
 \makebox[\textwidth]{\includegraphics[width=\textwidth]{figs/hyperplanes_good_classes.png}}
 \caption{Illustration of well separated classes.} 
 \label{fig:good_sep_classes} % labels must come after captions (figures are 'labelable'?)
@@ -300,10 +309,11 @@ However, more recently there have been attempts to use this concept as an \gls{o
 
 Figure \ref{fig:good_sep_classes} shows the desired geometry of the data. In the following two scenarios our reasoning makes the assumption when new examples are fed into the algorithm. They will likely be somewhere around the classes. The ovals indicate the 'clouds' of data that define each class and each line indicates a \gls{decisionboundary}. In a 2D context, this is a line and in a n-d context, these would be \gls{hyperplane}s.  For illustrative purposes, this is a 2D scenario, but it is important to recognise this would generalise up to n-many dimensions.  In this instance, 
 
-\begin{figure}[ht]
-\makebox[\textwidth]{\includegraphics[width=\textwidth]{figs/hyperplanes_poor_classes.png}}
-\caption{Illustration of poorly separated classes.}
-\label{fig:poor_sep_classes}
+\begin{figure}[H]
+    \centering
+    \makebox[\textwidth]{\includegraphics[width=\textwidth]{figs/hyperplanes_poor_classes.png}}
+    \caption{Illustration of poorly separated classes.}{With classes that have data grouped close together geometrically, we see there is a smaller range of separating hyperplanes that can be found (in this strictly hypothetically instance, there is only one meaningfully distinct hyperplane) and if we draw new samples from these classes, we might expect the data generating process to generate examples that are misclassified (and so experience a label 'flip') by the trained classifier.}
+    \label{fig:poor_sep_classes}
 \end{figure}
 
 Figure \ref{fig:poor_sep_classes} shows a geometry of the data that would have high flipping probability upon \gls{rp}. There is only one \gls{hyperplane} that separates the classes. Hence new examples (e.g. out-of-sample data), which are likely to be near this boundary (the area indicated in red) have a high chance of being misclassified. This is an example of a situation where a traditional loss function, such as the \gls{mse}, would have poor \gls{generalisationperformance}, upon learning a \gls{decisionboundary} between these two classes. \bigskip
