@@ -205,7 +205,14 @@ The underpinnings of the resurgence of \gls{dcnn}s in recent times is linked to 
 
 \section{Tools and Hardware}
 
-Given the computational complexity of  \gls{dl} models, the providence of good tools has accelerated the development of algorithms.  Initially, neural networks were implemented i
+Given the computational complexity of  \gls{dl} models, the providence of good tools has accelerated the development of algorithms. A selection of these tools a proxy for their popularity is shown in figure \ref{fig:git_stars}.
+
+\begin{figure}
+    \centering
+    \includegraphics[width=120mm]{figs/xor_problem.png}
+    \caption{An illustration of the \gls{xor} problem that a perceptron can not solve. Lines indicate arbitrary examples of \gls{linearclassifier}s.}
+    \label{fig:xor_problem}
+\end{figure}
 
 This later burgeoned with Torch, Caffe, Theano and a variety of disparate frameworks and later evolved into Pytorch, Keras and Tensorflow, which have become the main tools of research and production in the \gls{dl}. All three of these frameworks have implementations in Python as well as a variety of other languages (for example, Keras has recently had a wrapper implemented in R \cite{keras_r}). All modern libraries have \gls{ad} incorporated, meaning it is not neccesary to manually find the derivative of a given function in order to perform back propagation; the partial derivatives of functions and the hence the gradients are automatically calculated.  \bigskip
 
