@@ -28,29 +28,8 @@
 
 \setlength{\parindent}{0pt} % disable indents
 
-\begin{abstract}
+\include{tex/1_abstract}
 
-We developed a novel implementation of a \gls{loss} function; the empirical \gls{flipprobability}, derived from the flip probability developed by Durrant \& Kab\'an \cite{durrant2013sharp}. \gls{loss} and tested it in several canonical versions of convolution neural networks to assess whether an increase in training speed or \gls{generalisationperformance} could be achieved. While the \gls{lossfunction} can be used to train networks of a reasonably high accuracy, the performance is generally worse than when standard a standard \gls{lossfunction} and architecture is used. 
-
-\end{abstract}
-\begin{acknowledgements}
-
-\bigskip
-
-\begin{spacing}{2}
-
-% ZAMINGO - is it 'was pivotal' or 'were pivotal'?
-% removed - I think it overstates the results
-% Check whether '.' after Dr
-I would like to thank Dr Robert Durrant for his patience, wisdom and understanding in helping produce this dissertation.
-\bigskip
-
-I am grateful for the support and kindness of my partner, Renata Sawyer.
-\bigskip
-
-\end{spacing}
-
-\end{acknowledgements}
 \tableofcontents
 \listoffigures
 \listoftables
@@ -62,15 +41,15 @@ I am grateful for the support and kindness of my partner, Renata Sawyer.
 \newpage
 \pagenumbering{arabic}
 \setcounter{page}{1}
-\include{tex/acronyms_glossary}
-\include{tex/introduction}
-\include{tex/literature_review}
-\include{tex/methods}
-\include{tex/results_discussion}
-\include{tex/conclusion}
-\include{tex/back_matter}
 
-\chapter{Appendix}
+\include{tex/2_introduction}
+\include{tex/3_literature_review}
+\include{tex/4_methods}
+\include{tex/5_results}
+\include{tex/6_discussion_limitations}
+\include{tex/7_conclusion}
+\include{tex/8_acronyms_glossary}
+\include{tex/9_appendix}
 
 \printglossary[type=\acronymtype]
 \printglossary[type=main]

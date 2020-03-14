@@ -1,3 +1,5 @@
+% this sty file contains the bulk of the preamble for the dissertation
+
 \ProvidesPackage{hon_dissert} % import cust hons sty 'package'
 
 \usepackage{amsmath, amssymb,amsxtra,acronym}
@@ -6,8 +8,6 @@
 
 \usepackage[acronym]{glossaries} % for glossary
 \renewcommand{\glossarypreamble}{\footnotesize}
-
-
 
 \usepackage [autostyle, english = american]{csquotes}
 \MakeOuterQuote{"} % fixes backwards quotes (lets you use " ")
@@ -20,7 +20,6 @@
 \usepackage[english]{babel}
 \usepackage{setspace} % line spacing
 \usepackage{dsfont} % for indicator sign
-\usepackage{hyperref} % for url links
 \usepackage{amsthm} % for theorems
 
 % couldn't figure out how to fix
@@ -83,3 +82,12 @@
 \vspace{-0.5ex}%
 \rule{\textwidth}{0.3pt}
 ] % after-code
+
+% folk wisdom suggests using this last avoids conflicts
+\usepackage{hyperref} % for url links
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}

@@ -1,3 +1,6 @@
+# author: matthew skiffington
+# # purpose: make simple sorted column chart for dissertation re:dl repos
+
 library(ggplot2)
 library(scales)
 

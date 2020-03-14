@@ -163,12 +163,6 @@
     description={A statistical measure of the distance between the predicted result and the actual result, used in the training of learning algorithms}
 }
 
-\newglossaryentry{neuralnetwork}
-{
-    name={NN},
-    description={A Neural Network (NN) is a machine learning algorithm that comprises of a series of layers each with a given number of neurons (which act as a weighted sum of the inputs) with trainable parameters including weights and biases where each neuron typically undergoes a non-linear transformation in the form of an activation function to ultimately produce a prediction of class or target value based on the input data}
-}
-
 \newglossaryentry{neuron}
 {
     name=layer,
@@ -223,12 +217,6 @@
     description={Any learning that does not use the class label or true target value (e.g. clustering)}
 }
 
-\newglossaryentry{vapnikchervonenkis}
-{
-    name={VC},
-    description={The Vapnik-Chervonekis (VC) dimension, this is a measure of the complexity, or capacity of a classifier. It denotes the largest number of points, relative to the ambient dimension, that are always able to classified by a class of classifiers \cite[Chapter~2]{haykin}}
-}
-
 \newacronym{ai}{AI}{Artificial Intelligence}
 \newacronym{apm}{APM}{Actions Per Minute}
 \newacronym{ann}{ANN}{Artificial Neural Network} 
@@ -265,12 +253,24 @@
 \newacronym{mse}{MSE}{Mean Squared Error} 
 \newacronym{nin}{NIN}{Network-in-Network}
 \newacronym{nist}{NIST}{National Institute of Standards and Technology} 
+\newacronym{nn}{NN}{Neuron Network} 
+%\newacronym{nn}{NN}{Neural Network}
 
-\newglossaryentry{nn}{type=\acronymtype, 
-name={NN}, 
-description={Neural Network}, 
-first={Neural Network (NN)\glsadd{neuralnetwork}},
-see=[Glossary:]{neuralnetwork}}
+%\newglossaryentry{nn}
+%{
+%    name={NN},
+%    description={A Neural Network (NN) is a machine learning %algorithm that comprises of a series of layers each with a %given number of neurons (which act as a weighted sum of the %inputs) with trainable parameters including weights and biases %where each neuron typically undergoes a non-linear %transformation in the form of an activation function to %ultimately produce a prediction of class or target value based %on the input data},
+%    first={Neural Network (NN)},
+%    long={Neural Network}
+%}
+
+%\newglossaryentry{vc}
+%{
+%    name={VC},
+%    description={The Vapnik-Chernonekis  dimension, this is a %measure of the complexity, or capacity of a classifier. It %denotes the largest number of instances, relative to the %ambient dimension, that are always able to classified by a %class of classifiers \cite[Chapter~2]{haykin}},
+%    first={Vapnik-Chernonekis (VC)},
+%    long={Vapnik-Chernonekis}
+%}
 
 \newacronym{pca}{PCA}{Principal Components Analysis}
 \newacronym{ram}{RAM}{Random Access Memory}
@@ -285,12 +285,6 @@ see=[Glossary:]{neuralnetwork}}
 \newacronym{tpu}{TPU}{Tensor Processing Unit}
 \newacronym{uap}{UAP}{Universal Approximation Theorem}
 \newacronym{vae}{VAE}{Variational Auto-Encoder}
-
-\newglossaryentry{vc}{type=\acronymtype, 
-name={VC}, 
-description={Vapnik-Chervonenkis}, 
-first={Vapnik-Chervonekis (VC)\glsadd{vapnikchervonenkis}},
-see=[Glossary:]{vapnikchervonenkis}}
-
+\newacronym{vc}{VC}{Vapnik-Chernonekis}
 \newacronym{xor}{XOR}{Exclusive OR}
 \newacronym{yolo}{YOLO}{You Only Look Once}

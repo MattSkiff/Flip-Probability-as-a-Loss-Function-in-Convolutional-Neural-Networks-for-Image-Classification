@@ -1,9 +1,10 @@
 \chapter{Results and Discussion}
 
-The first set of experiments used the 'toy' artificial data set. 
-\bigskip
+%The first set of experiments used the 'toy' artificial data set. 
+%\bigskip
 
-The second set of experiments used the MNIST data set. In principle, any modern iteration of a \gls{cnn} can achieve very high accuracy on this data set \cite{mnist_sota_web}. \gls{nn}s ranging from simple CNNs to modern CapsNets, \gls{resnet}s and DenseNets (all \gls{dnn}s) should be able to achieve 98-99\% on this data set {\cite{mnist_sota_web}}. This is seen in the test and training accuracies in the baseline training schemes (figure \ref{fig:training_scheme_9_10}), where very high accuracies are achieved after only a few \gls{epoch}s. 
+% The second set of
+The experiments used the MNIST data set. In principle, any modern iteration of a \gls{cnn} can achieve very high accuracy on this data set \cite{mnist_sota_web}. \gls{nn}s ranging from simple CNNs to modern CapsNets, \gls{resnet}s and DenseNets (all \gls{dnn}s) should be able to achieve 98-99\% on this data set {\cite{mnist_sota_web}}. This is seen in the test and training accuracies in the baseline training schemes (figure \ref{fig:training_scheme_9_10}), where very high accuracies are achieved after only a few \gls{epoch}s. 
 \bigskip
 
 % https://tex.stackexchange.com/questions/140833/arranging-multiple-plots-in-a-grid-inside-a-figure-subfloat
@@ -37,7 +38,7 @@ The second set of experiments used the MNIST data set. In principle, any modern 
     \label{fig:training_scheme_1}
 \end{figure}
 
-The initial results in figure \ref{fig:training_scheme_1} show that using \gls{fp} as a \gls{lossfunction} is viable, if not very effective. We see that while the network sporadically achieves high test accuracies (often higher than the training accuracies, although this effect would likely diminish once \gls{cv} is performed), the network settles in a low-accuracy configuration, where it's performance on the test set is only equivalent to randomly guessing (10\% for the ten class case). It is possible the optimiser has coasted past the local optimum on the loss surface, as we have not used a learning rate schedule to modulate the size of the steps towards the optimum as the algorithm is trained.
+The initial results in figure \ref{fig:training_scheme_1} show that using \gls{fp} as a \gls{lossfunction} is viable, if not very effective. We see that while the network sporadically achieves high test accuracies (often higher than the training accuracy's, although this effect would likely diminish once \gls{cv} is performed), the network settles in a low-accuracy configuration, where its performance on the test set is only equivalent to randomly guessing (10\% for the ten class case). It is possible the optimiser has coasted past the local optimum on the loss surface, as we have not used a learning rate schedule to modulate the size of the steps towards the optimum as the algorithm is trained.
 \bigskip
 
     
@@ -65,7 +66,7 @@ The initial results in figure \ref{fig:training_scheme_1} show that using \gls{f
     \label{fig:training_scheme_2}
 \end{figure}
 
-The results from training the algorithm for a shorter period of time (10 epochs) are more promising, although the test performance still pales in comparison to the baseline algorithm. We can see from the train accuracy and the loss graphs that there is a considerable amount of oscillation occurring when we switch from using the \gls{ce} loss to the \gls{fp} loss on a batc-wise basis. This likely comes from the problem of using two separate loss functions for the same modeling problem; as both loss functions would have a separate n-dimension surface they are being optimised on via \gls{sgd}, hence we are seeing a 'tug-of-war' as we alternate between them. It is possible that this also occurred with the initial training scheme (\ref{fig:training_scheme_1}) and there the algorithm ended up minimising the \gls{fp} loss preferentially to the \gls{ce} loss. However, as indicated by the loss plots, both are being minimised, although far more slowly than we might expect with using a single loss function. Extending the period of \gls{fp} training on the data worsen the results, as shown in \ref{fig:training_scheme_7}.
+The results from training the algorithm for a shorter period of time (10 epochs) are more promising, although the test performance still pales in comparison to the baseline algorithm. We can see from the train accuracy and the loss graphs that there is a considerable amount of oscillation occurring when we switch from using the \gls{ce} loss to the \gls{fp} loss on a batc-wise basis. This likely comes from the problem of using two separate loss functions for the same modeling problem; as both loss functions would have a separate n-dimension surface they are being optimised on via \gls{sgd}, hence we are seeing a 'tug-of-war' as we alternate between them. It is possible that this also occurred with the initial training scheme (\ref{fig:training_scheme_1}) and there the algorithm ended up minimising the \gls{fp} loss preferentially to the \gls{ce} loss. However, as indicated by the loss plots, both are being minimised, although far more slowly than we might expect with using a single loss function. Extending the period of \gls{fp} training on the data worsens the results, as shown in \ref{fig:training_scheme_7}.
 \bigskip
 
 % Scheme 3 excluded from results as identical to run 4, sans training plot
@@ -162,8 +163,8 @@ The results from training the algorithm for a shorter period of time (10 epochs)
       \includegraphics[width=65mm]{figs/run_6/train_losses_ce.png}
     }
     \hspace{0mm}
-    \hbox to 67.5mm{}% !!
-    \subfloat[Flip probability loss - train]{   % ???
+    \hbox to 67.5mm{}
+    \subfloat[Flip probability loss - train]{   
       \includegraphics[width=65mm]{figs/run_6/train_losses_fp.png}
     }
     \caption[The results of the fifth training scheme]{The fifth training scheme shows that once the loss is switched to \gls{fp}, the \gls{ce} loss rapidly decreases and test and training training accuracy increase, although not to baseline levels. The \gls{fp} loss shows the first half of training batches, while the \gls{ce} loss shows the second half.}
@@ -186,8 +187,8 @@ The results from training the algorithm for a shorter period of time (10 epochs)
       \includegraphics[width=65mm]{figs/run_7/train_losses_ce.png}
     }
     \hspace{0mm}
-    \hbox to 67.5mm{}% !!
-    \subfloat[Flip probability loss - train]{   % ???
+    \hbox to 67.5mm{}
+    \subfloat[Flip probability loss - train]{  
       \includegraphics[width=65mm]{figs/run_7/train_losses_fp.png}
     }
     \caption[The results of the sixth training scheme]{The results of the sixth training scheme show using momentum has no significant effect on the results.}
@@ -210,8 +211,8 @@ The results from training the algorithm for a shorter period of time (10 epochs)
       \includegraphics[width=65mm]{figs/run_8/train_losses_ce.png}
     }
     \hspace{0mm}
-    \hbox to 67.5mm{}% !!
-    \subfloat[Flip probability loss - training]{   % ???
+    \hbox to 67.5mm{}
+    \subfloat[Flip probability loss - training]{
       \includegraphics[width=65mm]{figs/run_8/train_losses_fp.png}
     }
     \caption[The results of the seventh training scheme]{The seventh training scheme shows that extending the period of representation training to 10 epochs worsens the results when the regular learning process using \gls{ce} is resumed.}
@@ -234,8 +235,8 @@ The results from training the algorithm for a shorter period of time (10 epochs)
       \includegraphics[width=65mm]{figs/run_9/train_losses_ce.png}
     }
     \hspace{0mm}
-    \hbox to 67.5mm{}% !!
-    \subfloat[Flip probability loss - train]{   % ???
+    \hbox to 67.5mm{}
+    \subfloat[Flip probability loss - train]{   
       \includegraphics[width=65mm]{figs/run_9/train_losses_fp.png}
     }
     \caption[The results of the eight training scheme]{long}
@@ -314,8 +315,6 @@ The results from training the algorithm for a shorter period of time (10 epochs)
     \label{fig:training_scheme_11}
 \end{figure}
 
-
-
 \begin{figure}[p]
     \centering
     \subfloat[Test accuracy]{
@@ -340,21 +339,11 @@ The results from training the algorithm for a shorter period of time (10 epochs)
     \label{fig:training_scheme_12}
 \end{figure}
 
-We can see that the baseline schemes, figures \ref{fig:training_scheme_10_11}, clearly achieve a very high accuracy rapidly and without trouble. Removing image normalisation slightly decreases training and testing accuracy during the early stages of training, but otherwise has little effect on the final accuracy.
+We can see that the baseline schemes (figure \ref{fig:training_scheme_9_10}), clearly achieve a very high accuracy rapidly with minimal oscillation. Removing image normalisation slightly decreases training and testing accuracy during the early stages of training, but otherwise has little effect on the final accuracy.
 \bigskip
 
-The third, more refined set of experiments was on the \gls{cifar}-10 data set
-\bigskip
-
-The final experiment was an attempt to implement \gls{fp} in a \gls{dl} context, to see if any improvements could be made. We used the Tiny ImageNet data set
-\bigskip
-
-\section{Discussion}
-
-It is feasible to implement \gls{fp} in a way that resembles the cosine loss, although this comes at the expense of increased computation burden and poorer training accuracies. Implementing \gls{fp} in a way that allows for \gls{gd} has still not been done.
-\bigskip
-
-Other work leveraging \gls{rp}s exists. For example, \gls{rp}s have been used in projection networks in tandem with the full \gls{nn} to efficiently compress down (reduce the number of parameters) the full networks to lessen the memory footprint. This allows projection networks to run on devices that have resource constraints, such as smartwatches \cite{projection_net}. 
-\bigskip
-
-
+%The third, more refined set of experiments was on the \gls{cifar}-10 data set
+%\bigskip
+%
+%The final experiment was an attempt to implement \gls{fp} in a \gls{dl} context, to see if any %improvements could be made. We used the Tiny ImageNet data set
+%\bigskip

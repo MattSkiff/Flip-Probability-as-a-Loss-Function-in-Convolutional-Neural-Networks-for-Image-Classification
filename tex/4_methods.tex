@@ -1,6 +1,6 @@
 \chapter{Methods}
 
-One of the motivations of using flip probability as a loss function is the 'cold start' problem in \gls{ml}. Ideally, one could 'warm start' a network by training it from scratch with a small sample. This is not dissimilar to the idea of \gls{dataaugmentation} - improving the ability of the network to learn on the raw data. This is a problem that is exacerbated further in the context of \gls{dl}, as there are many more millions of parameters (in modern networks) and hence the \gls{parameterspace} is much larger. One hypothesis is that one could use \gls{fp} to perform \gls{representationlearning} on less data than would usually be required so that the network will train quickly.
+One of the motivations of using \gls{fp} as a \gls{lossfunction} is the \enquote{cold start} problem in \gls{ml}. Ideally, one could \enquote{warm start} a network by training it from scratch with a small sample. This is not dissimilar to the idea of \gls{dataaugmentation} - improving the ability of the network to learn on the raw data. This is a problem that is exacerbated further in the context of \gls{dl}, as there are many more millions of parameters (in modern networks) and hence the \gls{parameterspace} is much larger. One hypothesis is that one could use \gls{fp} to perform \gls{representationlearning} on less data than would usually be required to improve training speed.
 
 \begin{hypothesis} %\begin{hyp}[H\ref{hyp:first}] \label{hyp:first}
 Using \gls{fp} to perform \gls{representationlearning} on the data will allow the network to train more quickly.
@@ -8,7 +8,7 @@ Using \gls{fp} to perform \gls{representationlearning} on the data will allow th
 \end{hypothesis}
 
 % this is something of a false dichotomy - need to investigate how CE performs around edges
-Another problem with classifiers trained using a traditional loss function, like \gls{mse}, is that (as illustrated by figures \ref{fig:poor_sep_classes} and \ref{fig:good_sep_classes}) they tend to generalise poorly, especially when the data classes are closely spaced geometrically. Hence, by using \gls{fp} to find a representation of the data that spaces out these classes in a geometric sense, we might expect to see an increase in \gls{generalisationperformance}.
+Another problem with classifiers trained using a traditional \gls{lossfunction}, like \gls{mse}, is that (as illustrated by figures \ref{fig:poor_sep_classes} and \ref{fig:good_sep_classes}) they tend to generalise poorly, especially when the data classes are closely spaced geometrically. Hence, by using \gls{fp} to find a representation of the data that spaces out these classes in a geometric sense, we might expect to see an increase in \gls{generalisationperformance}.
 
 \begin{hypothesis} %\begin{hyp}[H\ref{hyp:first}] \label{hyp:first}
 Using \gls{fp} to perform \gls{representationlearning} on the data will improve \gls{generalisationperformance}.
@@ -95,7 +95,7 @@ Where;  \smallskip
 \item $M$ is the number of classes %is the number of \gls{rp} matrices
 \end{itemize}
 
-Equation \ref{eq:sgd_fp} fails to consider the possibility that the randomly projected classifier,  $(R_j h_i)$, will classify the data, $x_L$, correctly where the unprojected classifier has classified the data incorrectly.
+Equation \ref{eq:sgd_fp} fails to consider the possibility that the randomly projected classifier,  $(R_j h_i)$, will classify the data, $x_L$, correctly where the unprojected classifier has classified the data incorrectly. This would count as a label 'flip' (and hence increase the \gls{loss}) despite the projected classifier correctly classifying the instance.
 \bigskip
 
 \begin{equation}
@@ -107,24 +107,27 @@ Equation \ref{eq:sgd_fp} fails to consider the possibility that the randomly pro
 Where $y_i$ is the correct label of the data $x_i$. 
 \bigskip
 
-Equation \ref{eq:conditional_sgd_fp} correctly accounts for this (although it is anticipated with a well trained classifier, this situation would account for a negligible proportion of cases). 
+Equation \ref{eq:conditional_sgd_fp} correctly accounts for this (although it is anticipated that with a well trained classifier, this situation would account for a negligible proportion of cases). 
 \bigskip
 
-How often the projected classifier incorrectly classifies the data when the data is compressed strongly depends on the geometry of the data. The key idea with using \gls{fp} as a loss function in a \gls{nn} context is to "drive the representation to a nice place" aka, undergo effective unsupervised representation learning before learning a classifier on the data. 
+How often the projected classifier incorrectly classifies the data when the data is compressed strongly depends on its geometry. The key idea with using \gls{fp} as a \gls{lossfunction} in a \gls{nn} context is to "drive the representation to a nice place" i.e. undergo effective unsupervised representation learning before learning a classifier on the data. 
 \bigskip
 
 % TODO - more explain on FP
 
-Implementing  \gls{fp} inevitably encounters a problem in that loss functions must be differentiable, if the network is to be trained using gradient descent, or a variant thereof (such as the \gls{adam} algorithm). In particular, the loss function must be differentiable with respect to the parameters of the model in order for the gradients to be backpropagated through the network. The gradients are then used to update the parameters in the correct direction (towards a local, and hopefully global, optimum). Modern tools incorporate auto-differentiation libraries to lessen the mathematical challenge of specifying derivatives for complex loss functions, but the function, when decomposed, must still nonetheless be differentiable.
+Implementing  \gls{fp} inevitably encounters a problem in that loss functions must be differentiable, if the network is to be trained using gradient descent, or a variant thereof (such as the \gls{adam} algorithm). In particular, the \gls{lossfunction} must be differentiable with respect to the parameters of the network at each layer, in order for the gradients to be backpropagated correctly. The gradients are then used to update the parameters in the correct direction (towards a local, and hopefully global, optimum). Modern tools incorporate auto-differentiation libraries to lessen the mathematical challenge of specifying derivatives for complex loss functions, but the function, when decomposed, must still nonetheless be differentiable.
 \bigskip
 
-\begin{equation}
-\hat{FP}\ := \frac{1}{L}\frac{1}{M}\sum_{l = 1}^N \sum_{j = 1}^M \mathds{1}((R_j h_i)^T R_jx_L \neq h_i^Tx_L)  
-\label{eq:sgd_fp}
-\end{equation}
+%\begin{equation}
+%\hat{P}\ := \frac{1}{L}\frac{1}{M}\sum_{l = 1}^N \sum_{j = 1}^M \mathds{1}((R_j %h_i)^T R_jx_L \neq h_i^Tx_L)  
+%\label{eq:sgd_fp}
+%\end{equation}
 
-Hence, a major challenge with the above functions is that they are not differentiable, primary due to the inequality involved. This inequality introduces a discontinuity in the function, which is not differentiable. One way to get around this is to recognise that in principle, by minimising the \gls{fp}, we are minimising the angle between the data and the classifier, in the projected space \cite[p.~3]{bob_rp_storage}. From this we can construct a smooth approximation what \gls{fp} is measuring.
+Hence, a major challenge with the above functions is that they are not differentiable, primary due to the discontinuity introduce by the inequality. One workaround is to recognise that in principle, by minimising the \gls{fp}, we are minimising the angle between the data and the classifier, in the projected space \cite[p.~3]{bob_rp_storage}. From this we can construct a smooth approximation what \gls{fp} is measuring (the angle between the data and the classifier).
 
+% Zambingo - probabilistic angle equation
+% Zambingo - regular cosine loss equation
+% Zambingo - final angle fp loss equation
 
 %\myequation{Empirical Flip Probability for Stochastic Gradient Descent}
 
@@ -155,6 +158,7 @@ One way we can reduce the computational burden of this procedure is to generate 
 \end{algorithm}
 
 % TODO - calculate number of RP matrices need for static storage and dynamic generation
+
 \section{Data sets}
  
 %\subsection{Artificial Data}
@@ -162,10 +166,11 @@ One way we can reduce the computational burden of this procedure is to generate 
 %In order to test the effectiveness of \gls{fp} as a loss function, some %synthetic, linearly separable data was generated. As  \gls{fp} benefits %from the \gls{jll}, it was necessary to ensure this was sufficiently highly %dimensional. Hence, data with dimension $k =$ 5,10,20,50,100,500,1000,10000 %was generated to test with a  \gls{nn}. 
 %\bigskip
 
- \subsection{MNIST}
+\subsection{MNIST}
  
-\href{http://yann.lecun.com/exdb/mnist/}{\gls{mnist}} is a famous data set often regarded as a starting point to work on and experiment with. It represents an improvement over the older \gls{nist} data set, which used images from different sources (high school students and workers) for the training and testing set \cite{nist}. It comprises of images of handwritten digits (of ten classes, 0-9), scaled, centered and batch normalised into 28x28 grayscale images. Of 60k images, these are split into 10k training images and 50k testing images \cite{mnist}. This type of problem (digit recognition) is fairly unique in image classification in that the visual information directly conveys the \gls{classlabel}, i.e. there is a direct mapping between the image and the label. Modern training accuracies are sufficiently high (less than 0.2\%, \cite{mnist_sota}) on \gls{mnist} that it can be considered a 'solved' problem \cite{mnist_sota_web}. However, this data is of sufficientl dimensionality ($28 * 28 = \mathds{R}^{784}$) that it can adequately be used as a test for \gls{fp} in a \gls{cnn} context. 
- \bigskip
+\href{http://yann.lecun.com/exdb/mnist/}{\gls{mnist}} is a famous data set often regarded as a starting point to work on and experiment with. It represents an improvement over the older \gls{nist} data set, which used images from different sources (high school students and workers) for the training and testing set \cite{nist}. It comprises of images of handwritten digits (of ten classes, 0-9), scaled, centered and batch normalised into 28x28 grayscale images. Of 60k images, these are split into 10k training images and 50k testing images \cite{mnist}. This type of problem (digit recognition) is fairly unique in image classification in that the visual information directly conveys the \gls{classlabel}, i.e. there is a direct mapping between the image and the label. Modern training accuracies are sufficiently high (less than 0.2\%, \cite{mnist_sota}) on \gls{mnist} that it can be considered a \enquote{solved} problem \cite{mnist_sota_web}. However, this data is of a dimensionality ($28 * 28 = \mathds{R}^{784}$) that it can adequately be used as a test for \gls{fp} in a \gls{cnn} context. \Gls{mnist} is a challenge in linking the representation of the data to a class label in which it is directly represented. This differs from other more modern challenges, which tend to have the objective of linking a semantic meaning or abstract concept to a class label. 
+\bigskip
+
 
 %\subsection{CIFAR-10}
 %
@@ -237,7 +242,7 @@ In terms of \gls{hyperparameter} tuning, various modern methods for this exist, 
 \begin{figure}
     \centering
     \includegraphics[scale=0.5]{figs/relu.png}
-    \caption[The ReLu activation function.]{The ReLu activation function, also known as the \enquote{hinge loss}}, known for its ease of computation and efficacy in training networks.]
+    \caption[The ReLu activation function.]{The ReLu activation function, also known as the \enquote{hinge loss}, known for its ease of computation and efficacy in training networks \cite{activation_search}.}
     \label{fig:relu_function}
 \end{figure}
 
