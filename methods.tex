@@ -3,7 +3,7 @@
 One of the motivations of using flip probability as a loss function is the 'cold start' problem in \gls{ml}. Ideally, one could 'warm start' a network by training it from scratch with a small sample. This is not dissimilar to the idea of \gls{dataaugmentation} - improving the ability of the network to learn on the raw data. This is a problem that is exacerbated further in the context of \gls{dl}, as there are many more millions of parameters (in modern networks) and hence the \gls{parameterspace} is much larger. One hypothesis is that one could use \gls{fp} to perform \gls{representationlearning} on less data than would usually be required so that the network will train quickly.
 
 \begin{hypothesis} %\begin{hyp}[H\ref{hyp:first}] \label{hyp:first}
-Using \gls{fp} to perform \gls{representationlearning} on the data will allow the network to train more quickly.https://www.overleaf.com/project/5d4c12731e8baf5a40f9c2d9
+Using \gls{fp} to perform \gls{representationlearning} on the data will allow the network to train more quickly.
 \label{hyp:first}
 \end{hypothesis}
 
@@ -15,7 +15,7 @@ Using \gls{fp} to perform \gls{representationlearning} on the data will improve 
 \label{hyp:second}
 \end{hypothesis}
 
-Another key idea, as mention in 
+%Another key idea, as mention in 
 
 \section{Flip Probability}
 
@@ -27,7 +27,7 @@ X \in \mathds{R}^d
 
 Where $d$, the dimensionality of the data, is quite high. \bigskip
 
-For a single batch of data and a single classifier, the empirical flipping probability can be thought of as the proportion of label 'flips' that occur when the classifier and binary data are randomly projected down (using a \gls{rp} matrix) to a lower dimension:
+For a single batch of data and a single classifier, the empirical flipping probability can be thought of as the proportion of label \enquote{flips} that occur when the classifier and binary data are randomly projected down (using a \gls{rp} matrix) to a lower dimension:
 
 \begin{equation}
 P((R h)^T Rx \neq h^{T}x)  
@@ -71,7 +71,7 @@ R \in M^{kxd}, R_{ij} = \pm 1 \; w.p. 0.5
 \item $R_{ij}$ is an individual entry of the \gls{rp} matrix  \gls{sgd}  
 \end{itemize}
 
-One example of $h_i$ is the ZAMBINGO at the $i^{th}$ node of the last layer of an \gls{mlp}. This would take the form of a vector of weights that are applied to (cross-multiplied with) the inputs from the previous layer and a bias term is added, before the \gls{activationfunction} for the layer is added.
+One example of $h_i$ is the \gls{linearclassifier} at the $i^{th}$ node of the last layer of an \gls{mlp}. This would take the form of a vector of weights that are applied to (cross-multiplied with) the inputs from the previous layer and a bias term is added, before the \gls{activationfunction} for the layer is added.
 \bigskip
 
 \bigskip
@@ -79,8 +79,8 @@ One example of $h_i$ is the ZAMBINGO at the $i^{th}$ node of the last layer of a
 \gls{fp} implemented using  \gls{sgd} would look like the following:
 
 \begin{equation}
-\label{eq:sgd_fp}
 \hat{P}\ := \frac{1}{L}\frac{1}{M}\sum_{l = 1}^N \sum_{j = 1}^M \mathds{1}((R_j h_i)^T R_jx_L \neq h_i^Tx_L)  
+\label{eq:sgd_fp}
 \end{equation}
 
 Where;  \smallskip
@@ -118,12 +118,14 @@ How often the projected classifier incorrectly classifies the data when the data
 Implementing  \gls{fp} inevitably encounters a problem in that loss functions must be differentiable, if the network is to be trained using gradient descent, or a variant thereof (such as the \gls{adam} algorithm). In particular, the loss function must be differentiable with respect to the parameters of the model in order for the gradients to be backpropagated through the network. The gradients are then used to update the parameters in the correct direction (towards a local, and hopefully global, optimum). Modern tools incorporate auto-differentiation libraries to lessen the mathematical challenge of specifying derivatives for complex loss functions, but the function, when decomposed, must still nonetheless be differentiable.
 \bigskip
 
-Hence, a major challenge with the above loss functions is that they are not differentiable, primary due to the inequality involved. This inequality introduces a discontinuity in the function, which is not differentiable. One way to get around this is to recognise that in principle, we are minimising the angle between the data and the classifier \cite{}
-
 \begin{equation}
-\label{eq:sgd_fp}
 \hat{FP}\ := \frac{1}{L}\frac{1}{M}\sum_{l = 1}^N \sum_{j = 1}^M \mathds{1}((R_j h_i)^T R_jx_L \neq h_i^Tx_L)  
+\label{eq:sgd_fp}
 \end{equation}
+
+Hence, a major challenge with the above functions is that they are not differentiable, primary due to the inequality involved. This inequality introduces a discontinuity in the function, which is not differentiable. One way to get around this is to recognise that in principle, by minimising the \gls{fp}, we are minimising the angle between the data and the classifier, in the projected space \cite[p.~3]{bob_rp_storage}. From this we can construct a smooth approximation what \gls{fp} is measuring.
+
+
 %\myequation{Empirical Flip Probability for Stochastic Gradient Descent}
 
 \section{Implementation of Flip Probability}
@@ -162,7 +164,7 @@ One way we can reduce the computational burden of this procedure is to generate 
 
  \subsection{MNIST}
  
-\url{\gls{mnist}}{http://yann.lecun.com/exdb/mnist/} is a famous data set often regarded as a starting point to work on and experiment with. It represents an improvement over the older \gls{nist} data set, which used images from different sources (high school students and workers) for the training and testing set \cite{nist}. It comprises of images of handwritten digits (of ten classes, 0-9), scaled, centered and batch normalised into 28x28 grayscale images. Of 60k images, these are split into 10k training images and 50k testing images \cite{mnist}. This type of problem (digit recognition) is fairly unique in image classification in that the visual information directly conveys the \gls{classlabel}, i.e. there is a direct mapping between the image and the label. Modern training accuracies are sufficiently high (less than 0.2\%, \cite{mnist_sota}) on \gls{mnist} that it can be considered a 'solved' problem \cite{mnist_sota_web}. However, this data is of sufficientl dimensionality ($28 * 28 = \mathds{R}^{784}$) that it can adequately be used as a test for \gls{fp} in a \gls{cnn} context. 
+\href{http://yann.lecun.com/exdb/mnist/}{\gls{mnist}} is a famous data set often regarded as a starting point to work on and experiment with. It represents an improvement over the older \gls{nist} data set, which used images from different sources (high school students and workers) for the training and testing set \cite{nist}. It comprises of images of handwritten digits (of ten classes, 0-9), scaled, centered and batch normalised into 28x28 grayscale images. Of 60k images, these are split into 10k training images and 50k testing images \cite{mnist}. This type of problem (digit recognition) is fairly unique in image classification in that the visual information directly conveys the \gls{classlabel}, i.e. there is a direct mapping between the image and the label. Modern training accuracies are sufficiently high (less than 0.2\%, \cite{mnist_sota}) on \gls{mnist} that it can be considered a 'solved' problem \cite{mnist_sota_web}. However, this data is of sufficientl dimensionality ($28 * 28 = \mathds{R}^{784}$) that it can adequately be used as a test for \gls{fp} in a \gls{cnn} context. 
  \bigskip
 
 %\subsection{CIFAR-10}
@@ -186,7 +188,7 @@ It is necessary to have baseline results to compare the performance of \gls{fp} 
     \item Simplifying the script to handle artificial data and complexifying the script to handle \gls{cifar}-10
 \end{itemize}
 
-The layers of the network trained on \gls{mnist} \footnote{\url{See Adam W. Harley's excellent \gls{mnist} visualisation}{https://www.cs.ryerson.ca/~aharley/vis/conv/} to explore the internals of how using a \gls{cnn} to classify digits works \cite{mnist_viz}.}
+The layers of the network trained on \gls{mnist} \footnote{\href{https://www.cs.ryerson.ca/~aharley/vis/conv/}{See Adam W. Harley's excellent \gls{mnist} visualisation} to explore the internals of how using a \gls{cnn} to classify digits works \cite{mnist_viz}.}
 
 \begin{itemize}
     \itemsep-1em 
@@ -235,7 +237,7 @@ In terms of \gls{hyperparameter} tuning, various modern methods for this exist, 
 \begin{figure}
     \centering
     \includegraphics[scale=0.5]{figs/relu.png}
-    \caption{The ReLu activation function.}[The ReLu activation function, also known as the 'hinge loss', known for it's ease of computation and efficacy in training networks.]
+    \caption[The ReLu activation function.]{The ReLu activation function, also known as the \enquote{hinge loss}}, known for its ease of computation and efficacy in training networks.]
     \label{fig:relu_function}
 \end{figure}
 
@@ -253,7 +255,7 @@ In all cases;
     \item Kernel size = 5
 \end{itemize}
 
-Where normalisation was performed, this was over each input channel \footnote{\url{https://pytorch.org/docs/stable/torchvision/transforms.html}}, using a mean of 0.1307 and a standard deviation of 0.3081, which are known to be the mean and standard deviation of the grayscale (only) channel of \gls{mnist}.
+Where normalisation was performed, this was over each input channel \footnote{\href{https://pytorch.org/docs/stable/torchvision/transforms.html}{Pytorch Documentation}}, using a mean of 0.1307 and a standard deviation of 0.3081, which are known to be the mean and standard deviation of the grayscale (only) channel of \gls{mnist}.
 
 \begin{landscape}
 
