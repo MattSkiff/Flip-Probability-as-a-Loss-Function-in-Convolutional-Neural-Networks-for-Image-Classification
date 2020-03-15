@@ -75,7 +75,7 @@
 \newglossaryentry{gaussianrandomprojection}
 {
     name=gaussian random projection,
-    description={Random projection of the data by matrix multiplying it with a projection matix whose entries are filled from a distribution from the gaussian family}
+    description={Random projection of the data by matrix multiplying it with a projection matrix whose entries are filled from a distribution from the gaussian family}
 }
 
 \newglossaryentry{generalisationperformance}
@@ -169,6 +169,14 @@
     description={ In a neural network context, a neuron is a single 'unit' that applies a function. Mathematically, this can be thought of as a single column in a the weights matrix, with a length that matches the dimensionality for the input data (if the neuron is situated in the input layer).  } 
 }
 
+\newglossaryentry{nn}
+{
+    name={NN},
+    description={A Neural Network (NN) is a machine learning algorithm that comprises of a series f layers each with a given number of neurons (which act as a weighted sum of the inputs) with rainable parameters including weights and biases where each neuron typically undergoes a on-linear transformation in the form of an activation function to ultimately produce a class prediction or target value based on the input data},
+    first={Neural Network (NN)},
+    long={Neural Network}
+}
+
 \newglossaryentry{objectivefunction}
 {
     name={objective function},
@@ -217,17 +225,28 @@
     description={Any learning that does not use the class label or true target value (e.g. clustering)}
 }
 
+\newglossaryentry{vc}
+{
+    name={VC},
+    description={The Vapnik-Chernonekis  dimension, this is a measure of the complexity, or capacity of a classifier. It denotes the largest number of instances, relative to the ambient dimension, that are always able to classified by a class of classifiers \cite[Chapter~2]{haykin}},
+    first={Vapnik-Chernonekis (VC)},
+    long={Vapnik-Chernonekis}
+}
+
 \newacronym{ai}{AI}{Artificial Intelligence}
 \newacronym{apm}{APM}{Actions Per Minute}
 \newacronym{ann}{ANN}{Artificial Neural Network} 
 \newacronym{ad}{AD}{Automatic Differentiation}
 \newacronym{adam}{ADAM}{Adaptive Moment Estimation} 
 \newacronym{aws}{AWS}{Amazon Web Services}
+\newacronym{brnn}{BRNN}{Bi-directional Neural Network}
 \newacronym{ce}{CE}{Cross-Entropy}
 \newacronym{cifar}{CIFAR}{Canadian Institute for Advanced Research}
 \newacronym{cnn}{CNN}{Convolutional Neural Network}
 \newacronym{cpu}{CPU}{Central Processing Unit}
 \newacronym{cv}{CV}{Cross Validation}
+\newacronym{dae}{DAE}{Denoising Auto-Encoder}
+\newacronym{dbm}{DBM}{Deep Boltzmann Machine}
 \newacronym{dl}{DL}{Deep Learning}
 \newacronym{dnn}{DNN}{Deep Neural Network}
 \newacronym{dcnn}{DCNN}{Deep Convolutional Neural Network}
@@ -242,6 +261,9 @@
 \newacronym{gcp}{GCP}{Google Cloud Platform}
 \newacronym{gd}{GD}{Gradient Descent}
 \newacronym{gpu}{GPU}{Graphics Processing Unit} 
+\newacronym{gsn}{GSN}{Generative Stochastic Network}
+\newacronym{gtn}{GTN}{Graph Transformer Network}
+\newacronym{ide}{IDE}{Integrated Development Environment}
 \newacronym{ilsvrc}{ILSVRC}{ImageNet Large Scale Visual Recognition Challenge}
 \newacronym{jll}{JLL}{Johnson-Linden Straus Lemma} 
 \newacronym{kl}{KL}{Kullback–Leibler} 
@@ -253,27 +275,10 @@
 \newacronym{mse}{MSE}{Mean Squared Error} 
 \newacronym{nin}{NIN}{Network-in-Network}
 \newacronym{nist}{NIST}{National Institute of Standards and Technology} 
-\newacronym{nn}{NN}{Neuron Network} 
-%\newacronym{nn}{NN}{Neural Network}
-
-%\newglossaryentry{nn}
-%{
-%    name={NN},
-%    description={A Neural Network (NN) is a machine learning %algorithm that comprises of a series of layers each with a %given number of neurons (which act as a weighted sum of the %inputs) with trainable parameters including weights and biases %where each neuron typically undergoes a non-linear %transformation in the form of an activation function to %ultimately produce a prediction of class or target value based %on the input data},
-%    first={Neural Network (NN)},
-%    long={Neural Network}
-%}
-
-%\newglossaryentry{vc}
-%{
-%    name={VC},
-%    description={The Vapnik-Chernonekis  dimension, this is a %measure of the complexity, or capacity of a classifier. It %denotes the largest number of instances, relative to the %ambient dimension, that are always able to classified by a %class of classifiers \cite[Chapter~2]{haykin}},
-%    first={Vapnik-Chernonekis (VC)},
-%    long={Vapnik-Chernonekis}
-%}
-
+%\newacronym{nn}{NN}{Neural Network} 
 \newacronym{pca}{PCA}{Principal Components Analysis}
 \newacronym{ram}{RAM}{Random Access Memory}
+\newacronym{rbm}{RBM}{Restricted Boltzmann Machine}
 \newacronym{relu}{ReLu}{Rectified Linear Unit}
 \newacronym{r-cnn}{RNN}{Region-Convolutional Neural Network}
 \newacronym{rgb}{RGB}{Red, Green, Blue}
@@ -281,10 +286,12 @@
 \newacronym{rp}{RP}{Random Projection}
 \newacronym{sgd}{SGD}{Stochastic Gradient Descent}
 \newacronym{ssd}{SSD}{Solid State Disk}
+\newacronym{snn}{SNN}{Spiking Neural Network}
 \newacronym{svm}{SVM}{Support Vector Machines}
+\newacronym{tdnn}{TDNN}{Time Delayed Neural Network}
 \newacronym{tpu}{TPU}{Tensor Processing Unit}
 \newacronym{uap}{UAP}{Universal Approximation Theorem}
 \newacronym{vae}{VAE}{Variational Auto-Encoder}
-\newacronym{vc}{VC}{Vapnik-Chernonekis}
+%\newacronym{vc}{VC}{Vapnik-Chernonekis}
 \newacronym{xor}{XOR}{Exclusive OR}
 \newacronym{yolo}{YOLO}{You Only Look Once}
