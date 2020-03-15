@@ -38,7 +38,7 @@ The experiments used the MNIST data set. In principle, any modern iteration of a
     \label{fig:training_scheme_1}
 \end{figure}
 
-The initial results in figure \ref{fig:training_scheme_1} show that using \gls{fp} as a \gls{lossfunction} is viable, if not very effective. We see that while the network sporadically achieves high test accuracies (often higher than the training accuracy's, although this effect would likely diminish once \gls{cv} is performed), the network settles in a low-accuracy configuration, where its performance on the test set is only equivalent to randomly guessing (10\% for the ten class case). It is possible the optimiser has coasted past the local optimum on the loss surface, as we have not used a learning rate schedule to modulate the size of the steps towards the optimum as the algorithm is trained.
+The initial results in figure \ref{fig:training_scheme_1} show that using \gls{fp} as a \gls{lossfunction} is viable, if not very effective. We see that while the network sporadically achieves high test accuracies (often higher than the training accuracy's, although this effect would likely diminish once \gls{cv} is performed), the network settles in a low-accuracy configuration, where its performance on the test set is only equivalent to randomly guessing (10\% for the ten class case). It is possible the optimiser coasted past the local optimum on the loss surface, as we did not use a learning rate schedule to modulate the size of the steps towards the optimum as the algorithm is trained.
 \bigskip
 
     
@@ -141,7 +141,7 @@ The results from training the algorithm for a shorter period of time (10 epochs)
     \subfloat[Flip probability loss - training]{   % ???
       \includegraphics[width=65mm]{figs/run_5/train_losses_fp.png}
     }
-    \caption[The results of the fourth training scheme]{The }
+    \caption[The results of the fourth training scheme]{The results of the fourth training scheme}
     \label{fig:training_scheme_4}
 \end{figure}
 
@@ -239,7 +239,7 @@ The results from training the algorithm for a shorter period of time (10 epochs)
     \subfloat[Flip probability loss - train]{   
       \includegraphics[width=65mm]{figs/run_9/train_losses_fp.png}
     }
-    \caption[The results of the eight training scheme]{long}
+    \caption[The results of the eighth training scheme]{Setting up the training procedure such that the network alernates between training mostly on \gls{ce} loss and only trains on \gls{fp} loss for short periods improves performance considerably, suggesting \gls{fp} has a detrimental effect.}
     \label{fig:training_scheme_8}
 \end{figure}
 
