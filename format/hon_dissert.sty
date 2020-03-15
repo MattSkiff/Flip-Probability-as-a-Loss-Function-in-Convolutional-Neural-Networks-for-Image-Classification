@@ -2,7 +2,8 @@
 
 \ProvidesPackage{hon_dissert} % import cust hons sty 'package'
 
-\usepackage{amsmath, amssymb,amsxtra,acronym}
+\usepackage{amsmath}
+\usepackage{amssymb,amsxtra,acronym}
 \usepackage[utf8]{inputenc} % defines input encoding as utf-8
 \usepackage[T1]{fontenc}
 
@@ -26,7 +27,6 @@
 % https://tex.stackexchange.com/questions/173102/table-of-equations-like-list-of-figures
 % \usepackage[subfigure]{tocloft} % conflicts with subfigure, even when option used
 \usepackage{subfig} % for grids of figures
-
 \usepackage{sidecap}  % for caption next to figure 
 \usepackage{wrapfig} % wrap text around figure
 \usepackage[ruled,vlined]{algorithm2e} % allows use of the 'algorithmic' environment
@@ -82,6 +82,8 @@
 \vspace{-0.5ex}%
 \rule{\textwidth}{0.3pt}
 ] % after-code
+
+%\usepackage{svg} % for svgs % broken
 
 % folk wisdom suggests using this last avoids conflicts
 \usepackage{hyperref} % for url links

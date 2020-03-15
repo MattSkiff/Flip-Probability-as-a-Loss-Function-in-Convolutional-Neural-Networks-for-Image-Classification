@@ -45,7 +45,7 @@
 \newglossaryentry{epoch}
 {
     name=epoch,
-    description={A full forward and backwards pass over the network}
+    description={A time step representing a full forward and backwards pass over the network}
 }
 
 \newglossaryentry{features}
@@ -225,6 +225,14 @@
     description={Any learning that does not use the class label or true target value (e.g. clustering)}
 }
 
+\newglossaryentry{vanishinggradients}
+{
+    name=vanishing gradients,
+    description={
+    The tendency of gradients that are being back-propagated to 'vanish' i.e. diminish in size to the point where numerical underflow issues occur. This is closely linked to the 'exploding gradients' problem
+    }
+}
+
 \newglossaryentry{vc}
 {
     name={VC},
@@ -267,7 +275,7 @@
 \newacronym{ilsvrc}{ILSVRC}{ImageNet Large Scale Visual Recognition Challenge}
 \newacronym{jll}{JLL}{Johnson-Linden Straus Lemma} 
 \newacronym{kl}{KL}{Kullback–Leibler} 
-\newacronym{lln}{LNN}{Law of Large Numbers}
+\newacronym{lln}{LLN}{Law of Large Numbers}
 \newacronym{ltsm}{LTSM}{Long-Term Short-Term Memory}
 \newacronym{ml}{ML}{Machine Learning}
 \newacronym{mlp}{MLP}{Multi-layer Perceptron}
@@ -290,7 +298,7 @@
 \newacronym{svm}{SVM}{Support Vector Machines}
 \newacronym{tdnn}{TDNN}{Time Delayed Neural Network}
 \newacronym{tpu}{TPU}{Tensor Processing Unit}
-\newacronym{uap}{UAP}{Universal Approximation Theorem}
+\newacronym{uap}{UAP}{Universal Approximation}
 \newacronym{vae}{VAE}{Variational Auto-Encoder}
 %\newacronym{vc}{VC}{Vapnik-Chernonekis}
 \newacronym{xor}{XOR}{Exclusive OR}
