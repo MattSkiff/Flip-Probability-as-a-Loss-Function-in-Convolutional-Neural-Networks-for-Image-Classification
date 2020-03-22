@@ -96,7 +96,7 @@ Where;  \smallskip
 \item $M$ is the number of classes %is the number of \gls{rp} matrices
 \end{itemize}
 
-Equation \ref{eq:sgd_fp} fails to consider the possibility that the randomly projected classifier,  $(R_j h_i)$, will classify the data, $x_L$, correctly where the unprojected classifier has classified the data incorrectly. This would count as a label 'flip' (and hence increase the \gls{loss}) despite the projected classifier correctly classifying the instance.
+Equation \ref{eq:sgd_fp} fails to consider the possibility that the randomly projected classifier,  $(R_j h_i)$, will classify the data, $x_L$, correctly where the unprojected classifier has classified the data incorrectly. This would count as a label \enquote{flip} (and hence increase the \gls{loss}) despite the projected classifier correctly classifying the instance.
 \bigskip
 
 \begin{equation}
@@ -125,6 +125,8 @@ Implementing  \gls{fp} inevitably encounters a problem in that loss functions mu
 %\end{equation}
 
 Hence, a major challenge with the above functions is that they are not differentiable, primarily due to the discontinuity introduced by the inequality. One workaround is to recognise that in principle, by minimising the \gls{fp}, we are minimising the angle between the data and the classifier, in the projected space \cite[p.~3]{bob_rp_storage}. From this we can construct a smooth approximation what \gls{fp} is measuring (the angle between the data and the classifier).
+
+
 
 % Zambingo - probabilistic angle equation
 
@@ -172,7 +174,7 @@ One way we can reduce the computational burden of this procedure is to generate 
 
 \subsection{Development Data Sets}
 
-In the development of the final implemented loss function, the synthetic 'moons' data set from SciKitLearn \footnote{\href{https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_moons.html}{Found here.}} and the Wisconsin breast cancer classification set \cite{uci_ml_data} \footnote{\href{https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+(Diagnostic)}{UCI link}} were used. Both are binary classification problems; the 'moons' data set is a simple example of non-linearly separable data (with only 'x' and 'y' coordinates as attributes) and the breast cancer data set has around ~30 attributes.
+In the development of the final implemented loss function, the synthetic \enquote{moons} data set from SciKitLearn \footnote{\href{https://scikit-learn.org/stable/modules/generated/sklearn.datasets.make_moons.html}{Found here.}} and the Wisconsin breast cancer classification set \cite{uci_ml_data} \footnote{\href{https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+(Diagnostic)}{UCI link}} were used. Both are binary classification problems; the \enquote{moons} data set is a simple example of non-linearly separable data (with only \enquote{x} and \enquote{y} coordinates as attributes) and the breast cancer data set has around ~30 attributes.
 
 \subsection{MNIST}
  
@@ -191,7 +193,7 @@ To extend upon the \gls{mnist} testing with a more challenging data set, the ten
 
 \section{Training Schemes}
 % , \ref{algo:10-fold-cv}  
-It is necessary to have baseline results to compare the performance of \gls{fp} against. While there are various data preprocessing (scaling, whitening), and \gls{dataaugmentation} strategies (e.g. flipping, cropping, rotation, random erasing and jittering \cite{data_aug_survey}) available, we use a fairly simple script in Pytorch (\cite{mnist_script}) that uses the test/train split present in the  \gls{mnist} data set and rapidly achieves an accuracy of 97\%. Ideally, we would test the algorithms using 10-fold \gls{cv} (the 'gold standard'). However, this introduces a high level of computational burden, as the algorithm must be run independently across at 10 different subsets of the data. This script was built upon by:
+It is necessary to have baseline results to compare the performance of \gls{fp} against. While there are various data preprocessing (scaling, whitening), and \gls{dataaugmentation} strategies (e.g. flipping, cropping, rotation, random erasing and jittering \cite{data_aug_survey}) available, we use a fairly simple script in Pytorch (\cite{mnist_script}) that uses the test/train split present in the  \gls{mnist} data set and rapidly achieves an accuracy of 97\%. Ideally, we would test the algorithms using 10-fold \gls{cv} (the \enquote{gold standard}). However, this introduces a high level of computational burden, as the algorithm must be run independently across at 10 different subsets of the data. This script was built upon by:
 
 \begin{itemize}
     \item Writing new \gls{lossfunction}s to implement \gls{fp}
@@ -248,7 +250,7 @@ In terms of \gls{hyperparameter} tuning, various modern methods for this exist, 
 \begin{figure}
     \centering
     \includegraphics[scale=0.5]{figs/relu.png}
-    \caption[The ReLu activation function.]{The ReLu activation function, also known as the \enquote{hinge loss}, known for its ease of computation and efficacy in training networks \cite{activation_search}.}
+    \caption[The ReLu activation function.]{The ReLu activation function, also known as the \enquote{hinge loss} (when used as a \gls{lossfunction}), known for its ease of computation and efficacy in training networks \cite{activation_search}.}
     \label{fig:relu_function}
 \end{figure}
 
@@ -315,4 +317,6 @@ Locally, the \gls{nn}s were run on an Asus laptop with 8 \gls{gb}s of \gls{ram},
 
 \section{Software}
 
-All networks were implemented in \href{https://pytorch.org/}{Pytorch}, a \gls{dl} platform built on top of the older 'torch' library. Python was used to design and run all code, with Spyder as the \gls{ide} when scripts were run locally. Pytorch has the advantage of being more easily able to be modified at a low level, which is necessary for designing and integrating custom loss functions. It also has a 'pythonic' imperative style, which is less obtuse than the declarative style used in Tensorflow and the reductionist style of Keras \cite{tale_dl}. All code used to generate results, visualisations and latex markup written for this dissertation can be accessed at the \href{https://github.com/MattSkiff/Flip-Probability-as-a-Loss-Function-in-Convolutional-Neural-Networks-for-Image-Classification}{GitHub repository}. This document was written using \href{https://www.overleaf.com/}{Overleaf}. \href{https://inkscape.org/}{Inkscape} was used for non-programmatic diagrams.
+All networks were implemented in \href{https://pytorch.org/}{Pytorch}, a \gls{dl} platform built on top of the older \enquote{torch} library. Python was used to design and run all code, with Spyder as the \gls{ide} when scripts were run locally. Pytorch has the advantage of being more easily able to be modified at a low level, which is necessary for designing and integrating custom loss functions. It also has a \enquote{pythonic} imperative style, which is less obtuse than the declarative style used in Tensorflow and the reductionist style of Keras \cite{tale_dl}.
+\bigskip
+

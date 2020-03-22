@@ -66,7 +66,7 @@ The initial results in figure \ref{fig:training_scheme_1} show that using \gls{f
     \label{fig:training_scheme_2}
 \end{figure}
 
-The results from training the algorithm for a shorter period of time (10 epochs) are more promising, although the test performance still pales in comparison to the baseline algorithm. We can see from the train accuracy and the loss graphs that there is a considerable amount of oscillation occurring when we switch from using the \gls{ce} loss to the \gls{fp} loss on a batc-wise basis. This likely comes from the problem of using two separate loss functions for the same modeling problem; as both loss functions would have a separate n-dimension surface they are being optimised on via \gls{sgd}, we are seeing a 'tug-of-war' as we alternate between them. It is possible that this also occurred with the initial training scheme (\ref{fig:training_scheme_1}) and there the algorithm ended up minimising the \gls{fp} loss preferentially to the \gls{ce} loss. However, as indicated by the loss plots, both are being minimised, although far more slowly than we might expect with using a single loss function. Extending the period of \gls{fp} training on the data worsens the results, as shown in \ref{fig:training_scheme_7}.
+The results from training the algorithm for a shorter period of time (10 epochs) are more promising, although the test performance still pales in comparison to the baseline algorithm. We can see from the train accuracy and the loss graphs that there is a considerable amount of oscillation occurring when we switch from using the \gls{ce} loss to the \gls{fp} loss on a batch-wise basis. This likely comes from the problem of using two separate loss functions for the same modeling problem; as both loss functions would have a separate n-dimension surface they are being optimised on via \gls{sgd}, we are seeing a \enquote{tug-of-war} as we alternate between them. It is possible that this also occurred with the initial training scheme (\ref{fig:training_scheme_1}) and there the algorithm ended up minimising the \gls{fp} loss preferentially to the \gls{ce} loss. However, as indicated by the loss plots, both are being minimised, although far more slowly than we might expect with using a single loss function. Extending the period of \gls{fp} training on the data worsens the results, as shown in \ref{fig:training_scheme_7}.
 \bigskip
 
 % Scheme 3 excluded from results as identical to run 4, sans training plot
@@ -100,7 +100,7 @@ The results from training the algorithm for a shorter period of time (10 epochs)
     \subfloat[Test accuracy]{
       \includegraphics[width=65mm]{figs/run_4/test_accuracy_fp.png}
     }
-    \subfloat[second]{
+    \subfloat[Test FP loss]{
       \includegraphics[width=65mm]{figs/run_4/test_losses_fp.png}
     }
     \hspace{0mm}
@@ -126,7 +126,7 @@ The results from training the algorithm for a shorter period of time (10 epochs)
     \subfloat[Test accuracy]{
       \includegraphics[width=65mm]{figs/run_5/test_accuracy_fp.png}
     }
-    \subfloat[second]{
+    \subfloat[Test FP loss]{
       \includegraphics[width=65mm]{figs/run_5/test_losses_fp.png}
     }
     \hspace{0mm}
@@ -141,7 +141,7 @@ The results from training the algorithm for a shorter period of time (10 epochs)
     \subfloat[Flip probability loss - training]{   % ???
       \includegraphics[width=65mm]{figs/run_5/train_losses_fp.png}
     }
-    \caption[The results of the fourth training scheme]{The results of the fourth training scheme}
+    \caption[The results of the fourth training scheme.]{The results of the fourth training scheme.}
     \label{fig:training_scheme_4}
 \end{figure}
 
@@ -152,7 +152,7 @@ The results from training the algorithm for a shorter period of time (10 epochs)
     \subfloat[Test accuracy]{
       \includegraphics[width=65mm]{figs/run_6/test_accuracy_fp.png}
     }
-    \subfloat[second]{
+    \subfloat[Test FP loss]{
       \includegraphics[width=65mm]{figs/run_6/test_losses_fp.png}
     }
     \hspace{0mm}
@@ -277,7 +277,7 @@ The results from training the algorithm for a shorter period of time (10 epochs)
       \includegraphics[width=50mm]{figs/run_11/train_losses_ce.png}
     }
     \hspace{0mm}
-    \caption[The results of the ninth and tenth training scheme, the baseline scheme, with and without normalisation]{The baseline scheme, both with normalised and unnormalised input data, showing very high test accuracies after only a few epochs.}
+    \caption[The results of the ninth and tenth training scheme, the baseline scheme, with and without normalisation.]{The baseline scheme, both with normalised and unnormalised input data, showing very high test accuracies after only a few epochs.}
     \label{fig:training_scheme_9_10}
 \end{figure}
 
@@ -311,7 +311,7 @@ The results from training the algorithm for a shorter period of time (10 epochs)
     \subfloat[Flip probability loss - training]{   % ???
       \includegraphics[width=65mm]{figs/run_12/train_losses_fp.png}
     }
-    \caption{The results of the eleventh training scheme}
+    \caption{The results of the eleventh training scheme.}
     \label{fig:training_scheme_11}
 \end{figure}
 
@@ -335,12 +335,14 @@ The results from training the algorithm for a shorter period of time (10 epochs)
     \subfloat[Flip probability loss - training]{   % ???
       \includegraphics[width=65mm]{figs/run_13/train_losses_fp.png}
     }
-    \caption[The results of the twelfth training scheme]{Running the network for many epochs with \gls{fp} loss, without momentum or drop-out shows results that are at least comparable to the baseline scheme, given sufficient training time.}
+    \caption[The results of the twelfth training scheme.]{Running the network for many epochs with \gls{fp} loss, without momentum or drop-out shows results that are at least comparable to the baseline scheme, given sufficient training time.}
     \label{fig:training_scheme_12}
 \end{figure}
 
 We can see that the baseline schemes (figure \ref{fig:training_scheme_9_10}), clearly achieve a very high accuracy rapidly with minimal oscillation. Removing image normalisation slightly decreases training and testing accuracy during the early stages of training, but otherwise has little effect on the final accuracy.
 \bigskip
+
+We can see from the figures above, where the network was able to achieve a high and stable accuracy, this took a greater number of epochs than when running the baseline scheme. Additionally, the time for each iteration to complete was longer, which follows intuitively as the network incorporating the flip probability required the evaluation of a more complex loss function.
 
 %The third, more refined set of experiments was on the \gls{cifar}-10 data set
 %\bigskip
