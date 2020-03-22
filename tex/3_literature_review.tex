@@ -38,19 +38,21 @@ Figure \ref{fig:ai_ml_dl} shows the relationship between \gls{ai}, \gls{ml} and 
 \section{Machine Learning}
 % name drop kernel trick
 
+\glsreset{ml} 
+
 \glsfirst{ml} is an interdisciplinary field at the intersection of mathematics, computer science and statistics and itself is often considered as a sub-field of the broad area of study that is \gls{ai}. \gls{ml} deals with the challenge of "learning" from data without manual human input. In contrast to many statistical techniques, \gls{ml} is well suited to scenarios where predictive accuracy is paramount, training examples are both numerous and high dimensional, and inferential understanding is not critical. \gls{ml} gathered a lot of momentum in the 1990s, with the term \enquote{data mining} often used as a pseudonym (this usually refers to a slightly broader field of study which looks at the process end to end, with less of an algorithmic focus). Traditional techniques in the field of \gls{ml} include decision trees,  \gls{svm}s (1992, \cite{svm}), K-means clustering (1962 \cite{k_means}), Naive Bayes and  \gls{flda}.  
 \bigskip
 
-Examples of classic data sets in \gls{ml} include unsupervised classification of data points into flower species (the Iris data set), predicting diabetes risk based on a small subset of predictors, predicting whether a mine is present based on hundreds of reflection frequencies  and other challenges \cite{uci_ml_data}. A major practical milestone includes the use of Yan Le Cun's \enquote{LeNet} architecture in the late 1990s to perform accurate handwriting recognition. 
+Examples of classic data sets in \gls{ml} include unsupervised classification of data points into flower species (the Iris data set), predicting diabetes risk based on a small subset of predictors, predicting whether a mine is present based on hundreds of reflection frequencies, and other challenges \cite{uci_ml_data}. A major practical milestone includes the use of Yan Le Cun's \enquote{LeNet} architecture in the late 1990s to perform accurate handwriting recognition \cite{LeNet}. 
 \bigskip
 
 %At one stage, this algorithm (a \gls{cnn}) was responsible for the majority of automated cheque processing in the United States [ZAMBINGO].  \bigskip
-The key idea is that the algorithm automatically finds and determines a set of rules to effectively label the input data based on some learning process that seeks to find the optimal set of model parameters. This avoids, for example, algorithms that are highly task specific (such as searching algorithms or algorithms specifically designed to find the optimal move given a particular rule set). 
+The key idea is that a \gls{ml} algorithm automatically finds and determines a set of rules to effectively label the input data based on some learning process that seeks to find the optimal set of model parameters. This avoids, for example, algorithms that are highly task specific (such as searching algorithms or algorithms specifically designed to find the optimal move given a particular rule set). 
 \bigskip
 
 \section{Neural Networks} 
 
-In this work, networks, \gls{ann}s and \enquote{nets} all refer to \glsfirst{nn}s. \gls{nn}s started with the linear combiner. With the addition of extra neurons this became the single-layer perceptron (also known as a single layer \gls{ffnn} \cite{haykin}). In a multi-class classification context, on the output layer of the perceptron, for each class we have a neuron $i$ which acts as the linear classifier $h_1, h_2, h_3, ... , h_i$. With the addition of a \gls{hiddenlayer}, this evolved onto the \gls{mlp}. Later with increasing use of multi-layer \gls{ffnn}s, the architecture diversified into \gls{cnn}s which use local receptive fields. A partial timeline of developments and architectures is present in figures \ref{fig:timeline_new_nn} and \ref{fig:timeline_old_nn}. \bigskip
+In this work, networks, \gls{ann}s and \enquote{nets} all refer to \glsfirst{nn}s. \gls{nn}s started with the McCulloch-Pitts model of the the neuron \cite{logical_calculus}. They developed the model of the neuron known as the \gls{tlu} \cite{tlu_tutorial}. Rosenblatt developed the perceptron learning algorithm and proved that it converged. With the addition of extra neurons this became the single-layer perceptron (also known as a single layer \gls{ffnn} \cite{haykin}). In a multi-class classification context, on the output layer of the perceptron, for each class we have a neuron $i$ which acts as the linear classifier $h_1, h_2, h_3, ... , h_i$. With the addition of a \gls{hiddenlayer}, this evolved onto the \gls{mlp}. Later with increasing use of multi-layer \gls{ffnn}s, the architecture diversified into \gls{cnn}s which use local receptive fields. A partial timeline of developments and architectures is present in figures \ref{fig:timeline_new_nn} and \ref{fig:timeline_old_nn}. \bigskip
 
 \begin{figure}
     \centering
@@ -136,7 +138,7 @@ If we use the sigmoid \gls{activationfunction} and incorporate a bias term, we n
 \end{wrapfigure}
 
 \bigskip
-Many \gls{nn}s diverge from most statistical techniques in that they do not assume a distribution over the data, rather taking an \enquote{algorithmic} approach to classification and prediction \cite{two_cultures}. They leverage the increased classifier complexity that results from the addition of extra neurons to layers (\enquote{going wide}) and the addition of \gls{layer}s (\enquote{going deep}). This increased complexity comes at the cost of the interpretability, although a variety of techniques are in development to address this problem \cite{nn_interpretability}. Basic uses of \gls{nn}s include statistical pattern recognition, temporal pattern recognition and image recognition (e.g. using \gls{ffnn}s, \gls{rnn}s and \gls{cnn}s, respectively).
+Many \gls{nn}s diverge from most statistical techniques in that they do not assume a distribution over the data, rather taking an \enquote{algorithmic} approach to classification and prediction \cite{two_cultures}. They leverage the increased classifier complexity that results from the addition of extra neurons to layers (\enquote{going wide}) and the addition of \gls{layer}s (\enquote{going deep}). This increased complexity comes at the cost of the interpretability (often being described as 'black boxes'), although a variety of techniques are in development to address this problem \cite{nn_interpretability}. Basic uses of \gls{nn}s include statistical pattern recognition, temporal pattern recognition and image recognition (e.g. using \gls{ffnn}s, \gls{rnn}s and \gls{cnn}s, respectively).
 \bigskip
 
 \gls{nn}s find their origins in the fields of psychology and electronic engineering, dating back to the days of linear adaptive filters in the 1950s \cite{haykin}. This began with the perceptron model proposed by Rosenblatt \cite{perceptron_paper} as an extension of the McCulloch and Pitts model of the neuron \cite{logical_calculus}. 
@@ -269,14 +271,25 @@ It is now possible to use a \gls{nn} 'off-the-shelf' or pre-trained. This is a c
 \section{Loss Functions}
 
 % mention NP-hardness loss paper
-\gls{lossfunction}s measure how far the prediction a statistical or \gls{ml} algorithm creates from the target. As the algorithm is trained, the loss is minimised. In $\mathds{R}^3$, this can be visualised quite strikingly as trying to find the lowest point in a 'loss landscape' \cite{loss_landscape}. Parameters can be found analytically, such as when using the normal equations to solve exactly for the optimal coefficients e.g. as in the training procedure used for linear regression.
+\Gls{lossfunction}s measure how far the prediction created by a statistical or \gls{ml} algorithm is from the target. As the algorithm is trained, the loss is minimised. In $\mathds{R}^3$, this can be visualised quite strikingly as trying to find the lowest point in a 'loss landscape' \cite{loss_landscape}. Parameters can be found analytically, such as when using the normal equations (\ref{eq:normal_equations}) to solve exactly for the optimal coefficients e.g. as in the training procedure used for linear regression.
 \bigskip
 
 % Insert normal equations for reference here - maybe
-\begin{align*}
-    \hat{X\beta} = X(X^TX)^{-1}X^TY \\
-    \beta = (X^TX)^{-1}X^TY
-\end{align*}
+\begin{align}
+    \hat{y} = X\hat{\beta} = X(X^TX)^{-1}X^Ty \\
+    \hat{\beta} = (X^TX)^{-1}X^Ty
+    \label{eq:normal_equations}
+\end{align}
+
+Where;
+
+\begin{itemize}
+    \item $\hat{X\beta}$ is the vector of efficient estimates
+    \item $y$ is the vector of response values  
+    \item $\hat{y}$ is the vector of predicted, or fitted, values  
+    \item $X$ is the matrix of predictor variables (each column corresponds to a predictor)
+    \item $X(X^TX)^{-1}X^T$ is the 'hat' or projection matrix, which maps the response values to the fitted values
+\end{itemize}
 
 Linear regression traditionally uses the  \gls{mse} as a \gls{lossfunction}, more commonly known as the L2 loss in a \gls{ml} context:
 
@@ -294,9 +307,17 @@ Where;
     \item $\hat{y}$ is the predicted class for the individual example 
 \end{itemize}
 
-More commonly, some optimisation method is required in order to minimise the \gls{loss}. At the simplest level, this takes the form of \gls{gd}. However, as \gls{gd} requires the gradients to be computed with respect to the entire training data, \gls{sgd} is more common as it is much faster, even though each individual step may not point as closely towards the local minima. More recent methods include  \gls{adam}, Adagrad and Adadelta. When a \gls{nn} is trained, these methods are used to find the parameters in conjunction with back propagation. These methods are relatively simple and require more computation than other optimisation techniques, such as the second-order quasi-newton method (which involves calculation of the hessian matrix) \cite[p.~34]{nn_tricks_trade}. However, a major weakness is that they do not necessarily find the global optimum. It is well known that \gls{nn}s tend to have complex loss surfaces, with many local optima, hence a method derived from \gls{gd} is only likely to find a local optima during any given training run \cite[pg.~83]{good_fellow_2016}.   
+More commonly, some optimisation method is required in order to minimise the \gls{loss}, as the the complexity of a model may mean an analytical solution isn't available. Hypothetically, we could imagine a scenario where we retrain the network with randomly set parameters, until we achieve a satisfactory performance - this is known as 'random guessing'. Obviously, in practice, this is not used - the vast number of possible guesses even for models with a small \gls{parameterspace} serves to illustrate the necessity of finding efficient optimisation methods, and improving on them. The most straightforward optimisation technique,in practice, takes the form of \gls{gd}. However, as \gls{gd} requires the gradients to be computed with respect to the entire training data, \gls{sgd} is more common as it is much faster, even though each individual step may not point as closely towards the local minima. More recent methods include  \gls{adam}, Adagrad and Adadelta. When a \gls{nn} is trained, these methods are used to find the parameters in conjunction with back propagation. These methods are relatively simple and require more computation than other optimisation techniques, such as the second-order quasi-newton method (which involves calculation of the hessian matrix) \cite[p.~34]{nn_tricks_trade}. However, a major weakness is that they do not necessarily find the global optimum. It is well known that \gls{nn}s tend to have complex loss surfaces, with many local optima, hence a method derived from \gls{gd} is only likely to find a local optima during any given training run \cite[pg.~83]{good_fellow_2016}.   
 % Figures  \ref{fig:gd_simple} and \ref{fig:sgd_simple} show this process performed for a simple function.
 % Zambingo - optima ref for gd - eibe notes, and also ref for quasi netwton stuff - stats text is fine for this
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{figs/gd_lr.png}
+%\includesvg{figs/hyperplanes_good_classes.svg}
+\caption[Illustration of gradient descent.]{The above figure demonstrate the difference between using a low learning and high learning rate when gradient descent is performed. Obviously, solving for the minimum of $x^2$ is trivial, but illustrates the effect of the learning rate, and the way \gls{gd} 'steps' downward toward the local optimum, using the information provided by the gradient.} 
+\label{fig:good_sep_classes} % labels must come after captions (figures are 'labelable'?)
+\end{figure}
 
 % ZAMBINGO - design r script - sgd vs gd for optim viz
 % Zambingo - make classic diag of local optimum fail
@@ -358,7 +379,7 @@ The development of \gls{fp} is closely tied with the \gls{jll}. This lemma makes
     \textit{$n$ points in high dimensional euclidean space can be mapped onto k dimensions where $K \leq \mathcal{O}(log \frac{n}{\epsilon^{2})} $ without distorting the euclidean distance between any two points more than a factor of $\pm \: \epsilon$ \cite{jll_notes}.}
 \end{quote}
 
-\Gls{jll}, however, has the significant caveat of assuming the data is randomly distributed. This lemma is important because it provides a strong bound on the error when using projections; we can use \gls{rp}s with some known quantifiable maximum tradeoff and this bound can be used directly to motivate the development of other bounds e.g. \cite{bob_sharp_generalisation_error_bounds}.  The use of \gls{rp}s has been around for some time, mostly as a dimensionality reduction technique (such as in \gls{pca}).
+\Gls{jll}, however, has the significant caveat of assuming the data is randomly distributed. This lemma is important because it provides a strong bound on the error when using projections; we can use \gls{rp}s with some known quantifiable maximum tradeoff and this bound can be used directly to motivate the development of other bounds e.g. \cite{bob_sharp_generalisation_error_bounds}.  The \gls{rp}s have been used for some time, mostly as a dimensionality reduction technique (such as in \gls{pca}).
 \bigskip
 
 %In this capacity, it has found use in traditional statistical techniques, \gls{ml} techniques and \gls{dl}. %\gls{rp}s have the \gls{lln} supporting them 

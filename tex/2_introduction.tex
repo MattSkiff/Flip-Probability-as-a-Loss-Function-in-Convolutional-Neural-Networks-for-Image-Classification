@@ -13,15 +13,15 @@ Part of the problem when investigating developing improvements to \gls{nn} metho
 
 \section{Motivation}
 
-A small  \gls{mse} is not a guarantee of a small $0/1$ loss - similar parts can have dissimilar labels. Points near the boundaries of classes are a key concern and likely to be misclassified.  \gls{mse} is a good aggregate measure of bulk of points. However, it is a poor measure of points near the decision boundary of classes. We wish for a smooth loss for fitting a classifier, not a discrete loss like the $0/1$ loss and a loss function that is superior to the  \gls{mse}.
+A small  \gls{mse} is not a guarantee of a small $0/1$ loss - similar parts can have dissimilar labels. Points near the boundaries of classes are a key concern and likely to be misclassified.  \gls{mse} is a good aggregate measure of bulk of points. However, it is a poor measure of points near the decision boundary of classes. We need a smooth loss for fitting a classifier, not a discrete loss like the $0/1$ loss and a loss function that is superior to the  \gls{mse}. Backpropagation, a requirement for training \gls{dnn}s
 \bigskip
 
 \section{Overview}
 
-As the focus of this dissertation is to test \gls{fp} as a \gls{lossfunction} for the purpose of image classification, we will restrict testing of this to \gls{cnn}s or simpler networks (such as \gls{mlp}s or \gls{feedforward} \gls{nn}s). 
+As the focus of this dissertation is to trial \gls{fp} as a \gls{lossfunction} for the purpose of image classification, we will restrict testing of this to \gls{cnn}s or simpler networks (such as \gls{mlp}s or \gls{feedforward} \gls{nn}s). 
 \bigskip
 
- The \gls{fp} loss is a smooth approximation of the $0/1$ loss and, in principle, should more accurately classify points near the \gls{decisionboundary}. To implement this, we can use  \gls{nn}s "off the shelf", tweak them and measure results. However,\gls{fp} is a theoretical concept and finding an empirical measure is necessary if we wish to implement it in practice. 
+ The \gls{fp} loss can be viewed as a smooth approximation of the $0/1$ loss. We want to enforce a \enquote{large margin} representation of the data. To implement this, we can use  \gls{nn}s "off the shelf", tweak them and measure results. However,\gls{fp} is a theoretical concept and finding an empirical measure is necessary if we wish to implement it in practice. 
  \bigskip
 
 Once an empirical measure is found, we proceed to test this, using standard \gls{nn} training and testing techniques.
